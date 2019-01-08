@@ -1,0 +1,556 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 6.1.3.1 (Linux)"/>
+	<meta name="created" content="2016-06-14T17:14:28.679842002"/>
+	<meta name="changed" content="2018-11-08T15:00:34.658183477"/>
+	<meta name="created" content="00:00:00">
+	<meta name="changed" content="00:00:00">
+	<meta name="created" content="00:00:00">
+	<meta name="created" content="00:00:00">
+	<style type="text/css">
+		@page { size: 21cm 29.7cm; margin: 2.01cm }
+		p { margin-bottom: 0.25cm; line-height: 120%; background: transparent }
+		a:link { color: #000080; so-language: zxx; text-decoration: underline }
+		a:visited { color: #800000; so-language: zxx; text-decoration: underline }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><p align="center" style="margin-bottom: 0cm; line-height: 100%">
+<font size="4" style="font-size: 16pt"><b>ERYA – Profiling : How to
+make a Profiling Simulation</b></font></p>
+<p align="center" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font size="3" style="font-size: 12pt">This section will detail a
+brief resume of the physical theory of ERYA-Profiling, and a simple
+guided tutorial to operate the software. </font>
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font size="3" style="font-size: 12pt">Notice that a complete
+tutorial manual are available separately. </font>
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><b>Yield
+Evaluation Procedure</b></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+The ERYA application will evaluate the yield of several isotopes
+defined from the user, taking the user-defined parameters and all
+related databases to calculate the pretended result.</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+Since the sample are composed by several layers, each one with a
+define depth in terms of atomic surface density (in 10<sup>15</sup>
+atoms per square centimeter units) and the relative stoichiometry of
+the present elements on it, the yield evaluation on ERYA-Profiling is
+more complex than on ERYA-Bulk.</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><span style="font-weight: normal">1.</span>
+<span style="font-weight: normal">Each Yield are related to the
+element, like on the ERYA-Bulk, but the original integral now becomes
+a multidimensional integral, since:</span></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="center" style="margin-bottom: 0cm; line-height: 100%"><span style="font-weight: normal">Y
+(E</span><sub><span style="font-weight: normal">0</span></sub><span style="font-weight: normal">)
+= </span><font face="Liberation Serif, serif"><span style="font-weight: normal">ε</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">abs</span></font></sub><font face="Liberation Serif, serif"><span style="font-weight: normal">(E</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">γ</span></font></sub><font face="Liberation Serif, serif"><span style="font-weight: normal">)N</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">p
+</span></font></sub><font face="Liberation Serif, serif"><span style="font-weight: normal">N</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">AV</span></font></sub>
+∫ <font face="Liberation Serif, serif"><span style="font-weight: normal">f</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">m</span></font></sub><font face="Liberation Serif, serif"><span style="font-weight: normal">(E)
+f</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">i
+</span></font></sub><font face="Liberation Serif, serif"><span style="font-weight: normal">(E)σ(E)/d</span></font><font face="Times New Roman, serif"><span style="font-weight: normal">ε</span></font>
+<font face="Liberation Serif, serif"><span style="font-weight: normal">dE</span></font></p>
+<p align="center" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%">†
+<font face="Liberation Serif, serif"><span style="font-weight: normal">ε</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">abs</span></font></sub><font face="Liberation Serif, serif"><span style="font-weight: normal">(E</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">γ</span></font></sub><font face="Liberation Serif, serif"><span style="font-weight: normal">),
+is the <a href="Detector.html">Detector Efficiency</a></span></font>
+<font face="Liberation Serif, serif"><span style="font-weight: normal">to
+the respective gamma emission energy of the current isotope. Any
+isotope on ground-level will have a zero gamma yield emission.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%">† <font face="Liberation Serif, serif"><span style="font-weight: normal">N</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">p
+</span></font></sub><font face="Liberation Serif, serif"><span style="font-weight: normal">is
+the number of protons calculated from the “Charge” specified from
+the user (default is 1 µC).</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%">† <font face="Liberation Serif, serif"><span style="font-weight: normal">f</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">m</span></font></sub><sub>
+</sub><font face="Liberation Serif, serif"><span style="font-weight: normal">relates
+to the mass fraction of the isotope related to the sample layer</span></font>
+<font face="Liberation Serif, serif"><span style="font-weight: normal">it
+belongs.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif">- This means, if the element are
+alone, their mass fraction will be equal to one.</font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif">- If the isotope belongs to a
+certain compound, the mass fraction is evaluated by taking the weight
+average of their isotope mass and stoichiometric ratio of current
+compound.</font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><span style="font-weight: normal">-
+Thus, taking the sum, S = Σ s</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">k
+</span></font></sub><font face="Liberation Serif, serif"><span style="font-weight: normal">A</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">k
+</span></font></sub><font face="Liberation Serif, serif"><span style="font-weight: normal">,
+the mass fraction will be f</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">m</span></font></sub><sub>
+</sub><font face="Liberation Serif, serif"><span style="font-weight: normal">=
+s</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">i</span></font></sub>
+<font face="Liberation Serif, serif"><span style="font-weight: normal">A</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">i</span></font></sub>
+<font face="Liberation Serif, serif"><span style="font-weight: normal">/
+S.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%">† <font face="Liberation Serif, serif"><span style="font-weight: normal">f</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">i</span></font></sub><sub>
+</sub><font face="Liberation Serif, serif"><span style="font-weight: normal">is
+simply the isotope abundance, and it should be available on the
+<a href="Database.html">Element Database</a>.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%">† <font face="Liberation Serif, serif"><span style="font-weight: normal">N</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">av</span></font></sub><sub>
+</sub><font face="Liberation Serif, serif"><span style="font-weight: normal">is
+the Avogadro Number (</span></font>≈<font face="Liberation Serif, serif"><span style="font-weight: normal">6.022*10</span></font><sup><font face="Liberation Serif, serif"><span style="font-weight: normal">23</span></font></sup><font face="Liberation Serif, serif"><span style="font-weight: normal">).</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%">†
+<font face="Liberation Serif, serif"><span style="font-weight: normal">σ(E)
+is the Element cross-section function, usually interpolated from the
+<a href="Element.html">Element’s cross-section data</a>, but can be
+overridden by a custom resonance function, as explained <a href="DetectorProfile.html">here</a>.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%">† <font face="Liberation Serif, serif"><span style="font-weight: normal">The
+dε quantity is the <a href="Ziegler.html">Energy Stopping</a></span></font>
+<font face="Liberation Serif, serif"><span style="font-weight: normal">loss
+which use the Bragg's Law and the Ziegler's </span></font><font face="Liberation Serif, serif"><i><span style="font-weight: normal">ansatz</span></i></font>
+<font face="Liberation Serif, serif"><span style="font-weight: normal">equations
+</span></font><font face="Liberation Serif, serif"><span style="font-weight: normal">or
+SRIM tables</span></font><font face="Liberation Serif, serif"><span style="font-weight: normal">
+to model the energy beam losses.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%">2. In
+order to simplify the Yield Calculation, the initial integral are
+transformed by a sum of partial yields for each elementary layer
+step, giving:</p>
+<p align="center" style="margin-bottom: 0cm; line-height: 100%">Y
+(E<sub>0</sub>) = ∑ <font face="Liberation Serif, serif">Y</font><sub><font face="Liberation Serif, serif">L
+</font></sub><font face="Liberation Serif, serif">(</font><font face="Liberation Serif, serif"><u>E</u></font><span style="text-decoration: none"><sub><font face="Liberation Serif, serif">L</font></sub></span><span style="text-decoration: none"><font face="Liberation Serif, serif">)</font></span></p>
+<p align="center" style="margin-bottom: 0cm; line-height: 100%"><span style="text-decoration: none"><font face="Liberation Serif, serif">Y</font></span><span style="text-decoration: none"><sub><font face="Liberation Serif, serif">L
+</font></sub></span><span style="text-decoration: none"><font face="Liberation Serif, serif">(</font></span><font face="Liberation Serif, serif"><u>E</u></font><span style="text-decoration: none"><sub><font face="Liberation Serif, serif">L</font></sub></span><span style="text-decoration: none"><font face="Liberation Serif, serif">)=
+</font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">ε</span></font></span><span style="text-decoration: none"><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">abs</span></font></sub></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">(E</span></font></span><span style="text-decoration: none"><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">γ</span></font></sub></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">)N</span></font></span><span style="text-decoration: none"><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">p
+</span></font></sub></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">N</span></font></span><span style="text-decoration: none"><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">AV</span></font></sub></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">f</span></font></span><span style="text-decoration: none"><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">mL</span></font></sub></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">f</span></font></span><span style="text-decoration: none"><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">iL
+</span></font></sub></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">(σ(</span></font></span><font face="Liberation Serif, serif"><u><span style="font-weight: normal">E</span></u></font><span style="text-decoration: none"><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">L</span></font></sub></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">)/</span></font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><span style="font-weight: normal">ε(</span></font></span><font face="Times New Roman, serif"><u><span style="font-weight: normal">E</span></u></font><span style="text-decoration: none"><sub><font face="Times New Roman, serif"><span style="font-weight: normal">L</span></font></sub></span><span style="text-decoration: none"><font face="Times New Roman, serif"><span style="font-weight: normal">)
+) </span></font></span><u>∆</u><font face="Times New Roman, serif"><u><span style="font-weight: normal">E</span></u></font><span style="text-decoration: none"><sub><font face="Times New Roman, serif"><span style="font-weight: normal">L</span></font></sub></span><span style="text-decoration: none">
+</span>
+</p>
+<p align="center" style="margin-bottom: 0cm; line-height: 100%"><u>∆</u><font face="Times New Roman, serif"><u><span style="font-weight: normal">E</span></u></font><span style="text-decoration: none"><sub><font face="Times New Roman, serif"><span style="font-weight: normal">L
+</span></font></sub></span><span style="text-decoration: none">≈
+</span><span style="text-decoration: none"><font face="Times New Roman, serif"><span style="font-weight: normal">ε(</span></font></span><font face="Times New Roman, serif"><u><span style="font-weight: normal">E</span></u></font><span style="text-decoration: none"><sub><font face="Times New Roman, serif"><span style="font-weight: normal">L</span></font></sub></span><span style="text-decoration: none"><font face="Times New Roman, serif"><span style="font-weight: normal">)
+Γ</span></font></span><span style="text-decoration: none"><sub><font face="Times New Roman, serif"><span style="font-weight: normal">L</span></font></sub></span></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif">Where <font face="Times New Roman, serif">Γ</font>
+is the atomic density at the current layer, and <u>E</u><span style="text-decoration: none">
+is the average energy at the same layer.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
+<font face="Liberation Serif, serif">To model more accurately the
+energy loss when the incident beam propagates along the sample, the
+cross-section value should be handled by a distribution integral:</font></p>
+<p align="center" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif"><span style="text-decoration: none"><u>σ</u></span><span style="text-decoration: none">(</span><u>E</u><span style="text-decoration: none"><sub>L</sub></span><span style="text-decoration: none">)
+= ∫ F (E) σ (E) dE</span></font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
+ <font face="Liberation Serif, serif">The distribution can be
+understood by a composition of two components:</font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
+<font face="Liberation Serif, serif">- The own Detector had a thermal
+and resolution distribution due to the finite temperature and energy
+resolution dispersion.</font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
+<font face="Liberation Serif, serif">- While beam propagation own
+energy loss across the sample are described by a propagation
+distribution, also called straggling distribution, since it is
+related to the Energy Stopping Loss.</font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
+† <font face="Liberation Serif, serif">The global distribution is a
+convolution of the two distributions previously discussed:</font></p>
+<p align="center" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif"><span style="text-decoration: none">F
+(E ) = ∫ F</span><span style="text-decoration: none"><sub>T</sub></span><span style="text-decoration: none">
+(F) F</span><span style="text-decoration: none"><sub>S </sub></span><span style="text-decoration: none">(</span><span style="text-decoration: none">E</span><span style="text-decoration: none">
+– </span><span style="text-decoration: none">F</span><span style="text-decoration: none">
+) dF</span></font></p>
+<p align="center" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif"><span style="text-decoration: none">Where
+the thermal F</span><span style="text-decoration: none"><sub>T</sub></span><span style="text-decoration: none">
+is always </span><span style="text-decoration: none">a G</span><span style="text-decoration: none">aussian
+</span><span style="text-decoration: none">Distribution</span><span style="text-decoration: none">,
+and the straggling F</span><span style="text-decoration: none"><sub>S
+</sub></span><span style="text-decoration: none">are a Vavilov
+distribution, </span><span style="text-decoration: none">where such
+distribution requires special routines to handle at best computation
+time.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
+<font face="Liberation Serif, serif">This means that the evaluation
+of the cross-section are handled by a numerical double integral,
+using the Simpson's Rule, giving by:</font></p>
+<p align="center" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif"><span style="text-decoration: none"><u>σ</u></span><span style="text-decoration: none">(</span><u>E</u><span style="text-decoration: none"><sub>L</sub></span><span style="text-decoration: none">)
+= ∫∫ F</span><span style="text-decoration: none"><sub>T</sub></span><span style="text-decoration: none">
+(y) F</span><span style="text-decoration: none"><sub>S</sub></span><span style="text-decoration: none">
+(x-y) σ(</span><u>E</u><span style="text-decoration: none"><sub>L</sub></span><span style="text-decoration: none">-x)
+dx dy</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
+ <font face="Liberation Serif, serif">Combining the whole
+distribution integral of the cross-section relative by their layer,
+the whole yield numerical integral is now a triple numerical
+integral, making the numerical evaluation more time consuming in
+clear contrast of the simple integration on the ERYA-Bulk.</font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">3.
+The program will compute an array of several yields, ranging from the
+user selected Energy Minimum, until the Maximum Energy, </span></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">by
+equally increasing initial energies defined by</span></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">
+the Energy Step. The sample is also </span></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">divided</span></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">
+by smaller layers, using a default Sample Step </span></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">of
+10</span></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">*10</span></font></span><span style="text-decoration: none"><sup><font face="Liberation Serif, serif"><span style="font-weight: normal">15</span></font></sup></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">at/cm</span></font></span><span style="text-decoration: none"><sup><font face="Liberation Serif, serif"><span style="font-weight: normal">2</span></font></sup></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">unit,
+where can be changed, by clicking on “<a href="Advanced.html">Advanced</a>”
+button on the bottom interface.</span></font></span></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+<font face="Liberation Serif, serif"><b>Distributions</b></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif"><span style="text-decoration: none">The
+ERYA-Profiling use a custom numerical library, </span><span style="text-decoration: none">in
+order to evaluate</span><span style="text-decoration: none"> the
+Vavilov distribution using the original references, first derived
+from </span><span style="text-decoration: none"><i>Montagna R.</i></span><span style="text-decoration: none">
+work </span><span style="text-decoration: none">and </span><span style="text-decoration: none"><i>Luis
+F.</i></span><span style="text-decoration: none"><span style="font-style: normal">
+thesis work that was</span></span><span style="text-decoration: none">
+</span><span style="text-decoration: none">also the</span><span style="text-decoration: none">
+previous LabView ERYA-Profiling author.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<span style="text-decoration: none"> </span><font face="Liberation Serif, serif"><span style="text-decoration: none">Currently,
+all numerical routines on ERYA-Profiling was</span><span style="text-decoration: none">
+reimplemented from scratch.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<span style="text-decoration: none"> </span><font face="Liberation Serif, serif"><span style="text-decoration: none">For
+each initial energy at any</span><span style="text-decoration: none">
+layer </span><u>E</u><span style="text-decoration: none"><sub>L, </sub></span><span style="text-decoration: none">the
+program evaluate the relativistic velocity </span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>β
+</b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif">,
+the energy cut-off </font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>κ</b></font></span><span style="text-decoration: none"><sub><font face="Times New Roman, serif"><b>MAX</b></font></sub></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif">,
+the resolution factor </font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>ξ</b></font></span><span style="text-decoration: none">
+, and the factor </span><span style="text-decoration: none"><b>k =</b></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>ξ
+/ κ</b></font></span><span style="text-decoration: none"><sub><font face="Times New Roman, serif"><b>MAX</b></font></sub></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif">.</font></span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><span style="text-decoration: none"><font face="Times New Roman, serif"><span style="font-weight: normal">Once</span></font></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif"><span style="font-weight: normal">the
+factors </span></font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>β,
+</b></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><b>k,
+</b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>ξ</b></font></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif"><span style="font-weight: normal">are
+evaluated, it also evaluates the Bohr variance, requiring to use the
+Mean Ionization Energy, and Density, located on the <a href="Ziegler.html">Ziegler's
+Parameters</a> file.</span></font></span></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif"><span style="font-weight: normal">Finally,
+the straggling variance can be evaluated by </span></font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><span style="font-weight: normal">the
+following formula, derived by </span></font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><span lang="en-US"><i>H.
+Bichsel</i></span></font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><span style="font-weight: normal">:</span></font></span></p>
+<p align="center" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif"><span style="text-decoration: none"><font face="Times New Roman, serif">σ</font></span><span style="text-decoration: none"><sub><font face="Times New Roman, serif">B</font></sub></span><span style="text-decoration: none"><sup><font face="Times New Roman, serif">2</font></sup></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif">=
+(8 ξ) / (3 Γ) </font></span><span style="text-decoration: none">∑
+</span><span style="text-decoration: none"><font face="Times New Roman, serif">s</font></span><span style="text-decoration: none"><sub><font face="Times New Roman, serif">i</font></sub></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif">I</font></span><span style="text-decoration: none"><sub><font face="Times New Roman, serif">i</font></sub></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif">ln
+( 2 m</font></span><span style="text-decoration: none"><sub><font face="Times New Roman, serif">e</font></sub></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif">β</font></span><span style="text-decoration: none"><sup><font face="Times New Roman, serif">2</font></sup></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif">/
+I</font></span><span style="text-decoration: none"><sub><font face="Times New Roman, serif">i</font></sub></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif">)</font></span></font></p>
+<p align="center" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"> But
+the user can change the straggling variance formula to use the
+Vavilov formula instead, by clicking the <span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">“<a href="Advanced.html">Advanced</a>”
+button:</span></font></span></p>
+<p align="center" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif"><span style="text-decoration: none"><font face="Times New Roman, serif">σ</font></span><span style="text-decoration: none"><sub><font face="Times New Roman, serif">V</font></sub></span><span style="text-decoration: none"><sup><font face="Times New Roman, serif">2</font></sup></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif">=
+ ξ</font></span><span style="text-decoration: none"><sup><font face="Times New Roman, serif">2</font></sup></span><span style="text-decoration: none"><font face="Times New Roman, serif">
+* ( 1 - </font></span><span style="text-decoration: none"> </span><span style="text-decoration: none"><font face="Times New Roman, serif">β</font></span><span style="text-decoration: none"><sup><font face="Times New Roman, serif">2</font></sup></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif">/
+2</font></span><span style="text-decoration: none"> </span><span style="text-decoration: none"><font face="Times New Roman, serif">)
+/ k</font></span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
+ <font face="Times New Roman, serif">A final option to force a
+Gaussian distribution to the Straggling Distribution (which is fairly
+accurate for bulk samples), will defaults the Vavilov formula to the
+straggling variance.</font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
+<br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
+<font face="Times New Roman, serif">To reduce numerical errors during
+the whole complex chain of numerical steps, the program will evaluate
+each partial factor <b>β, </b><font face="Liberation Serif, serif"><b>k,
+</b></font><b>ξ, σ</b><sub><b>B</b></sub><sup><b>2</b></sup> <font face="Liberation Serif, serif">along
+each layer a</font><font face="Liberation Serif, serif">nd sum </font><font face="Liberation Serif, serif">such
+factors </font><font face="Liberation Serif, serif">along the
+previous values.</font> The accumulated factors are the main inputs
+for the numerical Vavilov Distribution, and applied according on the
+following rules, if the user don’t force a pure Gaussian
+Distribution: </font>
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif"><span style="text-decoration: none"><font face="Times New Roman, serif"><b>For
+k=0</b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif">,
+the Vavilov Distribution is a degenerate one, a single point handled
+by a </font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>Dirac’s
+Function.</b></font></span></font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif"><span style="text-decoration: none"><font face="Times New Roman, serif"><b>For</b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>
+0&lt;k&lt;0.02</b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif">,
+the Vavilov Distribution can be approximated by a </font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>Landau
+Function</b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif">.</font></span></font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif"><span style="text-decoration: none"><font face="Times New Roman, serif"><b>For</b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>
+0.02&lt;k&lt;0.235 </b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif">are
+on domain of the </font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>Moyal
+Function</b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif">,
+described by </font></span><span style="text-decoration: none"><i>Montagna
+R.</i></span><span style="text-decoration: none"> work on numerical
+approximations of the Vavilov Distributions, but requires additional
+steps to fix incorrect approximations, as also detected on the
+previous LabView ERYA’s author.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif"><span style="text-decoration: none"><b>For
+0.235&lt;k&lt;5</b></span><span style="text-decoration: none"> the
+Vavilov Distribution are approximated by the </span><span style="text-decoration: none"><b>Edgeworth
+Function</b></span><span style="text-decoration: none">.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif"><span style="text-decoration: none"><b>Finally
+for k&gt;5</b></span><span style="text-decoration: none">, the
+Vavilov Distribution can be approximate by the </span><span style="text-decoration: none"><b>Gaussian
+Function.</b></span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif"><span style="text-decoration: none">The
+thermal distribution is always a </span><span style="text-decoration: none"><b>Gaussian</b></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><b>Distribution</b></span><span style="text-decoration: none">,
+unless the degenerate case when the temperature and resolution are
+zero (an impossible ideal detector), making a </span><span style="text-decoration: none"><b>Dirac’s
+Function.</b></span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><span style="text-decoration: none"><font face="Liberation Serif, serif"><b>Note:
+</b></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">The
+ERYA-Profiling approximate all distributions by a 3-sigma cut-off,
+since it won’t make sense an unlimited interval on numerical
+integration. Except the Dirac’s Function, that use a single point,
+the other four functions accuracy can be changed on “<a href="Advanced.html">Advanced</a>”
+button, located on the bottom main interface. </span></font></span>
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
+ <font face="Liberation Serif, serif">Due to the limiting range
+domain, all distributions should be renormalized, and where the
+program actually makes two double integrals, fortunately with the
+same domain matrix, and divide them to obtain the renormalized value:</font></p>
+<p align="center" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><span style="text-decoration: none"><span style="font-weight: normal">σ(</span></span><u><span style="font-weight: normal">E</span></u><span style="text-decoration: none"><sub><span style="font-weight: normal">L</span></sub></span><span style="text-decoration: none"><span style="font-weight: normal">)
+= </span></span><span style="text-decoration: none">∫∫ </span><span style="text-decoration: none"><span style="font-weight: normal">F</span></span><span style="text-decoration: none"><sub><span style="font-weight: normal">T</span></sub></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><span style="font-weight: normal">(y)
+F</span></span><span style="text-decoration: none"><sub><span style="font-weight: normal">S</span></sub></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><span style="font-weight: normal">(x-y)
+σ(</span></span><u><span style="font-weight: normal">E</span></u><span style="text-decoration: none"><sub><span style="font-weight: normal">L</span></sub></span><span style="text-decoration: none"><span style="font-weight: normal">-</span></span><span style="text-decoration: none"><span style="font-weight: normal">x</span></span><span style="text-decoration: none"><span style="font-weight: normal">)
+dx dy / </span></span><span style="text-decoration: none">∫∫ </span><span style="text-decoration: none"><span style="font-weight: normal">F</span></span><span style="text-decoration: none"><sub><span style="font-weight: normal">T</span></sub></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><span style="font-weight: normal">(y)
+F</span></span><span style="text-decoration: none"><sub><span style="font-weight: normal">S</span></sub></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><span style="font-weight: normal">(x-y)
+dx dy</span></span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><b>Profiling
+Analysis How-To</b></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><span style="font-weight: normal">1.
+You need to check first if you have a functional database. If the
+program warns about an invalid database for Elements, Ziegler or
+Detector Setup, you need to check the source database files (You
+should put all three in the same directory), or change the <a href="SetupSettings.html">default
+configuration</a>, as explained on “Settings” menu option.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif">Alternatively, use the menu
+option “Settings”&gt;”Reset Settings” to reset the wrong
+configuration.</font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><span style="font-weight: normal">2.
+You can override the default <a href="Database.html">Element Database</a></span></font>
+<font face="Liberation Serif, serif"><span style="font-weight: normal">loaded
+at start-up, using the adequate menu.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%">†
+<font face="Liberation Serif, serif"><span style="font-weight: normal">Tip:
+Also check the <a href="Detector.html">Detector Setup</a></span></font>
+<font face="Liberation Serif, serif"><span style="font-weight: normal">and
+<a href="Ziegler.html">Ziegler Parameters</a></span></font> <font face="Liberation Serif, serif"><span style="font-weight: normal">from
+the appropriate menu options.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><span style="font-weight: normal">3.
+The first step is to use the “<a href="ElementProfiler.html">Elements</a>”
+tab, and select the number of Elements, and their names and gammas
+from the main database. The other tabs contents are automatically
+updated.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><span style="font-weight: normal">4.
+The sample composition are defined on “<a href="LayerEditor.html">Layer</a>”
+tab, first by selecting the number of layers, and finally, fill the
+depth, and the relative stoichiometry for each element. During the
+numerical evaluation, the stoichiometry for each layer are internally
+renormalized without additional user input.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><span style="font-weight: normal">5.
+Finally, on the “<a href="DetectorProfile.html">Detector</a>”
+tab, select the physical parameters of the Detector, and an
+additional custom resonance, if needed. </span></font>
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif">6. Once everything complete,
+click “Run Simulation” on the bottom line of the main program
+interface. The program will check all inputs, and build the necessary
+memory structures to ensure a smooth numerical evaluation.</font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif">On the status bar, it will
+display a progress percentage during the numerical computations. In
+real samples, it may take several minutes, or even hours (depending
+the complexity of the sample) to complete the process, and the
+progress bar information is the main indication that the program are
+working as expected.</font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><b>In
+Case of an Error:</b></font> <font face="Liberation Serif, serif"><span style="font-weight: normal">If
+an invalid option (non-numerical input, negative values for Energy,
+etc), or an syntax error occurs, the main numerical procedure are
+halted, and return an error, warning the user when (at best possible)
+the first fatal error was found.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif">The user should make the
+necessary corrections, and try again.</font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><b>Changing
+Precision Parameters: </b></font><font face="Liberation Serif, serif"><span style="font-weight: normal">Click
+on “<a href="Advanced.html">Advanced</a>” button, and change the
+values, in order to balance the precision, and fast evaluation.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><span style="font-weight: normal">7.
+Save the all made samples, using “File” &gt; “Save”, and will
+save the Elements, Layers, Detector and Resonances data, along the
+custom parameters on a XML file with </span><b>epgs</b> <span style="font-weight: normal">extension.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font face="Liberation Serif, serif">When needed, just load the same
+file from “File” &gt; “Open”, to avoid manual typing of all
+parameters again. </font>
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%">8. Once
+the main procedure is completed. The results are displayed on the
+last three tabs: a graphic plot of the yields spectrum on “<a href="Graphics.html">Output</a>”
+tab, where is also possible to add additional data on the plot
+without deleting the previous ones, unlike the numerical procedure
+that erase all plot data. A <a href="Table.html">numeric table</a>
+from the same yields, are also displayed, along a <a href="Log.html">full
+log</a> of all partial numerical calculations.</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%">The
+numerical table, and log table can be saved to an ASCII or Excel Xlsx
+file directly by clicking on the buttons “Save Table” and “Save
+Log” located on the bottom of the main program interface.</p>
+</body>
+</html>
