@@ -408,7 +408,7 @@ void ERYAProfilingdialogERYACalculator::OnInputVariable( wxCommandEvent& event )
 wxString ERYAProfilingdialogERYACalculator::GetConversion(double Var, bool Sci)
 {
   wxString NumberDecimalDigits = wxString::Format("%i",DecimalPrecision); //Convert the decimal points precision as a string.
-  if(std::abs(Var < 0.01) || std::abs(Var > 1e+10))
+  if((std::abs(Var) < 0.01) || (std::abs(Var) > 1e+10))
     Sci = true; // Override the scientific notation for large or small numbers.
   wxString NumberFormat;
   if (Sci)
