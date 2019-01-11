@@ -870,8 +870,9 @@ double Element::EvaluateZiegler(double AtEnergy)
   }
   else
   {
-    return 0;
+    return 0; // Default value
   }
+ return 0; // Default value
 }
 
 // Evaluates the total stoichiometry of all Elements found on main spreadsheet
