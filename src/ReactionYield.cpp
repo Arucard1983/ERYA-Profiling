@@ -870,9 +870,9 @@ double Element::EvaluateZiegler(double AtEnergy)
   }
   else
   {
-    return 0; // Default value
+    return 0; // Default Value
   }
- return 0; // Default value
+ return 0; // Default Value
 }
 
 // Evaluates the total stoichiometry of all Elements found on main spreadsheet
@@ -1296,6 +1296,9 @@ double Yield::YieldFunction(int LayerNumber, double Energy)
  double ElementSigma = this->SigmaDistributionConvolution(LayerNumber,Energy);
  double ElementStoppingPower = BraggFactor / ElementMass;
  double YieldLayer = YieldNull * ElementSigma * YieldStep / ElementStoppingPower;
+ // In some circumstances, it may occur a numerical overflow (Stopping-Power equal to zero are the most common one), without physical meaning.
+ if (!(std::isfinite(YieldLayer)))
+    YieldLayer = 0.0;
  // return the value
  return YieldLayer;
 }
@@ -1515,6 +1518,7 @@ bool ReactionProfiling::SampleSetup(ElementDatabaseArray AllElements, ZieglerPar
 // Main cycle of processing
 bool ReactionProfiling::MainProcedure(wxStatusBar* progress)
 {
+ // Steps Counter
  PartialNumberSteps = 0;
  //Get the number of energy steps
  int NumberSteps = std::ceil((EnergyMaximum-EnergyMinimum)/EnergyStep);
