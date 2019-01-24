@@ -1,4 +1,4 @@
-ERYA-Profiling 2.35 ReadMe
+ERYA-Profiling 2.40 ReadMe
 ----------------------------------------
 
 Testing Release
@@ -109,6 +109,7 @@ This interim release had the following features:
 # Fixed the numerical integration domain of yields, thus solving some abnormal results on some simulations.
 # Support for Stopping-Power calculation by table interpolation, usally imported from the SRIM program.
 # Direct SRIM table parsing from Ziegler's import option.
+# The window sizes can be resized with a mouse.
 
 7. Future Improvements
 
