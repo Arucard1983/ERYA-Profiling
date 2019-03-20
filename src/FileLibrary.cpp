@@ -1230,7 +1230,7 @@ bool DatabaseFile::ElementBlockParsing(wxArrayString ElementBlock)
    wxArrayString CurrentEnergyError;
    wxArrayString CurrentSigma;
    wxArrayString CurrentSigmaError;
-   if (DatabaseFileVersion == wxT("txt")) // Process the uncrypted LabView database format
+   if (DatabaseFileVersion == wxT("txt")) // Process the  LabView database source file format (is a plain text file, luckily)
   {
    wxArrayString CurrentGammaStack; //Required for LabView file format correct handling
    wxArrayString AllEnergyStack; //Required for LabView file format correct handling
@@ -1456,10 +1456,10 @@ bool DatabaseFile::ERYAProfilingDatabaseFileLoad()
    }
   return ParsedDatabase.SortElementDatabase();
  }
- else if (DatabaseFileVersion == wxT("txt")) // Apply old ERYA file format
+ else if (DatabaseFileVersion == wxT("txt")) // Use the ASCII version (deprecated), and the LabView version
  {
   LabViewElements LabViewBinaryDatabase(DatabaseFileName);
-  if(LabViewBinaryDatabase.IsLabViewElements()) // Experimental LabView Binary Database Support
+  if(LabViewBinaryDatabase.IsLabViewElements()) // Use the LabView Binary Database Loader
   {
     if(LabViewBinaryDatabase.IsLabViewElements()) // It is a compatible file ?
     {
@@ -1851,7 +1851,7 @@ ZieglerFile::ZieglerFile(wxString ZieglerFilePath, wxString Version, ZieglerPara
  ZieglerFileVersion = Version;
  ParsedParameters = CurrentParameters;
  ParsedTables = CurrentTables;
- TableMode = Argument; // For non-native formats, it restricts the kind of data
+ TableMode = Argument; // If argument is zero, force Ziegler's Parameters, otherwise it will use the SRIM table corresponding to the Atomic Number
 }
 
 bool ZieglerFile::ZieglerFileLoad()
@@ -1867,7 +1867,21 @@ bool ZieglerFile::ZieglerFileLoad()
     dial->ShowModal();
     return false;
   }
-  if(!(LocalZieglerFile.GetRoot()->GetName() == wxT("ERYA-Bulk_Ziegler") || LocalZieglerFile.GetRoot()->GetName() == wxT("ERYA-Profiling_Ziegler")))
+  if(LocalZieglerFile.GetRoot()->GetName() == wxT("ERYA-Bulk_Ziegler"))
+  {
+   wxMessageDialog *question = new wxMessageDialog(NULL, wxT("If you import a ERYA-Bulk Stopping-Power file to ERYA-Profiling,\nThe Ionization and Density are not defined, and fixed values will be inserted...\nImport Anyway ?"), wxT("Warning! Wrong Stopping-Power Version!"), wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
+   if (question->ShowModal() == wxID_NO)
+   {
+     wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Unexpected file format of ") + ZieglerFileName, wxT("Ziegler File Loading Error"), wxOK | wxICON_ERROR);
+     dial->ShowModal();
+     return false;
+   }
+  }
+  else if(LocalZieglerFile.GetRoot()->GetName() == wxT("ERYA-Profiling_Ziegler"))
+  {
+   int a=0;
+  }
+  else
   {
     wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Unexpected file format of ") + ZieglerFileName, wxT("Ziegler File Loading Error"), wxOK | wxICON_ERROR);
     dial->ShowModal();
@@ -2084,11 +2098,11 @@ bool ZieglerFile::ZieglerFileLoad()
   }
   return true;
  }
- else if (ZieglerFileVersion == wxT("txt")) // LabView files can be binary or text file format
+ else if (ZieglerFileVersion == wxT("txt")) // Database files with such extension can be a genuine text file, or a LabView binary file
  {
   LabViewZiegler LabViewBinaryZiegler(ZieglerFileName);
   SRIMFile SRIMFileZiegler(ZieglerFileName);
-  if(LabViewBinaryZiegler.IsLabViewFile()) // Experimental LabView Binary Database Support. First check the header file.
+  if(LabViewBinaryZiegler.IsLabViewFile()) // Use the LabView Binary Database Loader. First check the header file.
   {
     if(LabViewBinaryZiegler.IsLabViewZiegler()) // It is a compatible file ?
     {
@@ -2139,7 +2153,7 @@ bool ZieglerFile::ZieglerFileLoad()
      return false;
    }
   }
-  else // It's a generic text file format from LabView itself
+  else // It's a generic text file format
   {
    wxTextFile file(ZieglerFileName);
    file.Open();
@@ -2152,8 +2166,31 @@ bool ZieglerFile::ZieglerFileLoad()
     TextLineParser CurrentLineData(CurrentLine, wxEmptyString); // Define the custom parser rules
     if(CurrentLineData.GetUnexcluded().GetCount() == 14 && TableMode == 0) // Ziegler Table
     {
+     wxMessageDialog *question = new wxMessageDialog(NULL, wxT("If you import a ERYA-Bulk Stopping-Power file to ERYA-Profiling,\nThe Ionization and Density are not defined, and fixed values will be inserted...\nImport Anyway ?"), wxT("Warning! Wrong Stopping-Power Version!"), wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
+     if (question->ShowModal() == wxID_NO)
+     {
+      wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("The user aborts the ASCII import of an ERYA-Bulk Stopping-Power table!"), wxT("ASCII Import Error"), wxOK | wxICON_ERROR);
+      dial->ShowModal();
+      ParsedParameters.Clear();
+      return false;
+     }
      // If the file is the legacy format, the program will treat the element symbol using the Z<n> format
      ParsedParameters.AddZieglerParameterData( wxT("Z") + CurrentLineData.GetUnexcluded().Item(0), CurrentLineData.GetUnexcluded().Item(1), CurrentLineData.GetUnexcluded().Item(2), CurrentLineData.GetUnexcluded().Item(3), CurrentLineData.GetUnexcluded().Item(4), CurrentLineData.GetUnexcluded().Item(5), CurrentLineData.GetUnexcluded().Item(6), CurrentLineData.GetUnexcluded().Item(7), CurrentLineData.GetUnexcluded().Item(8), CurrentLineData.GetUnexcluded().Item(9), CurrentLineData.GetUnexcluded().Item(10), CurrentLineData.GetUnexcluded().Item(11), CurrentLineData.GetUnexcluded().Item(12), CurrentLineData.GetUnexcluded().Item(13));
+     // The difference of the two versions, is that the 1977 version require 12 parameters, and the 1991 only 8.
+     double test1,test2,test3,test4;
+     CurrentLineData.GetUnexcluded().Item(9).ToDouble(&test1);
+     CurrentLineData.GetUnexcluded().Item(10).ToDouble(&test2);
+     CurrentLineData.GetUnexcluded().Item(11).ToDouble(&test3);
+     CurrentLineData.GetUnexcluded().Item(12).ToDouble(&test4);
+     if (test1 < 1e-10 && test2 < 1e-10 && test3 < 1e-10 && test4 < 1e-10)
+         ParsedParameters.SetZieglerVersion(wxT("1"));
+     else
+         ParsedParameters.SetZieglerVersion(wxT("0"));
+    }
+    else if(CurrentLineData.GetUnexcluded().GetCount() == 16 && TableMode == 0) // Ziegler Table
+    {
+     // If the file is the legacy format, the program will treat the element symbol using the Z<n> format
+     ParsedParameters.AddZieglerParameterData( wxT("Z") + CurrentLineData.GetUnexcluded().Item(0), CurrentLineData.GetUnexcluded().Item(1), CurrentLineData.GetUnexcluded().Item(2), CurrentLineData.GetUnexcluded().Item(3), CurrentLineData.GetUnexcluded().Item(4), CurrentLineData.GetUnexcluded().Item(5), CurrentLineData.GetUnexcluded().Item(6), CurrentLineData.GetUnexcluded().Item(7), CurrentLineData.GetUnexcluded().Item(8), CurrentLineData.GetUnexcluded().Item(9), CurrentLineData.GetUnexcluded().Item(10), CurrentLineData.GetUnexcluded().Item(11), CurrentLineData.GetUnexcluded().Item(12), CurrentLineData.GetUnexcluded().Item(13), CurrentLineData.GetUnexcluded().Item(14), CurrentLineData.GetUnexcluded().Item(15));
      // The difference of the two versions, is that the 1977 version require 12 parameters, and the 1991 only 8.
      double test1,test2,test3,test4;
      CurrentLineData.GetUnexcluded().Item(9).ToDouble(&test1);
@@ -2196,6 +2233,13 @@ bool ZieglerFile::ZieglerFileLoad()
    ZieglerMatrix.GetRealMatrixSize(NumberElements,NumberValues);
    if(NumberElements > 1 && NumberValues == 14 && TableMode == 0)
    {
+     wxMessageDialog *question = new wxMessageDialog(NULL, wxT("If you import a ERYA-Bulk Stopping-Power file to ERYA-Profiling,\nThe Ionization and Density are not defined, and fixed values will be inserted...\nImport Anyway ?"), wxT("Warning! Wrong Stopping-Power Version!"), wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
+     if (question->ShowModal() == wxID_NO)
+     {
+      wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("The user aborts the Excel import of an ERYA-Bulk Stopping-Power table!"), wxT("Excel Import Error"), wxOK | wxICON_ERROR);
+      dial->ShowModal();
+      return false;
+     }
      ParsedParameters.Clear();
      // Check if the entire line are numerical, except the first column.
      for(int i=0; i<NumberElements; i++)
@@ -2458,7 +2502,7 @@ bool ZieglerFile::ZieglerFileSave()
  // Save the file
  return LocalZiegler.Save(ZieglerFileName,0);
  }
- else if (ZieglerFileVersion == wxT("txt")) // Save on LabView Source format, i.e., a standard text file
+ else if (ZieglerFileVersion == wxT("txt")) // Save on ASCII Source format, i.e., a standard text file
  {
   wxTextFile file(ZieglerFileName);
   file.Create();
@@ -2480,8 +2524,10 @@ bool ZieglerFile::ZieglerFileSave()
    wxString c11 = ParsedParameters.GetZieglerValues11().Item(j);
    wxString c12 = ParsedParameters.GetZieglerValues12().Item(j);
    wxString c13 = ParsedParameters.GetZieglerMass().Item(j);
-   if (c0.Len()>0 && c1.Len()>0 && c2.Len()>0 && c3.Len()>0 && c4.Len()>0 && c5.Len()>0 && c6.Len()>0 && c7.Len()>0 && c8.Len()>0 && c9.Len()>0 && c10.Len()>0 && c11.Len()>0 && c12.Len()>0 && c13.Len()>0)
-  file.AddLine( c0 + wxT("\t") + c1 + wxT("\t") + c2 + wxT("\t") + c3 + wxT("\t") + c4 + wxT("\t") + c5 + wxT("\t") + c6 + wxT("\t") + c7 + wxT("\t") + c8 + wxT("\t") + c9 + wxT("\t") + c10 + wxT("\t") + c11 + wxT("\t") + c12 + wxT("\t") + c13 );
+   wxString c14 = ParsedParameters.GetZieglerDensity().Item(j);
+   wxString c15 = ParsedParameters.GetZieglerBloch().Item(j);
+   if (c0.Len()>0 && c1.Len()>0 && c2.Len()>0 && c3.Len()>0 && c4.Len()>0 && c5.Len()>0 && c6.Len()>0 && c7.Len()>0 && c8.Len()>0 && c9.Len()>0 && c10.Len()>0 && c11.Len()>0 && c12.Len()>0 && c13.Len()>0 && c14.Len()>0 && c15.Len()>0)
+  file.AddLine( c0 + wxT("\t") + c1 + wxT("\t") + c2 + wxT("\t") + c3 + wxT("\t") + c4 + wxT("\t") + c5 + wxT("\t") + c6 + wxT("\t") + c7 + wxT("\t") + c8 + wxT("\t") + c9 + wxT("\t") + c10 + wxT("\t") + c11 + wxT("\t") + c12 + wxT("\t") + c13 + wxT("\t") + c14 + wxT("\t") + c15);
   }
   }
   else

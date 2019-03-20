@@ -56,7 +56,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	menuERYADatabase->Append( menuERYADatabaseElements );
 
 	wxMenuItem* menuERYADatabaseZiegler;
-	menuERYADatabaseZiegler = new wxMenuItem( menuERYADatabase, wxID_ANY, wxString( wxT("Ziegler Parameters") ) , wxT("Opens the Ziegler Parameters Editor"), wxITEM_NORMAL );
+	menuERYADatabaseZiegler = new wxMenuItem( menuERYADatabase, wxID_ANY, wxString( wxT("Stopping Power") ) , wxT("Opens the Stopping Powers Editor"), wxITEM_NORMAL );
 	menuERYADatabase->Append( menuERYADatabaseZiegler );
 
 	menuERYAProfilingMain->Append( menuERYADatabase, wxT("Databases") );
@@ -1032,10 +1032,10 @@ dialogAddDatabase::dialogAddDatabase( wxWindow* parent, wxWindowID id, const wxS
 	wxGridSizer* sizerEditButtons;
 	sizerEditButtons = new wxGridSizer( 1, 8, 0, 0 );
 
-	buttonImportR33 = new wxButton( this, wxID_ANY, wxT("Import R33"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonImportR33 = new wxButton( this, wxID_ANY, wxT("Import"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerEditButtons->Add( buttonImportR33, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonExportR33 = new wxButton( this, wxID_ANY, wxT("Export R33"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonExportR33 = new wxButton( this, wxID_ANY, wxT("Export"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerEditButtons->Add( buttonExportR33, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
     buttonEditCopy = new wxButton( this, wxID_ANY, wxT("Copy"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -1920,7 +1920,7 @@ wizardLabViewImport::wizardLabViewImport( wxWindow* parent, wxWindowID id, const
 	labelLabView4->Wrap( -1 );
 	sizerlabView4->Add( labelLabView4, 1, wxALL|wxEXPAND, 5 );
 
-	fileLabViewDetector = new wxFilePickerCtrl( wizardLabView4, wxID_ANY, wxEmptyString, wxT("Select a Compatible LabView ERYA Database"), wxT("ASCII Text File (*.txt)|*.txt"), wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE );
+	fileLabViewDetector = new wxFilePickerCtrl( wizardLabView4, wxID_ANY, wxEmptyString, wxT("Select a Compatible ASCII file for Detector"), wxT("ASCII Text File (*.txt)|*.txt"), wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE );
 	sizerlabView4->Add( fileLabViewDetector, 0, wxALL|wxEXPAND, 5 );
 
 
@@ -1937,7 +1937,7 @@ wizardLabViewImport::wizardLabViewImport( wxWindow* parent, wxWindowID id, const
 	labelLabView5->Wrap( -1 );
 	sizerlabView5->Add( labelLabView5, 1, wxALL|wxEXPAND, 5 );
 
-	fileLabViewDensity = new wxFilePickerCtrl( wizardLabView5, wxID_ANY, wxEmptyString, wxT("Select a Compatible LabView ERYA Database"), wxT("ASCII Text File (*.txt)|*.txt"), wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE );
+	fileLabViewDensity = new wxFilePickerCtrl( wizardLabView5, wxID_ANY, wxEmptyString, wxT("Select a Compatible ASCII file for Density"), wxT("ASCII Text File (*.txt)|*.txt"), wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE );
 	sizerlabView5->Add( fileLabViewDensity, 0, wxALL|wxEXPAND, 5 );
 
 
@@ -1954,7 +1954,7 @@ wizardLabViewImport::wizardLabViewImport( wxWindow* parent, wxWindowID id, const
 	labelLabView6->Wrap( -1 );
 	sizerlabView6->Add( labelLabView6, 1, wxALL|wxEXPAND, 5 );
 
-	fileLabViewBloch = new wxFilePickerCtrl( wizardLabView6, wxID_ANY, wxEmptyString, wxT("Select a Compatible LabView ERYA Database"), wxT("LabView Database Binary File (*.txt)|*.txt"), wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE );
+	fileLabViewBloch = new wxFilePickerCtrl( wizardLabView6, wxID_ANY, wxEmptyString, wxT("Select a Compatible ASCII file for Bloch"), wxT("LabView Database Binary File (*.txt)|*.txt"), wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE );
 	sizerlabView6->Add( fileLabViewBloch, 0, wxALL|wxEXPAND, 5 );
 
 
@@ -2092,7 +2092,7 @@ wizardFirstRun::wizardFirstRun( wxWindow* parent, wxWindowID id, const wxString&
 	wxBoxSizer* sizerFirstRun3;
 	sizerFirstRun3 = new wxBoxSizer( wxVERTICAL );
 
-	labelFirstRun3 = new wxStaticText( wizardFirstRun3, wxID_ANY, wxT("Select the Elements Database compatible with ERYA Profiling, from the widget below.\n\nNote: If you have Databases from LabView ERYA,\nplease use the \"Import LabView ERYA\" wizard first to convert them.\n\nIf necessary, read the User Guide for further details."), wxDefaultPosition, wxDefaultSize, 0 );
+	labelFirstRun3 = new wxStaticText( wizardFirstRun3, wxID_ANY, wxT("Select the Elements Database compatible with ERYA Profiling, from the widget below.\n\nNote: Only native ERYA Databases are supported by this wizard.\n\nIf necessary, read the User Guide for further details."), wxDefaultPosition, wxDefaultSize, 0 );
 	labelFirstRun3->Wrap( -1 );
 	sizerFirstRun3->Add( labelFirstRun3, 1, wxALL|wxEXPAND, 5 );
 
@@ -2109,7 +2109,7 @@ wizardFirstRun::wizardFirstRun( wxWindow* parent, wxWindowID id, const wxString&
 	wxBoxSizer* sizerFirstRun4;
 	sizerFirstRun4 = new wxBoxSizer( wxVERTICAL );
 
-	labelFirstRun4 = new wxStaticText( wizardFirstRun4, wxID_ANY, wxT("Select a compatible ERYA Ziegler Parameters file,\nfrom the widget below.\n\nNote: Use the Database Management tools to convert the LabView ERYA file formats if necessary, before continue.\n\nPlease read the User Guide, before continue."), wxDefaultPosition, wxDefaultSize, 0 );
+	labelFirstRun4 = new wxStaticText( wizardFirstRun4, wxID_ANY, wxT("Select a compatible ERYA Ziegler Parameters file,\nfrom the widget below.\n\nNote: Only native ERYA Databases are supported by this wizard.\n\nPlease read the User Guide, before continue."), wxDefaultPosition, wxDefaultSize, 0 );
 	labelFirstRun4->Wrap( -1 );
 	sizerFirstRun4->Add( labelFirstRun4, 1, wxALL|wxEXPAND, 5 );
 

@@ -65,6 +65,9 @@ void ERYAProfilingwizardSRIMImport::OnSRIMImportComplete( wxWizardEvent& event )
       LocalSRIMTables.Replace(Number,Energy,Sigma);
     }
   }
+  // If the SRIM tables are not empty,set SRIM as default
+  if(LocalSRIMTables.GetCount() > 0)
+    LocalZiegler.SetZieglerVersion(wxT("3"));
   // Store the file output
   wxString ERYAOutputZiegler = fileZieglerOutput->GetPath();
   ZieglerFile file(ERYAOutputZiegler,wxT("epsz"),LocalZiegler,LocalSRIMTables,0);

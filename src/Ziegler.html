@@ -3,9 +3,9 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 	<title></title>
-	<meta name="generator" content="LibreOffice 6.1.3.2 (Linux)"/>
+	<meta name="generator" content="LibreOffice 6.1.5.1 (Linux)"/>
 	<meta name="created" content="2016-03-10T20:33:10.842593381"/>
-	<meta name="changed" content="2018-11-13T14:51:24.993610613"/>
+	<meta name="changed" content="2019-03-19T17:18:33.359336254"/>
 	<meta name="created" content="00:00:00">
 	<meta name="created" content="00:00:00">
 	<meta name="created" content="00:00:00">
@@ -29,7 +29,7 @@ and maintaining a stack of numerical tables that ERYA use to handle a
 semi-empirical physical model of scattering derived from the Bragg
 Rule.</font></p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
- <font size="3" style="font-size: 12pt">An optional custom function
+<font size="3" style="font-size: 12pt">An optional custom function
 macro, and some utilities complements this widget functionality.</font></p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 <font size="3" style="font-size: 12pt">The basic functions for the
@@ -42,9 +42,10 @@ parameters that each chemical element should describe.</font></p>
 tabs, where the left ones is the single Ziegler's Parameters, and the
 second tab are dedicated to scroll (using the switch) the SRIM tables
 for each element.</font></p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
-As a final alternative, it is possible to define a user-defined
-function to bypass the hard-coded functions.</p>
+<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font size="3" style="font-size: 12pt">As a final alternative, it is
+possible to define a user-defined function to bypass the hard-coded
+functions.</font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
@@ -68,13 +69,12 @@ with g/cm</span></span></font><sup><font size="3" style="font-size: 12pt"><span 
 
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<font size="3" style="font-size: 12pt">- This program, like the ERYA
-LabView version, support two Ziegler models which the main difference
-are the number of parameters. The 1977 version requires 12 fitting
-parameters, and the 1991 version only requires 8 (The A-9 to A-12
-columns are ignored or reset to zero).</font></p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<br/>
+<font size="3" style="font-size: 12pt">- This program, support two
+Ziegler models which the main difference are the number of
+parameters. The 1977 version requires 12 fitting parameters, and the
+1991 version only requires 8 (The A-9 to A-12 columns are ignored or
+reset to zero).</font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
@@ -95,20 +95,19 @@ an error.</font></p>
 
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<font size="3" style="font-size: 12pt">- The editor can export the
-LabView ERYA original Ziegler file in ASCII, but the program will use
-an hard-coded dictionary to change the “Elements” column to the
+<font size="3" style="font-size: 12pt">- The editor can import any
+Ziegler Parameters file in ASCII, but the program will use an
+hard-coded dictionary to change the “Elements” column to the
 chemical symbols automatically, beginning with “H, He, ...”</font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<font size="3" style="font-size: 12pt">- Using the built-in ERYA
-macro language, it is possible to define a custom function. With this
-new feature, it is even possible to use the table as an array of
-constants. (See below).</font></p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<br/>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">-
+Using the built-in ERYA macro language, it is possible to define a
+custom function. With this new feature, it is even possible to use
+the table as an array of constants. (For more information, read
+<a href="Macro.html">here</a>.)</span></span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
@@ -120,55 +119,16 @@ element’s stopping powers forehand.</font></p>
 
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
-<font size="3" style="font-size: 12pt"><b>Compatibility with LabView
-ERYA:</b></font></p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<font size="3" style="font-size: 12pt">- ERYA-Profiling support the
-import of the LabView ERYA Ziegler Parameters binary file.</font></p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<font size="3" style="font-size: 12pt">However the export as a binary
-file is not possible, due to the lack of documentation, and also as a
-safety measure. When the user choose to export with the LabView
-format, it will save to as a plain ASCII file format, where the
-LabView ERYA program can rebuild again.</font></p>
-<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
-
-</p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<font size="3" style="font-size: 12pt">- If you export the native
-file format (epsz) to the LabView text format, the original Element
-names will be replaced to their respective atomic numbers.</font></p>
-<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
-
-</p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<font size="3" style="font-size: 12pt">-It is not possible to export
-or import custom functions to LabView or ASCII format.</font></p>
-<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
-
-</p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<font size="3" style="font-size: 12pt">- SRIM tables are not
-supported at all to any LabView ERYA programs. All text files created
-by this program will give only text files with two columns of
-numerical data.</font></p>
-<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
-
-</p>
-<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
-
-</p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
 <font size="3" style="font-size: 12pt"><b>Export and Import Ziegler
-Parameters from an Excel File:</b></font></p>
+Parameters from an Excel File or plain ASCII files:</b></font></p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 <font size="3" style="font-size: 12pt">- ERYA-Profiling supports to
 read and write the Ziegler Parameters from Microsoft Excel files.</font></p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<font size="3" style="font-size: 12pt">However, while reading
-directly from an Excel file are supported, the program expects a
-compact spreadsheet with 14 or 16 columns, otherwise the ERYA’s
-Xlsx filter will fail to parse, and gives an error.</font></p>
+ <font size="3" style="font-size: 12pt">When load a compatible Excel
+file, it will also accept the files created by ERYA-Bulk, but warns
+that the Density and Bloch columns are not defined, leaving the user
+to accept the import, or reject it.</font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
@@ -192,8 +152,66 @@ should have only two columns (any labels are accepted, but ignored
 safely), and require the user to manually select the “SRIM” tab,
 and the correct Element’s Atomic Number before import an Excel
 file. The same logic applies, when export an Excel file, it will take
-the current selected Element’s Atomic Number on screen. The same
-export/import rules also applies to plain ASCII files.</font></p>
+the current selected Element’s Atomic Number on screen.</font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font size="3" style="font-size: 12pt">- The same export/import rules
+for Excel files also applies to plain ASCII files composed by columns
+of numerical data. The only real difference is the column that
+corresponds to the Elements Names are replaced by the Atomic Number
+instead, and ERYA will replace automatically using an internal
+dictionary.</font></p>
+<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<br/>
+
+</p>
+<p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
+<font size="3" style="font-size: 12pt"><b>Reading ERYA-Bulk
+Stopping-Power files on ERYA-Profiling, and vice-versa.</b></font></p>
+<p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
+<font size="3" style="font-size: 12pt"><b>- </b><span style="font-weight: normal">ERYA-Bulk
+can read the ERYA-Profiling Stopping-Power file version without
+problems, but will discard the Density and Bloch columns.</span></font></p>
+<p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
+<font size="3" style="font-size: 12pt"><span style="font-weight: normal">-
+ERYA-Profiling can also read the ERYA-Bulk file, but will warn the
+absence of the Density and Bloch columns, leaving the user to abort
+or continue the import.</span></font></p>
+<p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
+<font size="3" style="font-size: 12pt"><span style="font-weight: normal">-
+Avoid cross import of essential databases between the two programs,
+as possible.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font size="3" style="font-size: 12pt"><b>Import LabView Ziegler's
+Parameters files (Legacy and Deprecated Feature)</b> </font>
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font size="3" style="font-size: 12pt">ERYA can import the original
+LabView ERYA binary file for the Ziegler’s Parameters file. To use
+this conversion feature, requires to select “SRIM/LabView/ASCII”
+option from “Import” button, and select a compatible file. </font>
+</p>
+<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font size="3" style="font-size: 12pt">If successful, the original
+table data are converted to the Ziegler's Parameters table on first
+tab, and displayed there. The user can later save to the native ERYA
+file, for further processing.</font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">Additional
+reference are available on <a href="Legacy.html">Legacy Reference
+Section</a>. </span></span></font>
+</p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
@@ -204,12 +222,12 @@ export/import rules also applies to plain ASCII files.</font></p>
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 <font size="3" style="font-size: 12pt">- When select the
-“LabView/ASCII” option from “Import” button, ERYA can parse
-an unedited SRIM Stopping-Power output file to the correct Atomic
-Number location, making all unit conversions without any additional
-steps, even if the user don’t select the “SRIM” mode forehand.
-ERYA can ask if you want to override the table on the Atomic Number
-defined by the source file.</font></p>
+“SRIM/LabView/ASCII” option from “Import” button, ERYA can
+parse an unedited SRIM Stopping-Power output file to the correct
+Atomic Number location, making all unit conversions without any
+additional steps, even if the user don’t select the “SRIM” mode
+forehand. ERYA can ask if you want to override the table on the
+Atomic Number defined by the source file.</font></p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 <font size="3" style="font-size: 12pt">- Pure numerical text files
 with two columns are also supported, if the user select previously
@@ -247,10 +265,10 @@ Additional Reference</b></font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<p align="left" style="margin-bottom: 0cm; line-height: 100%">►<font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">The
-Ziegler Parameters tables publish</span></span></font><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">ed</span></span></font><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">
-in 1977 uses a full set of 12 fitting parameters for each element,
-and evaluates the stopping power in function of energy.</span></span></font></p>
+<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+<font size="3" style="font-size: 12pt">The Ziegler Parameters tables
+publish in 1977 uses a full set of 12 fitting parameters for each
+element, and evaluates the stopping power in function of energy.</font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
@@ -329,9 +347,10 @@ where m = 938280 keV is the rest mass of the proton.</span></font></font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<p align="left" style="margin-bottom: 0cm; line-height: 100%">►<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">Otherwise,
+<p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
+<font size="3" style="font-size: 12pt"><font face="Liberation Serif, serif"><span style="font-weight: normal">Otherwise,
 the Ziegler Parameters published in 1991 use only 8 parameters, but
-use another set of</span></span></font></font> <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">equations.</span></span></font></font></p>
+use another set of</span></font> <font face="Liberation Serif, serif"><span style="font-weight: normal">equations.</span></font></font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%">† <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">For
 E &gt; 25</span></span></font></font> <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">keV</span></span></font></font></p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
@@ -360,33 +379,16 @@ log ( (A</span></font><sub><font face="Liberation Serif, serif"><span style="fon
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Note:
-The program will use the approximation:</font></font></p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
-<font size="3" style="font-size: 12pt"><font face="Liberation Serif, serif"><span style="font-weight: normal">S
-= A</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">1</span></font></sub>
-<font face="Liberation Serif, serif"><span style="font-weight: normal">E</span></font><sup><font face="Liberation Serif, serif"><span style="font-weight: normal">A2
-</span></font></sup><font face="Liberation Serif, serif"><span style="font-weight: normal">+
-A</span></font><sub><font face="Liberation Serif, serif"><span style="font-weight: normal">3</span></font></sub>
-<font face="Liberation Serif, serif"><span style="font-weight: normal">E</span></font><sup><font face="Liberation Serif, serif"><span style="font-weight: normal">A4</span></font></sup></font></p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">For
-the interval E &lt; 25 keV</font></font></p>
-<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
-
-</p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
 <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><b>Using
 a Custom Function</b></font></font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<p align="left" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">Retrieving
-the</span></span></font></font><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">
-extensive reference from <a href="Detector.html">Detector’s
-Efficiency</a> , it is possible to define a custom algebraic
-expression at models the stopping-power (in eV/10</span></span></font></font><sup><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">15</span></span></font></font></sup>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">Applying
+the extensive reference from <a href="Macro.html">ERYA Macro</a>, it
+is possible to define a custom algebraic expression at models the
+stopping-power (in eV/10</span></span></font></font><sup><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">15</span></span></font></font></sup>
 <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">atm/cm</span></span></font></font><sup><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">2</span></span></font></font></sup>
 <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US"><span style="font-weight: normal">units),
 in function of Energy (keV).</span></span></font></font></p>
@@ -407,19 +409,13 @@ this case, the variables will be: <b>zn, zn1, …, zn15</b>.</font></font></p>
 <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">The
 base <b>zn</b> variable will be the Atomic Number value, and points
 to the corresponding table’s row. The <b>zn1 ~ zn12</b> will load
-the A-1 to A-12 parameters. The final <b>zn13, zn14 and zn15</b> will
-assign to the Atomic mass, density and Bloch Parameters of the
-highlighted element.</font></font></p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<br/>
-
+the A-1 to A-12 parameters. </font></font>
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">This
-feature is currently an hack to the ERYA macro language, in order to
-give an alternative to vectors, or the capability to read external
-data sources. </font></font>
-</p>
+<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">The
+<b>zn13</b> are reserved for Atomic Mass, while <b>zn14</b> contains
+the Atomic Density, and finally the <b>zn15</b> gets the Bloch
+parameter of the element.</font></font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
@@ -468,19 +464,15 @@ it is possible to read a two column numeric text file, or even an
 Excel file, but is required to the user select manually the correct
 atomic number from the “SRIM” tab, before import the data.</font></font></p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
- 
-</p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Once
 completed by either way, click on “Update Table” to store the new
 table on the ERYA program memory. To permanently store the updated
 tables, use the “Export” button to save as a native <b>epsz </b>file.</font></font></p>
-<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<br/>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
- <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">The
+<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">The
 “Clear All Tables” will delete all SRIM tables from ERYA program
 memory.</font></font></p>
 </body>

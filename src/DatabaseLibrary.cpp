@@ -1006,8 +1006,8 @@ ZieglerParameters::ZieglerParameters( wxTextCtrl* textZieglerFunction, wxChoice*
    ZieglerValues11.Add(temp11);
    ZieglerValues12.Add(temp12);
    ZieglerMass.Add(temp13);
-   ZieglerDensity.Add(wxT("1"));
-   ZieglerBloch.Add(wxT("10"));
+   ZieglerDensity.Add(temp14);
+   ZieglerBloch.Add(temp15);
    }
 }
 
