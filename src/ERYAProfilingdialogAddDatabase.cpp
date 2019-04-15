@@ -279,9 +279,19 @@ OpenDialog->Close(); // Clean up after ourselve
 void ERYAProfilingdialogAddDatabase::OnExportR33( wxCommandEvent& event )
 {
 wxFileDialog *SaveDialog = new wxFileDialog(this, wxT("Export current element table as IBANDL file"), wxEmptyString, wxEmptyString,wxT("IBANDL file (*.r33)|*.r33|Text Excitation Table file (*.txt)|*.txt|Text Excitation Table file (*.dat)|*.dat|Excel Xlsx file (*.xlsx)|*.xlsx"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT, wxDefaultPosition);
-
 // Saving file
 if (SaveDialog->ShowModal() == wxID_OK) // If the user clicked "OK"
+{
+ // Get the current local frame data
+ ElementDatabase TestElement(textEditElement,textEditGamma,textEditNumber,textEditAbundance,textEditAtomic,textEditIsotopic,tableDataEditor);
+// Check if their contents are valid
+if(!(TestElement.CheckElement()))
+{
+   wxMessageDialog *info = new wxMessageDialog(NULL, wxT("Element Names should be named exclusively with numbers and letters from \"A\"|\"a\" to \"z\"|\"z\".\nThe underscore \"_\" are acceptable, thought.\nOther fields should be exclusively numerical ones.\nPlease rectify the invalid data, and try again.") , wxT("Invalid Data Record"), wxOK|wxICON_ERROR);
+   info->ShowModal();
+   return;
+}
+else
 {
 wxString CurrentIBANDLFilePath = SaveDialog->GetPath();
 // set the path of our current document to the file the user choose to save under
@@ -377,9 +387,10 @@ else
  ITNFile savefile(CurrentIBANDLFilePath);
  if(savefile.ITNFileSave(tableDataEditor,textEditElement,textEditGamma,textEditNumber,textEditAbundance,textEditAtomic,textEditIsotopic))
  {
- wxMessageDialog *info = new wxMessageDialog(NULL, wxT("Current Element exported to file sucefully!") , wxT("Export Suceful!"), wxOK);
+ wxMessageDialog *info = new wxMessageDialog(NULL, wxT("Current Element exported to file successfully!") , wxT("Export Successful!"), wxOK);
  info->ShowModal();
  }
+}
 }
 }
 SaveDialog->Close(); // Clean up after ourselves
@@ -400,25 +411,30 @@ void ERYAProfilingdialogAddDatabase::OnEditSave( wxCommandEvent& event )
 {
  if(textEditElement->GetValue() != wxEmptyString && textEditGamma->GetValue() != wxEmptyString  && textEditNumber->GetValue() != wxEmptyString && textEditAbundance->GetValue() != wxEmptyString && textEditAtomic->GetValue() != wxEmptyString && textEditIsotopic->GetValue() != wxEmptyString)
  {
- // Call the parent frame
- ERYAProfilingdialogDatabaseManager *Parent = (ERYAProfilingdialogDatabaseManager *) GetParent();
- // Get the current local frame data
+  // Get the current local frame data
  ElementDatabase EditElement(textEditElement,textEditGamma,textEditNumber,textEditAbundance,textEditAtomic,textEditIsotopic,tableDataEditor);
- // Store the local data from child frame to parent frame
- Parent->StoreElement(EditElement);
- // Return to parent frame
- Parent->SaveElement(true);
- Close();
- }
-else
- {
-   wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Not all necessary fields are filled:\nDo you want to save it anyway (Yes)\nOr, amend it(No)?"), wxT("Attention! Incomplete record!"), wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
-  if (dial->ShowModal() == wxID_YES)
-  {// Call the parent frame
+  // Check if their contents are valid
+  if(!(EditElement.CheckElement()))
+  {
+   wxMessageDialog *info = new wxMessageDialog(NULL, wxT("Element Names should be named exclusively with numbers and letters from \"A\"|\"a\" to \"z\"|\"z\".\nThe underscore \"_\" are acceptable, thought.\nOther fields should be exclusively numerical ones.\nPlease rectify the invalid data, and try again.") , wxT("Invalid Data Record"), wxOK|wxICON_ERROR);
+   info->ShowModal();
+   return;
+  }
+  else
+  {
+  // Call the parent frame
   ERYAProfilingdialogDatabaseManager *Parent = (ERYAProfilingdialogDatabaseManager *) GetParent();
+  // Store the local data from child frame to parent frame
+  Parent->StoreElement(EditElement);
+  // Return to parent frame
   Parent->SaveElement(true);
   Close();
   }
+ }
+else
+ {
+  wxMessageDialog *info = new wxMessageDialog(NULL, wxT("Not all obligatory parameters are filled.\nPlease fill all necessary data, and try again!") , wxT("Incomplete Record."), wxOK|wxICON_EXCLAMATION);
+  info->ShowModal();
  }
 }
 
