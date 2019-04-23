@@ -2214,6 +2214,10 @@ bool ERYAProfilingERYAProfilingMain::StartUpDatabases(wxString MainDirectory, wx
     {
      CurrentZieglerParameters = testZiegler.GetParameters();
      CurrentSRIMTables = testZiegler.GetTables();
+     if(CurrentSRIMTables.GetCount()>0) //Force the SRIM version if exists SRIM tables
+     {
+       CurrentZieglerParameters.SetZieglerVersion(wxT("3"));
+     }
      ZieglerVersion = wxT("epsz");
      ZieglerFile targetZiegler(ZieglerFileName,ZieglerVersion,CurrentZieglerParameters,CurrentSRIMTables,0);
      if(targetZiegler.ZieglerFileSave())

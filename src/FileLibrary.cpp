@@ -2119,7 +2119,7 @@ bool ZieglerFile::ZieglerFileLoad()
      return false;
     }
   }
-  else if(SRIMFileZiegler.IsSRIMFile() && TableMode > 0) // Check if the file is a SRIM file
+  else if(SRIMFileZiegler.IsSRIMFile()) // Check if the file is a SRIM file
   {
    if(SRIMFileZiegler.SRIMImport()) // Extract the data inside the SRIM file
    {
@@ -2206,6 +2206,7 @@ bool ZieglerFile::ZieglerFileLoad()
     {
       Energy.Add(CurrentLineData.GetUnexcluded().Item(0));
       StoppingPower.Add(CurrentLineData.GetUnexcluded().Item(1));
+       ParsedParameters.SetZieglerVersion(wxT("3"));
     }
     else
     {

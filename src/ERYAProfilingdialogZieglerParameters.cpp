@@ -93,7 +93,7 @@ void ERYAProfilingdialogZieglerParameters::OnZieglerSelect( wxGridRangeSelectEve
 {
    dataClipboard->Clear();
    wxGrid* CurrentTable;
-   if(tabZieglerTables->GetSelection() == 0)
+   if(tabZieglerTables->GetSelection() == 1)
     CurrentTable = tableZieglerParameters;
    else
     CurrentTable = tableZieglerSRIM;
@@ -145,7 +145,7 @@ void ERYAProfilingdialogZieglerParameters::OnZieglerPaste( wxCommandEvent& event
     wxTheClipboard->Close();
     // Get the correct table
     wxGrid* CurrentTable;
-    if(tabZieglerTables->GetSelection() == 0)
+    if(tabZieglerTables->GetSelection() == 1)
      CurrentTable = tableZieglerParameters;
     else
      CurrentTable = tableZieglerSRIM;
@@ -191,7 +191,7 @@ wxFileDialog *OpenDialog = new wxFileDialog(this, wxT("Select the desired Ziegle
  wxString Version = ZieglerFileName.GetExt();
  ZieglerParameters LocalParameters(textZieglerFunction, choiceZieglerVersion, tableZieglerParameters);
  int DefaultMode;
- if (tabZieglerTables->GetSelection()==0)
+ if (tabZieglerTables->GetSelection()==1)
     DefaultMode = 0;
  else
     DefaultMode = spinZieglerSRIMCurrentElement->GetValue();
@@ -221,7 +221,7 @@ wxFileDialog *SaveDialog = new wxFileDialog(this, wxT("Save the current Ziegler 
   wxFileName ZieglerFileName(ERYAProfilingZieglerPath);
   wxString Version = ZieglerFileName.GetExt();
   int DefaultMode;
-  if (tabZieglerTables->GetSelection()==0)
+  if (tabZieglerTables->GetSelection()==1)
     DefaultMode = 0;
   else
     DefaultMode = spinZieglerSRIMCurrentElement->GetValue();
@@ -237,7 +237,7 @@ SaveDialog->Close();
 
 void ERYAProfilingdialogZieglerParameters::OnZieglerClear( wxCommandEvent& event )
 {
- if(tabZieglerTables->GetSelection() == 0)
+ if(tabZieglerTables->GetSelection() == 1)
  {
   tableZieglerParameters->ClearGrid();
   textZieglerFunction->Clear();
