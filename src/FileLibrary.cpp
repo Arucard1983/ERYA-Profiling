@@ -767,7 +767,7 @@ bool ERYAProfilingRessonanceFile::ERYAProfilingRessonanceSave(wxTextCtrl* valueB
 }
 
 // Global ERYA profiling file loading
-bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamResolution, wxTextCtrl* &valueTemperature, wxTextCtrl* &valueCharge, wxTextCtrl* &valueEnergyStep, wxTextCtrl* &valueMinimumEnergy, wxTextCtrl* &valueMaximumEnergy, wxTextCtrl* &valueRessonanceWidth, wxTextCtrl* &valueRessonancePeak, wxTextCtrl* &valueRessonanceEnergy, wxTextCtrl* &valueRessonanceMinimum, wxTextCtrl* &valueRessonanceMaximum, wxTextCtrl* &valueRessonanceFunction, bool& boolRessonanceLorentzian, int& intRessonanceMode, wxArrayString& ListElements, wxArrayString& ListGammaPeaks, wxArrayString& ListNumber, wxArrayString& ListAbundance, wxArrayString& ListIsotopic, wxArrayString& ListAtomic, wxArrayString& LayerGridData, ElementDatabaseArray OpenDatabase, unsigned int& SampleStep, unsigned int& GaussStep, unsigned int& MoyalStep, unsigned int& EdgeworthStep, unsigned int& LandauStep, unsigned int& VavilovLimit, unsigned int& EnableLog)
+bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamResolution, wxTextCtrl* &valueTemperature, wxTextCtrl* &valueCharge, wxTextCtrl* &valueEnergyStep, wxTextCtrl* &valueMinimumEnergy, wxTextCtrl* &valueMaximumEnergy, wxTextCtrl* &valueRessonanceWidth, wxTextCtrl* &valueRessonancePeak, wxTextCtrl* &valueRessonanceEnergy, wxTextCtrl* &valueRessonanceMinimum, wxTextCtrl* &valueRessonanceMaximum, wxTextCtrl* &valueRessonanceFunction, bool& boolRessonanceLorentzian, int& intRessonanceMode, wxArrayString& ListElements, wxArrayString& ListGammaPeaks, wxArrayString& ListNumber, wxArrayString& ListAbundance, wxArrayString& ListIsotopic, wxArrayString& ListAtomic, wxArrayString& LayerGridData, ElementDatabaseArray OpenDatabase, unsigned int& SampleStep, unsigned int& GaussStep, unsigned int& MoyalStep, unsigned int& EdgeworthStep, unsigned int& AiryStep, unsigned int& LandauStep, unsigned int& VavilovLimit, unsigned int& EnableLog)
 {
  // Process the initial globl variables
     wxXmlDocument LocalFile;
@@ -874,12 +874,13 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamReso
         wxXmlNode *PrecisionValues = PrecisionData->GetChildren();
         if(PrecisionValues->GetName() == wxT("Precision_Values"))
         {
-         wxString SampleData,GaussData,MoyalData,EdgeworthData,LandauData, VavilovData, LogData;
-         unsigned long SampleValue, GaussValue, MoyalValue, EdgeworthValue, LandauValue, VavilovValue, LogValue;
+         wxString SampleData,GaussData,MoyalData,EdgeworthData,AiryData, LandauData, VavilovData, LogData;
+         unsigned long SampleValue, GaussValue, MoyalValue, EdgeworthValue, AiryValue, LandauValue, VavilovValue, LogValue;
          SampleData = PrecisionValues->GetAttribute(wxT("Sample_Step"),wxT("10"));
          GaussData = PrecisionValues->GetAttribute(wxT("Gauss_Step"),wxT("60"));
          MoyalData = PrecisionValues->GetAttribute(wxT("Vavilov_Moyal_Step"),wxT("10"));
          EdgeworthData = PrecisionValues->GetAttribute(wxT("Vavilov_Edgeworth_Step"),wxT("70"));
+         AiryData = PrecisionValues->GetAttribute(wxT("Vavilov_Airy_Step"),wxT("100"));
          LandauData = PrecisionValues->GetAttribute(wxT("Landau_Step"),wxT("284"));
          VavilovData = PrecisionValues->GetAttribute(wxT("Vavilov_Limit"),wxT("1"));
          LogData = PrecisionValues->GetAttribute(wxT("Active_Log"),wxT("0"));
@@ -887,6 +888,7 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamReso
          GaussData.ToULong(&GaussValue);
          MoyalData.ToULong(&MoyalValue);
          EdgeworthData.ToULong(&EdgeworthValue);
+         AiryData.ToULong(&AiryValue);
          LandauData.ToULong(&LandauValue);
          VavilovData.ToULong(&VavilovValue);
          LogData.ToULong(&LogValue);
@@ -894,6 +896,7 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamReso
          GaussStep = static_cast<unsigned int>(GaussValue);
          MoyalStep = static_cast<unsigned int>(MoyalValue);
          EdgeworthStep = static_cast<unsigned int>(EdgeworthValue);
+         AiryStep = static_cast<unsigned int>(AiryValue);
          LandauStep = static_cast<unsigned int>(LandauValue);
          VavilovLimit = static_cast<unsigned int>(VavilovValue);
          EnableLog = static_cast<unsigned int>(LogValue);
@@ -1075,7 +1078,7 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamReso
 }
 
 // Global ERYA profilng file saving
-bool ERYAProfilingGlobalFile::ERYAProfilingGlobalSave(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueRessonanceFunction, bool boolRessonanceLorentzian, int intRessonanceMode, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass, ArrayAtomicMass textAtomicMass,wxGrid* LayerTable, ElementDatabaseArray OpenDatabase, unsigned int SampleStep, unsigned int GaussStep, unsigned int MoyalStep, unsigned int EdgeworthStep, unsigned int LandauStep, unsigned int VavilovLimit, unsigned int EnableLog)
+bool ERYAProfilingGlobalFile::ERYAProfilingGlobalSave(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueRessonanceFunction, bool boolRessonanceLorentzian, int intRessonanceMode, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass, ArrayAtomicMass textAtomicMass,wxGrid* LayerTable, ElementDatabaseArray OpenDatabase, unsigned int SampleStep, unsigned int GaussStep, unsigned int MoyalStep, unsigned int EdgeworthStep, unsigned int AiryStep, unsigned int LandauStep, unsigned int VavilovLimit, unsigned int EnableLog)
 {
  // Global variables
  wxString RessonanceOption, RessonanceMode;
@@ -1125,6 +1128,7 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalSave(wxTextCtrl* valueBeamResol
      datalabel0->AddAttribute(wxT("Gauss_Step"),wxString::Format("%ui",GaussStep));
      datalabel0->AddAttribute(wxT("Vavilov_Moyal_Step"),wxString::Format("%ui",MoyalStep));
      datalabel0->AddAttribute(wxT("Vavilov_Edgeworth_Step"),wxString::Format("%ui",EdgeworthStep));
+     datalabel0->AddAttribute(wxT("Vavilov_Airy_Step"),wxString::Format("%ui",AiryStep));
      datalabel0->AddAttribute(wxT("Landau_Step"),wxString::Format("%ui",LandauStep));
      datalabel0->AddAttribute(wxT("Vavilov_Limit"),wxString::Format("%ui",VavilovLimit));
      datalabel0->AddAttribute(wxT("Active_Log"),wxString::Format("%ui",EnableLog));

@@ -232,7 +232,7 @@ class ERYAProfilingMain : public wxFrame
 		virtual void OnOutputData( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOutputImage( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOutputHelp( wxCommandEvent& event ) { event.Skip(); }
-                virtual void OnImportData( wxCommandEvent& event ) { event.Skip(); }
+        virtual void OnImportData( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnTableSave( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnTableHelp( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLogSave( wxCommandEvent& event ) { event.Skip(); }
@@ -885,6 +885,8 @@ class dialogERYAProfilingAdvanced : public wxDialog
 		wxSpinCtrl* spinVavilovMoyal;
 		wxStaticText* labelVavilovEdgeworth;
 		wxSpinCtrl* spinVavilovEdgeworth;
+		wxStaticText* labelVavilovAiry;
+		wxSpinCtrl* spinVavilovAiry;
 		wxStaticText* labelLandau;
 		wxSpinCtrl* spinLandau;
         wxStaticText* labelNumberThreads;
@@ -906,7 +908,7 @@ class dialogERYAProfilingAdvanced : public wxDialog
 
 	public:
 
-		dialogERYAProfilingAdvanced( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("ERYA Profiling Advanced Precision Settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 700,500 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		dialogERYAProfilingAdvanced( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("ERYA Profiling Advanced Precision Settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 700,550 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~dialogERYAProfilingAdvanced();
 
 };

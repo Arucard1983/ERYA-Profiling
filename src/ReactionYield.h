@@ -59,6 +59,7 @@ double ThermalStep,ThermalMinimum,ThermalMaximum,StraggStep,StraggMinimum,Stragg
 GaussFunction ThermalFunction,StraggGauss;
 LandauFunction StraggLandau;
 VavilovEdgeworthFunction StraggEdgeworth;
+VavilovAiryFunction StraggAiry;
 VavilovMoyalFunction StraggMoyal;
 DiracFunction StraggDirac,ThermalDirac;
 unsigned int PDMode;
@@ -72,7 +73,7 @@ double GetThermalDoppler(double AtEnergy, double TargetMolarMass);
 double GetThermalVariance(){return std::sqrt(AverageBeamResolution*AverageBeamResolution + AverageDopplerEnergy * AverageDopplerEnergy);};
 bool CheckValidity(){return IsDefined;}
 wxString GetErrorMessage(){return ErrorMessage;}
-bool SetDistribution(double xi, double beta, double k, double DEM, double VEM, unsigned int Gauss, unsigned int Moyal, unsigned int Edgeworth, unsigned int Landau, bool StrictGaussian);
+bool SetDistribution(double xi, double beta, double k, double DEM, double VEM, unsigned int Gauss, unsigned int Moyal, unsigned int Edgeworth, unsigned int Airy, unsigned int Landau, bool StrictGaussian);
 double GetStraggStep(){return StraggStep;};
 double GetStraggMin(){return StraggMinimum;};
 double GetStraggMax(){return StraggMaximum;};
@@ -343,12 +344,12 @@ class ReactionProfiling
  wxString LastErrorCode;
  double Charge, EnergyStep, EnergyMinimum, EnergyMaximum;
  bool SampleComplete, InputComplete, DefaultParameters, RequireRessonance, RequireLog;
- unsigned int DefaultSampleStep, DefaultGauss, DefaultVavilovMoyal, DefaultVavilovEdgeworth, DefaultLandau, DefaultThreads;
+ unsigned int DefaultSampleStep, DefaultGauss, DefaultVavilovMoyal, DefaultVavilovEdgeworth, DefaultVavilovAiry, DefaultLandau, DefaultThreads;
  public:
  ReactionProfiling(){SampleComplete = false; InputComplete = false; RequireRessonance = false; DefaultParameters = true; LastErrorCode = wxT("General Error: Empty Input Data!");};
  bool StartProcedure(wxStatusBar* progress);
  bool SampleSetup(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, DetectorParameters ThisDetector, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass,ArrayAtomicMass textAtomicMass);
- bool SetOverrideParameters(unsigned int SamplePrecision, unsigned int GaussPrecision, unsigned int VavilovMoyalPrecision, unsigned int VavivlovEdgeworthPrecision, unsigned int LandauPrecision, unsigned int ThreadPrecision, bool EnableLog);
+ bool SetOverrideParameters(unsigned int SamplePrecision, unsigned int GaussPrecision, unsigned int VavilovMoyalPrecision, unsigned int VavilovEdgeworthPrecision, unsigned int VavilovAiryPrecision, unsigned int LandauPrecision, unsigned int ThreadPrecision, bool EnableLog);
  bool SetInitialParameters(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueRessonanceFunction, bool boolRessonanceLorentzian, int intRessonanceMode);
  wxString GetErrorCode(){return LastErrorCode;};
  std::vector<double> GetEnergyRange(){return LocalResults.GetEnergy();};

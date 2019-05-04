@@ -88,7 +88,7 @@ class ERYAProfilingERYAProfilingMain : public ERYAProfilingMain
         bool DefaultSetting;
         bool EnableLog;
         int RessonanceMode;
-        unsigned int SamplePrecision, LandauPrecision, VavilovEdgeworthPrecision, VavilovMoyalPrecision, GaussPrecision, ThreadPrecision;
+        unsigned int SamplePrecision, LandauPrecision, VavilovEdgeworthPrecision, VavilovMoyalPrecision, VavilovAiryPrecision, GaussPrecision, ThreadPrecision;
 
 	public:
 		/** Constructor */
@@ -119,8 +119,8 @@ class ERYAProfilingERYAProfilingMain : public ERYAProfilingMain
 	    bool IsDetectorEmpty(DetectorParameters ThisDetector) { return !(ThisDetector.GetDetectorEnergy().GetCount() > 0 || ThisDetector.GetDetectorFunction().Len()>0); }  // Check if Detector Setup are empty
 	    bool IsZieglerEmpty(ZieglerParameters ThisZiegler) { return !(ThisZiegler.GetZieglerElements().GetCount() > 0);  }  // Check if Ziegler Setup are empty
         bool IsDatabaseEmpty(ElementDatabaseArray ThisDatabase) { return !(ThisDatabase.GetCount() > 0);  }  // Check if the Database are empty
-        void GetPrecisionParameters(unsigned int& CP, unsigned int& G, unsigned int& VM, unsigned int& VE, unsigned int& L, unsigned int& NT, bool& EL){CP = SamplePrecision; G = GaussPrecision; VM = VavilovMoyalPrecision; VE = VavilovEdgeworthPrecision; L = LandauPrecision; NT = ThreadPrecision; EL = EnableLog; return;};
-	    void SetPrecisionParameters(unsigned int CP, unsigned int G, unsigned int VM, unsigned int VE, unsigned int L, unsigned int NT, bool EL){SamplePrecision = CP; GaussPrecision = G; VavilovMoyalPrecision = VM; VavilovEdgeworthPrecision = VE; LandauPrecision = L; ThreadPrecision = NT; EnableLog = EL; return;};
+        void GetPrecisionParameters(unsigned int& CP, unsigned int& G, unsigned int& VM, unsigned int& VE, unsigned int& VA, unsigned int& L, unsigned int& NT, bool& EL){CP = SamplePrecision; G = GaussPrecision; VM = VavilovMoyalPrecision; VE = VavilovEdgeworthPrecision; VA = VavilovAiryPrecision; L = LandauPrecision; NT = ThreadPrecision; EL = EnableLog; return;};
+	    void SetPrecisionParameters(unsigned int CP, unsigned int G, unsigned int VM, unsigned int VE, unsigned int VA, unsigned int L, unsigned int NT, bool EL){SamplePrecision = CP; GaussPrecision = G; VavilovMoyalPrecision = VM; VavilovEdgeworthPrecision = VE; VavilovAiryPrecision = VA; LandauPrecision = L; ThreadPrecision = NT; EnableLog = EL; return;};
 	    void CloseExternalOutput(bool Flag){DisplayExternalOutput = Flag; return;}
 	    void GenerateLayer(int Number);
         void GenerateLayer();

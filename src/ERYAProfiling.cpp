@@ -2596,7 +2596,7 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	sizerERYAProfilingAdvanced->Add( lineERYAProfilingSettings, 0, wxEXPAND | wxALL, 5 );
 
 	wxFlexGridSizer* sizerERYAProfilingSettings;
-	sizerERYAProfilingSettings = new wxFlexGridSizer( 7, 2, 20, 20 );
+	sizerERYAProfilingSettings = new wxFlexGridSizer( 8, 2, 20, 20 );
 	sizerERYAProfilingSettings->AddGrowableRow( 0 );
 	sizerERYAProfilingSettings->SetFlexibleDirection( wxBOTH );
 	sizerERYAProfilingSettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
@@ -2621,6 +2621,14 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 
 	spinVavilovMoyal = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 20, 10 );
 	sizerERYAProfilingSettings->Add( spinVavilovMoyal, 0, wxALL, 5 );
+
+	labelVavilovAiry = new wxStaticText( this, wxID_ANY, wxT("Number of Points for Main Range of Vavilov-Airy Distribution:"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelVavilovAiry->Wrap( -1 );
+	sizerERYAProfilingSettings->Add( labelVavilovAiry, 0, wxALL, 5 );
+
+	spinVavilovAiry = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 10, 150, 100 );
+	sizerERYAProfilingSettings->Add( spinVavilovAiry, 0, wxALL, 5 );
+
 
 	labelVavilovEdgeworth = new wxStaticText( this, wxID_ANY, wxT("Number of Points for Main Range of Vavilov-Edgeworth Distribution:"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelVavilovEdgeworth->Wrap( -1 );

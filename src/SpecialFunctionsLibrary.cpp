@@ -86,7 +86,6 @@ void LandauFunction::SetLandauStep(double xi, double beta, double k, double DEM,
  // Cut negative minimum values
  if(LandauMinimum < 0 && TrimNegative)
  {
-  LandauMaximum = LandauMaximum - LandauMinimum;
   LandauMinimum = 0;
  }
  return;
@@ -102,7 +101,7 @@ double LandauFunction::GetValue(double AtEnergy)
 // Auxiliary private functions
 double VavilovEdgeworthFunction::VEalpha(unsigned int n)
 {
- double alpha = (std::pow(VExi,n)/std::pow(VEk,n-1)) * ( 1 / ( n - 1) - (VEbeta * VEbeta) / n);
+ double alpha = (std::pow(VExi,n)/std::pow(VEk,n-1)) * ( (1 / ( n - 1)) - (VEbeta * VEbeta) / n);
  return alpha;
 }
 
@@ -138,12 +137,12 @@ double VavilovEdgeworthFunction::VE(double delta, double xi, double beta, double
  // Evaluate the function
  HermitePolynomial h;
  double gauss = (1 / std::sqrt(2 * pi * VEStdDev * VEStdDev)) * std::exp((-1 * VEdelta * VEdelta) / (2 * VEStdDev * VEStdDev));
- double edgeworth3 = (1 / std::tgamma(4)) * (this->VEmu(3) / std::pow(VEStdDev,3)) * h.GetValue(3,VEdelta/VEStdDev);
- double edgeworth4 = (1 / std::tgamma(5)) * (this->VEmu(4) / std::pow(VEStdDev,4) - 3) * h.GetValue(4,VEdelta/VEStdDev);
- double edgeworth5 = (1 / std::tgamma(6)) * (this->VEmu(5) / std::pow(VEStdDev,5) - 10 * this->VEmu(3) / std::pow(VEStdDev,3)) * h.GetValue(5,VEdelta/VEStdDev);
- double edgeworth6 = (10 / std::tgamma(7)) * std::pow(this->VEmu(3) / std::pow(VEStdDev,3),2) * h.GetValue(6,VEdelta/VEStdDev);
- double edgeworth7 = (35 / std::tgamma(8)) * (this->VEmu(3) / std::pow(VEStdDev,3)) * (this->VEmu(4) / std::pow(VEStdDev,4) - 3) * h.GetValue(7,VEdelta/VEStdDev);
- double edgeworth9 = (280 / std::tgamma(10)) * std::pow( this->VEmu(3) / std::pow(VEStdDev,3) , 3) * h.GetValue(9,VEdelta/VEStdDev);
+ double edgeworth3 = (1 / 6) * (this->VEmu(3) / std::pow(VEStdDev,3)) * h.GetValue(3,VEdelta/VEStdDev);
+ double edgeworth4 = (1 / 24) * (this->VEmu(4) / std::pow(VEStdDev,4) - 3) * h.GetValue(4,VEdelta/VEStdDev);
+ double edgeworth5 = (1 / 120) * ((this->VEmu(5) / std::pow(VEStdDev,5)) - 10 * (this->VEmu(3) / std::pow(VEStdDev,3))) * h.GetValue(5,VEdelta/VEStdDev);
+ double edgeworth6 = (1 / 72) * std::pow(this->VEmu(3) / std::pow(VEStdDev,3),2) * h.GetValue(6,VEdelta/VEStdDev);
+ double edgeworth7 = (1 / 144) * (this->VEmu(3) / std::pow(VEStdDev,3)) * (this->VEmu(4) / std::pow(VEStdDev,4) - 3) * h.GetValue(7,VEdelta/VEStdDev);
+ double edgeworth9 = (1 / 1296) * std::pow( this->VEmu(3) / std::pow(VEStdDev,3) , 3) * h.GetValue(9,VEdelta/VEStdDev);
  double edgeworth = 1 + edgeworth3 + edgeworth4 + edgeworth5 + edgeworth6 + edgeworth7 + edgeworth9;
  double f = gauss * edgeworth;
  return (f > 0) ? f : 0.0;
@@ -168,7 +167,6 @@ void VavilovEdgeworthFunction::SetEdgeworthStep(double xi, double beta, double k
  // Cut negative minimum values
  if(EdgeworthMinimum < 0 && TrimNegative)
  {
-  EdgeworthMaximum = EdgeworthMaximum - EdgeworthMinimum;
   EdgeworthMinimum = 0;
  }
  return;
@@ -405,7 +403,6 @@ void VavilovMoyalFunction::SetMoyalStep(double xi, double beta, double k, double
  // Cut negative minimum values
  if(MoyalMinimum < 0 && TrimNegative)
  {
-  MoyalMaximum = MoyalMaximum - MoyalMinimum;
   MoyalMinimum = 0;
  }
  return;
@@ -416,6 +413,81 @@ double VavilovMoyalFunction::GetValue(double AtEnergy)
  double euler = (std::lgamma(0.999999) - std::lgamma(1.000001)) / (0.000002); // Euler's Constant
  double MoyalLambda = (AtEnergy - VMDEM)/VMxi - 1 + euler - VMCbeta*VMCbeta - std::log(VMCk);
  return this->VMMain(VMCk,VMCbeta,MoyalLambda);
+}
+
+// Set the Airy Distribution domain, using the same procedure of Laudau variable on Edgeworth function
+void VavilovAiryFunction::SetAiryStep(double xi, double beta, double k, double DEM, unsigned int numberstep, bool TrimNegative)
+{
+ // The integral domain may be evaluated from k and beta parameters
+ double euler = (std::lgamma(0.999999) - std::lgamma(1.000001)) / (0.000002); // Euler's Constant
+ VAxi = xi;
+ VAk = k;
+ VAbeta = beta;
+ VADEM = DEM;
+ double lowlambda = (-0.0322 * VAbeta * VAbeta - 0.0743)*VAk + (-0.2453 * VAbeta * VAbeta + 0.0701)/std::sqrt(VAk) + (-0.5561 * VAbeta * VAbeta - 3.1579);
+ double highlambda = (-0.0135 * VAbeta * VAbeta - 0.0488)*VAk + (-1.6921 * VAbeta * VAbeta + 8.3656)/std::sqrt(VAk) + (-0.7327 * VAbeta * VAbeta - 3.5226);
+ double lambdastep = (highlambda - lowlambda)/numberstep;
+ // Define the Function Domain
+ AiryStep = VAxi * lambdastep;
+ AiryMinimum = VAxi * (lowlambda + 1 - euler + VAbeta*VAbeta + std::log(VAk)) + DEM;
+ AiryMaximum = VAxi * (highlambda + 1 - euler + VAbeta*VAbeta + std::log(VAk)) + DEM;
+ // Cut negative minimum values
+ if(AiryMinimum < 0 && TrimNegative)
+ {
+  AiryMinimum = 0;
+ }
+ return;
+}
+
+// Evaluate the Airy-Ai function between the first negative zero (-2.33811) until arg=6, taking zero otherwise.
+
+double VavilovAiryFunction::VAa(unsigned int n)
+{
+ if (n == 0)
+  return 1 / (std::pow(3.0,2.0/3.0) * std::tgamma(2.0/3.0));
+ else if (n==1)
+  return -1 / (std::pow(3.0,1.0/3.0) * std::tgamma(1.0/3.0));
+ else if (n==2)
+  return 0;
+ else
+  return (this->VAa(n-3))/(1.0*n*(1.0*n-1));
+}
+
+double VavilovAiryFunction::Airy(double t)
+{
+ // Apply a domain cut-off
+ if ((t>-2.33811) && (t<9))
+ {
+   double x=0;
+   for(unsigned int n=0; n<123; n++)
+   {
+     x = x + this->VAa(n)*std::pow(t,n*1.0);
+   }
+  return x;
+ }
+ else
+ {
+  return 0;
+ }
+}
+
+// Evaluate the Airy approximation value of Vavilov distribution
+double VavilovAiryFunction::VA(double delta, double xi, double beta, double k)
+{
+ // Set the following model parameters
+ double eta = (xi * (1 - (2*beta*beta)/3))/(std::pow(2.0*k,2.0/3.0));
+ double a = (std::pow(2.0*k,1.0/3.0) * (1 - (beta*beta)/2)) / (std::pow((1 - (2.0*beta*beta)/3.0),2.0/3.0));
+ double t = delta / eta + a*a;
+ double f = this->Airy(t) * std::exp(a*t-(a*a*a)/3) / eta;
+ //double f = this->Airy(t);
+ return (f>0) ? f : 0.0;
+}
+
+// Return the distribution value in terms of energy
+double VavilovAiryFunction::GetValue(double AtEnergy)
+{
+ VAdelta = AtEnergy - VADEM;
+ return this->VA(VAdelta,VAxi,VAbeta,VAk);
 }
 
 
@@ -437,7 +509,6 @@ void GaussFunction::SetGaussStep(double Mean, double StandardDesviation, unsigne
  // Cut negative minimum values
  if(GaussMinimum < 0 && TrimNegative)
  {
-  GaussMaximum = GaussMaximum - GaussMinimum;
   GaussMinimum = 0;
  }
  return;
