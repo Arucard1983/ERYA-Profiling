@@ -363,7 +363,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 2 + VarianceMode;
     return true;
    }
-   else if(k>=0.24 && k<4.00) //Vavilov-Airy Distribution
+   else if(k>=0.24 && k<22.00) //Vavilov-Airy Distribution
    {
     StraggAiry = VavilovAiryFunction();
     StraggAiry.SetAiryStep(xi,beta,k,DEM,Airy,false);
@@ -373,7 +373,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 3 + VarianceMode;
     return true;
    }
-   else if(k>=4.00 && k<5.00) //Vavilov-Edgeworth Distribution
+   else if(k>=22.00 && k<25.00) //Vavilov-Edgeworth Distribution
    {
     StraggEdgeworth = VavilovEdgeworthFunction();
     StraggEdgeworth.SetEdgeworthStep(xi,beta,k,DEM,Edgeworth,false);

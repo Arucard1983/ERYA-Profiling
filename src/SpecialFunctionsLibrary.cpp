@@ -439,7 +439,7 @@ void VavilovAiryFunction::SetAiryStep(double xi, double beta, double k, double D
  return;
 }
 
-// Evaluate the Airy-Ai function between the first negative zero (-2.33811) until arg=6, taking zero otherwise.
+// Evaluate the Airy-Ai function between the first negative zero (-2.33811) to all positive values. Around t=5 it will use the taylor expansion, and beyond that an assymptotic exponential function
 
 double VavilovAiryFunction::VAa(unsigned int n)
 {
@@ -456,7 +456,7 @@ double VavilovAiryFunction::VAa(unsigned int n)
 double VavilovAiryFunction::Airy(double t)
 {
  // Apply a domain cut-off
- if ((t>-2.33811) && (t<9))
+ if ((t>-2.33811) && (t<=5))
  {
    double x=0;
    for(unsigned int n=0; n<123; n++)
@@ -464,6 +464,10 @@ double VavilovAiryFunction::Airy(double t)
      x = x + this->VAa(n)*std::pow(t,n*1.0);
    }
   return x;
+ }
+ else if (t>5)
+ {
+  return (std::exp((-2.0/3.0)*std::pow(t,3.0/2.0)))/(std::sqrt(16.0*std::atan(1.0))*std::pow(t,1.0/4.0));
  }
  else
  {
@@ -479,9 +483,9 @@ double VavilovAiryFunction::VA(double delta, double xi, double beta, double k)
  double a = (std::pow(2.0*k,1.0/3.0) * (1 - (beta*beta)/2)) / (std::pow((1 - (2.0*beta*beta)/3.0),2.0/3.0));
  double t = delta / eta + a*a;
  double f = this->Airy(t) * std::exp(a*t-(a*a*a)/3) / eta;
- //double f = this->Airy(t);
  return (f>0) ? f : 0.0;
 }
+
 
 // Return the distribution value in terms of energy
 double VavilovAiryFunction::GetValue(double AtEnergy)
