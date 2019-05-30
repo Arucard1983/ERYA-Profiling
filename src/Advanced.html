@@ -3,9 +3,9 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 	<title></title>
-	<meta name="generator" content="LibreOffice 6.1.3.1 (Linux)"/>
+	<meta name="generator" content="LibreOffice 6.1.5.2 (Linux)"/>
 	<meta name="created" content="2016-06-14T17:14:28.679842002"/>
-	<meta name="changed" content="2018-11-08T14:54:14.008927646"/>
+	<meta name="changed" content="2019-05-28T15:17:04.143120962"/>
 	<meta name="created" content="00:00:00">
 	<meta name="created" content="00:00:00">
 	<style type="text/css">
@@ -25,18 +25,17 @@ Settings</b></font></p>
 
 </p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><font size="3" style="font-size: 12pt">Normally,
-the main program routines will handle conveniently the numerical
-tasks to provide quickly the tangible results. In some rare
-occasions, it may be necessary to change some system parameters, in
-order to manually tunning the balance between the accuracy and the
-computation time.</font></p>
+ERYA-Profiling will handle conveniently the numerical tasks to
+provide quickly the tangible results. In some rare occasions, it may
+be necessary to change some system parameters, in order to manually
+tunning the balance between the accuracy and the computation time.</font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><font size="3" style="font-size: 12pt"><b>Understanding
 the Parameters:</b></font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><font size="3" style="font-size: 12pt">The
-seven changeable parameters are the following in order:</font></p>
+eight changeable parameters are the following in order:</font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
@@ -54,7 +53,7 @@ of atoms per square centimeter). This means that</span></font></span><span style
 layers sizes defined on <a href="LayerEditor.html">Layer Editor tab</a>
 are sliced even further by the quantity selected by this parameter.
 To increase accuracy, select the smaller number possible, but the
-computation time will increase at an inverse rate.</span></font></span></p>
+computation time will increase </span></font></span><span style="text-decoration: none"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">porportionally</span></font></span><span style="text-decoration: none"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">.</span></font></span></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><span style="text-decoration: none"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">To
 balance the precision and computation time, make a simulation as
 described <a href="HowTo.html">here</a>, and look at the column
@@ -63,7 +62,9 @@ possible and make an average guess of how many energy is lost where
 the beam pass along a single material slice.</span></font></span></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><span style="text-decoration: none"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">Normally,
 a energy loss of about 1 keV is good enough for many realistic
-samples, unless some samples may require more</span></font></span><span style="text-decoration: none">
+samples, unless some samples </span></font></span><span style="text-decoration: none"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">with
+sharp resonances </span></font></span><span style="text-decoration: none"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">may
+require more</span></font></span><span style="text-decoration: none">
 </span><span style="text-decoration: none"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">precision.</span></font></span></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><font size="3" style="font-size: 12pt"><span style="text-decoration: none"><span style="font-weight: normal">For
 thin samples, a default 10*10</span></span><span style="text-decoration: none"><sup><span style="font-weight: normal">15</span></sup></span><span style="text-decoration: none">
@@ -76,9 +77,9 @@ with a bigger sample step, without great loss of accuracy.</span></span></font><
 </p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
 <font size="3" style="font-size: 12pt"><b>2 (Gauss), 3 (Moyal), 4
-(Edgewoth), 5 (Landau Step):</b></font></p>
+(Airy), 5 (Edgewoth), 6 (Landau Step):</b></font></p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
-<font size="3" style="font-size: 12pt">The next four parameters are
+<font size="3" style="font-size: 12pt">The next five parameters are
 related to the numerical approximation of the Vavilov Distribution.</font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><span style="text-decoration: none"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">In
 order to achieve a reasonable numerical method, the Vavilov
@@ -120,14 +121,19 @@ from the sample composition, and ΔE are related to the energy
 straggling.</font></span></font></p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
 <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">The
-Landau, Moyal and Edgeworth Distributions 3-sigma domains can be
-placed between λ=-3.4 and λ=10 to 25 (It depends from the parameter
-k). Leaving to the user select how any points this interval can be
-sliced evenly. The Moyal Distribution is an exception, since it will
-ask how an unitary Landau variable interval can be sliced.</font></font></p>
+Landau, Moyal, Airy and Edgeworth Distributions 3-sigma domains can
+be placed between λ=-3.4 and λ=10 to 25 (It depends from the
+parameter k). Is possible for the user select how any points this
+interval can be sliced evenly. The Moyal Distribution is an
+exception, since it will ask how an unitary Landau variable interval
+can be sliced.</font></font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
+<br/>
+
+</p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
 <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">The
-default values are defined to achieve a Landau Step of about δλ=0.1.
+standard values are made to achieve a Landau Step of about δλ=0.1.
 If the user select to increase the default values, the Landau Step
 are smaller, but it will take more time to evaluate the distribution.</font></font></p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
@@ -139,17 +145,17 @@ it is the real physical quantity on all numerical calculations.</font></span></f
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
 <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">The
 last distribution, is the Gauss Distribution, related to the thermal
-and resolution distribution and the straggling distribution for k&gt;5,
+and resolution distribution and the straggling distribution for k&gt;25,
 are adjustable to the default 3-sigma domain range, selecting the
 number of steps that this interval can be evenly divided. The average
-are the ΔE value for the straggling distribution, and zero for the
-thermal one, and the standard-deviation are evaluated from the sample
-composition.</font></font></p>
+of Gaussian are the ΔE value for the straggling distribution, and
+zero for the thermal and resolution; while the standard-deviation are
+evaluated from the sample composition.</font></font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
-<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><b>6
+<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><b>7
 (Bohr/Vavilov/Gauss Limit):</b></font></font></p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
 <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">The
@@ -158,10 +164,14 @@ Vavilov Distribution at higher parameter-k values are
 indistinguishable from the Gaussian Distribution. The user can choose
 between the Vavilov Limit or the Bohr-Bichsel formula, defined as the
 follows:</font></font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
+<br/>
+
+</p>
 <p align="center" style="margin-bottom: 0cm; line-height: 100%"><b><span style="text-decoration: none"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">σ</font></font></span><span style="text-decoration: none"><sub><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">V</font></font></sub></span><span style="text-decoration: none"><sup><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">2</font></font></sup></span><span style="text-decoration: none">
 </span><span style="text-decoration: none"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">=
 ξ</font></font></span><span style="text-decoration: none"><sup><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">2
-</font></font></sup></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">*</font></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">(</font></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">1
+</font></font></sup></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">*(1
 – β</font></font></span><span style="text-decoration: none"><sup><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">2</font></font></sup></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">/2)
 / k</font></font></span></b></p>
 <p align="center" style="margin-bottom: 0cm; line-height: 100%"><br/>
@@ -183,8 +193,8 @@ I )</font></font></span></b></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><span style="text-decoration: none"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">Where
 the last formula are dependent of the mean ionization </span></font></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><b>I
 </b></font></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">,
-the sample depth </span></font></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><b>x</b></font></font></span><span style="text-decoration: none"><span style="font-weight: normal">
-</span></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">,
+the sample depth </span></font></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><b>x</b></font></font></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">,
 and the kinetic energy of incident beam. All those values are stored
 from the <a href="Ziegler.html">Ziegler’s Parameters</a> file.</span></font></font></span></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
@@ -196,19 +206,22 @@ third option (Gaussian) will override the Vavilov distribution to the
 Gaussian one to the straggling distribution, ignoring the parameter-k
 values. This option is only useful for bulk samples, but had the
 advantage to reduce the computation time by a factor of hundreds
-compared to th Vavilov distributions, and the yields results are
+compared to the Vavilov distributions, and the yields results are
 almost the same.</font></font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
-<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><b>7
+<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><b>8
 (Enable/Disable Log):</b></font></font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><span style="text-decoration: none"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-weight: normal">Select
 the check-box to enable the <a href="Log.html">Log Output tab</a>
 spreadsheet table, or uncheck to bypass the logging. For huge
 samples, disable the log will save several minutes of computation
-time, and even a long post-calculation routines, and display the
-yields a little more fast.</span></font></font></span></p>
+time, and display the yields a little more fast.</span></font></font></span></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
+<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Normally,
+the Logging are only useful for a reduced number of elementary steps,
+in order to deduce the pattern for large samples.</font></font></p>
 </body>
 </html>

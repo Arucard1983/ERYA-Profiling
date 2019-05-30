@@ -1,4 +1,4 @@
-ERYA-Profiling 2.40 ReadMe
+ERYA-Profiling 2.50 ReadMe
 ----------------------------------------
 
 Testing Release
@@ -110,6 +110,8 @@ This interim release had the following features:
 # Support for Stopping-Power calculation by table interpolation, usally imported from the SRIM program.
 # Direct SRIM table parsing from Ziegler's import option.
 # The window sizes can be resized with a mouse.
+# SRIM tables are the default setting for the Stopping-Power.
+# Added Airy Function as an approximation of the Vavilov Distribution, fixing abnormal oscillations on sharp resonances profiles.
 
 7. Future Improvements
 

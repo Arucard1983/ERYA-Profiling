@@ -3,9 +3,9 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 	<title></title>
-	<meta name="generator" content="LibreOffice 6.1.5.1 (Linux)"/>
+	<meta name="generator" content="LibreOffice 6.1.5.2 (Linux)"/>
 	<meta name="created" content="2016-03-11T00:50:17.012769788"/>
-	<meta name="changed" content="2019-03-19T17:33:07.479187442"/>
+	<meta name="changed" content="2019-05-29T18:00:36.193836993"/>
 	<meta name="created" content="00:00:00">
 	<meta name="created" content="00:00:00">
 	<meta name="created" content="00:00:00">
@@ -23,9 +23,11 @@ and Resonance Editor</b></font></p>
 
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
-One of most important step is the user set the values that models the
-Detector physics, along the possibility to override the cross-section
-of several elements by Lorentzian of custom coded functions.</p>
+ This tab window permits to the user define the major simulation
+parameters, starting from the energy profiling spectrum to the
+physical characteristics of the detector itself. Each main section
+are self-explanatory, specially if the user had the basic knowledge
+of PIGE analysis.</p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
@@ -37,12 +39,14 @@ of several elements by Lorentzian of custom coded functions.</p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 The detector can be modeled by some external factors, like the
 temperature of the sample (default is 300 K), and internals, such as
-the beam resolution. Other factors are related by the quantity of
-yield samples the user want to simulate, by choosing a minimum,
-maximum and step energy, along the electric change.</p>
+the beam resolution. Other factors are related by the number of
+points for the yield spectrum the user want to simulate, by choosing
+a minimum, maximum and energy step value, not forgetting to define
+the electric change of the experiment.</p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-Optionally, the user can define a resonance, like the built-in
-Lorentzian, or a custom function.</p>
+Optionally, the user can define a resonance to override the values
+from the <a href="Database.html">Element’s Database</a>,
+that can be a Lorentzian distribution or even a custom function.</p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
@@ -52,13 +56,13 @@ Lorentzian, or a custom function.</p>
 
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-In order to ease the workflow, it is possible to save and load the
+Similar to other program options, it is possible to save and load the
 Detector and Resonances inputs to a file, and create a collection of
 profiles.</p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 The Detector profiles can only by stored on <b>eprs</b> <b>(</b>ERYA
 Profiling Ressonance Sample<b>) </b>extension, which is a XML file,
-and can only be edited by this program, or a generic XML Editor.</p>
+and should only be edited by this program.</p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 In practice, it is possible to store all Elements, Layers and
 Detector tabs on a single XML file with extension <b>epgs</b> (ERYA
@@ -83,28 +87,44 @@ tab to the “Lorentzian” (Default is “none”) one. </span></span>
 Resonance Peak in </span><u><span style="font-weight: normal">milibarns</span></u><span style="font-weight: normal">,
 the Resonance Width(related to the Lorentzian Distribution width) and
 Ressonance Energy in </span><u><span style="font-weight: normal">keV.</span></u></p>
+<p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 The program will apply the following function:</p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-f(x) = RP / (RW<sup>2 </sup>+ (x-RE)<sup>2</sup>)</p>
+f(x) = (RP * RW<sup>2</sup>/4) / (RW<sup>2</sup>/4 + (x-RE)<sup>2</sup>)</p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 Where the domain are applicable between x<sub>min</sub> = RE – 5*RW
 and x<sub>max</sub> = RE + 5*RW 
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-It is possible to input several resonances, along the values are
-separated by commas (,), in the correct order. If the size of
-Resonance Peak, Width and Energy mismatches, ERYA will display an
-error when try to run the simulation.</p>
-<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+<br/>
 
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-The function domain can be overridden by selecting an optional check
-box, and inserting the requested minimum and maximum values for the
-energy. Those values are always single ones.</p>
+It is possible to input several resonances, along the values are
+separated by commas (,) in the correct order. If the number of values
+for Resonance Peak, Width and Energy mismatches, ERYA will display an
+error when try to run the simulation.</p>
+<p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
+ In this case each individual resonance had their own 5-sigma domain,
+and in case of overlapping domains, their values are summed up. 
+</p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 <br/>
+
+</p>
+<p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
+Without additional information, ERYA will take the global resonance
+domain between the leftmost resonance peak, to the rightmost one by
+the 5-sigma rule, but can be <span style="font-weight: normal">overridden
+by selecting an optional check box, and inserting the requested
+</span><span style="font-weight: normal">global </span><span style="font-weight: normal">minimum
+and maximum values for the energy. Those values are always single
+ones.</span></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
@@ -114,23 +134,21 @@ energy. Those values are always single ones.</p>
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 The last option are the possibility to define any algebraic function
-as a custom resonance, using the built-in algebraic parser bundled on
-ERYA-Profiling, which is a trimmed-down macro language.</p>
+as a custom resonance, using the ERYA Macro language bundled on
+ERYA-Profiling, to write the desired function.</p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><span lang="en-US"><span style="font-weight: normal">The
 user should define four variables as function parameters, then the
 necessary number of constants, and finally the function itself.</span></span></p>
-<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
-
-</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><span lang="en-US"><span style="font-weight: normal">Finally,
+select the last option on bottom tab to activate the macro code mode
+for the Resonance model.</span></span></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><span lang="en-US"><span style="font-weight: normal">Further
 documentation about the ERYA macro can be obtained <a href="Macro.html">here</a>.</span></span></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
-
-</p>
-<p align="left" style="margin-bottom: 0cm; line-height: 100%"><span lang="en-US"><span style="font-weight: normal">The
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><span lang="en-US"><b>Tip:
+</b></span><span lang="en-US"><span style="font-weight: normal">The
 custom function can by pasted to</span></span> <span lang="en-US"><span style="font-weight: normal"><a href="Calculator.html">Calculator</a>
 tool for debugging purposes.</span></span></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
@@ -146,18 +164,17 @@ example:</p>
 
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
-- Undeclared initial values for “fxmin” and “fxmax” related
-variables are acceptable, and ERYA will apply the resonance to an
-unlimited function domain.</p>
+- Avoid undeclared initial values for the variables declared by
+“fxmin” and “fxmax”, or it could return unexpected results.</p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
-- Using the relational operators, it is possible to define segmented
-domain functions, such as:</p>
+- Using the relational operators, it is possible to define piecewise
+functions such as:</p>
 <p lang="en-US" align="left" style="margin-bottom: 0cm; line-height: 100%">
 <b>fxvar = x , fyvar = y , fxmin = a , fxmax = b : a = 1000 , b = a +
-10 , z = 10 : y = (x &gt; 1100) * ( x &lt; 1500) * z * x + (x&gt;1500)
+1000 , z = 10 : y = (x &gt; 1100) * ( x &lt; 1500) * z * x + (x&gt;1500)
 * z / x</b></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 

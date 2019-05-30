@@ -72,8 +72,10 @@ class ERYAProfilingdialogERYACalculator : public dialogERYACalculator
 		void OnInputVariable( wxCommandEvent& event );
 
                 // Internal variables
-                double LastFyx, LastAns;
+                double LastAns;
                 int DecimalPrecision;
+                std::vector<double> LastVector;
+                wxString LastVariables;
     private:
         wxString GetConversion(double Var, bool Sci);
 

@@ -1658,7 +1658,7 @@ dialogERYACalculator::dialogERYACalculator( wxWindow* parent, wxWindowID id, con
 	buttonComma = new wxButton( this, wxID_ANY, wxT(","), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerCalculatorTools->Add( buttonComma, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonDisplayProgram = new wxButton( this, wxID_ANY, wxT("DspProg"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonDisplayProgram = new wxButton( this, wxID_ANY, wxT("DspVars"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerCalculatorTools->Add( buttonDisplayProgram, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	buttonSetDecimals = new wxButton( this, wxID_ANY, wxT("SetDec"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -1691,7 +1691,7 @@ dialogERYACalculator::dialogERYACalculator( wxWindow* parent, wxWindowID id, con
 	buttonColon = new wxButton( this, wxID_ANY, wxT(":"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerCalculatorTools->Add( buttonColon, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonDisplayAnswer = new wxButton( this, wxID_ANY, wxT("DspAns"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonDisplayAnswer = new wxButton( this, wxID_ANY, wxT("InpVec"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerCalculatorTools->Add( buttonDisplayAnswer, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	buttonFunctionVar = new wxButton( this, wxID_ANY, wxT("f(x=?)"), wxDefaultPosition, wxDefaultSize, 0 );

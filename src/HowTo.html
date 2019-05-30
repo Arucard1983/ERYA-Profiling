@@ -3,16 +3,16 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 	<title></title>
-	<meta name="generator" content="LibreOffice 6.1.3.1 (Linux)"/>
+	<meta name="generator" content="LibreOffice 6.1.5.2 (Linux)"/>
 	<meta name="created" content="2016-06-14T17:14:28.679842002"/>
-	<meta name="changed" content="2018-11-08T15:00:34.658183477"/>
+	<meta name="changed" content="2019-05-29T18:17:01.587403544"/>
 	<meta name="created" content="00:00:00">
 	<meta name="changed" content="00:00:00">
 	<meta name="created" content="00:00:00">
 	<meta name="created" content="00:00:00">
 	<style type="text/css">
 		@page { size: 21cm 29.7cm; margin: 2.01cm }
-		p { margin-bottom: 0.25cm; line-height: 120%; background: transparent }
+		p { margin-bottom: 0.25cm; background: transparent; line-height: 120%; background: transparent }
 		a:link { color: #000080; so-language: zxx; text-decoration: underline }
 		a:visited { color: #800000; so-language: zxx; text-decoration: underline }
 	</style>
@@ -139,9 +139,8 @@ dε quantity is the <a href="Ziegler.html">Energy Stopping</a></span></font>
 <font face="Liberation Serif, serif"><span style="font-weight: normal">loss
 which use the Bragg's Law and the Ziegler's </span></font><font face="Liberation Serif, serif"><i><span style="font-weight: normal">ansatz</span></i></font>
 <font face="Liberation Serif, serif"><span style="font-weight: normal">equations
-</span></font><font face="Liberation Serif, serif"><span style="font-weight: normal">or
-SRIM tables</span></font><font face="Liberation Serif, serif"><span style="font-weight: normal">
-to model the energy beam losses.</span></font></p>
+or SRIM tables</span></font> <font face="Liberation Serif, serif"><span style="font-weight: normal">to
+model the energy beam losses.</span></font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
@@ -180,7 +179,7 @@ cross-section value should be handled by a distribution integral:</font></p>
 <font face="Liberation Serif, serif"><span style="text-decoration: none"><u>σ</u></span><span style="text-decoration: none">(</span><u>E</u><span style="text-decoration: none"><sub>L</sub></span><span style="text-decoration: none">)
 = ∫ F (E) σ (E) dE</span></font></p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
- <font face="Liberation Serif, serif">The distribution can be
+<font face="Liberation Serif, serif">The distribution can be
 understood by a composition of two components:</font></p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
 <font face="Liberation Serif, serif">- The own Detector had a thermal
@@ -191,28 +190,25 @@ resolution dispersion.</font></p>
 energy loss across the sample are described by a propagation
 distribution, also called straggling distribution, since it is
 related to the Energy Stopping Loss.</font></p>
-<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
-† <font face="Liberation Serif, serif">The global distribution is a
-convolution of the two distributions previously discussed:</font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%; text-decoration: none">
+† <font face="Liberation Serif, serif"><span style="font-weight: normal">The
+global distribution is a convolution of the two distributions
+previously discussed:</span></font></p>
 <p align="center" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 <font face="Liberation Serif, serif"><span style="text-decoration: none">F
 (E ) = ∫ F</span><span style="text-decoration: none"><sub>T</sub></span><span style="text-decoration: none">
-(F) F</span><span style="text-decoration: none"><sub>S </sub></span><span style="text-decoration: none">(</span><span style="text-decoration: none">E</span><span style="text-decoration: none">
-– </span><span style="text-decoration: none">F</span><span style="text-decoration: none">
-) dF</span></font></p>
+(F) F</span><span style="text-decoration: none"><sub>S </sub></span><span style="text-decoration: none">(E
+– F ) dF</span></font></p>
 <p align="center" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 <font face="Liberation Serif, serif"><span style="text-decoration: none">Where
 the thermal F</span><span style="text-decoration: none"><sub>T</sub></span><span style="text-decoration: none">
-is always </span><span style="text-decoration: none">a G</span><span style="text-decoration: none">aussian
-</span><span style="text-decoration: none">Distribution</span><span style="text-decoration: none">,
-and the straggling F</span><span style="text-decoration: none"><sub>S
+is always a Gaussian Distribution, and the straggling F</span><span style="text-decoration: none"><sub>S
 </sub></span><span style="text-decoration: none">are a Vavilov
-distribution, </span><span style="text-decoration: none">where such
-distribution requires special routines to handle at best computation
-time.</span></font></p>
+distribution, where such distribution requires special routines to
+handle at best computation time.</span></font></p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
 <font face="Liberation Serif, serif">This means that the evaluation
 of the cross-section are handled by a numerical double integral,
@@ -227,21 +223,22 @@ dx dy</span></font></p>
 
 </p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
- <font face="Liberation Serif, serif">Combining the whole
-distribution integral of the cross-section relative by their layer,
-the whole yield numerical integral is now a triple numerical
-integral, making the numerical evaluation more time consuming in
-clear contrast of the simple integration on the ERYA-Bulk.</font></p>
+<font face="Liberation Serif, serif">Combining the whole distribution
+integral of the cross-section relative by their layer, the whole
+yield numerical integral is now a triple numerical integral, making
+the numerical evaluation more time consuming in clear contrast of the
+simple integration on the ERYA-Bulk.</font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">3.
 The program will compute an array of several yields, ranging from the
-user selected Energy Minimum, until the Maximum Energy, </span></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">by
-equally increasing initial energies defined by</span></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">
-the Energy Step. The sample is also </span></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">divided</span></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">
-by smaller layers, using a default Sample Step </span></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">of
-10</span></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">*10</span></font></span><span style="text-decoration: none"><sup><font face="Liberation Serif, serif"><span style="font-weight: normal">15</span></font></sup></span><span style="text-decoration: none">
+user selected Energy Minimum, until the Maximum Energy, by equally
+increasing initial energies defined by</span></font></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">the
+Energy Step. The sample is also divided</span></font></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">by
+smaller layers, using a default Sample Step of 10*10</span></font></span><span style="text-decoration: none"><sup><font face="Liberation Serif, serif"><span style="font-weight: normal">15</span></font></sup></span><span style="text-decoration: none">
 </span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">at/cm</span></font></span><span style="text-decoration: none"><sup><font face="Liberation Serif, serif"><span style="font-weight: normal">2</span></font></sup></span><span style="text-decoration: none">
 </span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">unit,
 where can be changed, by clicking on “<a href="Advanced.html">Advanced</a>”
@@ -256,28 +253,24 @@ button on the bottom interface.</span></font></span></p>
 </p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 <font face="Liberation Serif, serif"><span style="text-decoration: none">The
-ERYA-Profiling use a custom numerical library, </span><span style="text-decoration: none">in
-order to evaluate</span><span style="text-decoration: none"> the
-Vavilov distribution using the original references, first derived
+ERYA-Profiling use a custom numerical library, in order to evaluate
+the Vavilov distribution using the original references, first derived
 from </span><span style="text-decoration: none"><i>Montagna R.</i></span><span style="text-decoration: none">
-work </span><span style="text-decoration: none">and </span><span style="text-decoration: none"><i>Luis
-F.</i></span><span style="text-decoration: none"><span style="font-style: normal">
-thesis work that was</span></span><span style="text-decoration: none">
-</span><span style="text-decoration: none">also the</span><span style="text-decoration: none">
-previous LabView ERYA-Profiling author.</span></font></p>
-<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<span style="text-decoration: none"> </span><font face="Liberation Serif, serif"><span style="text-decoration: none">Currently,
-all numerical routines on ERYA-Profiling was</span><span style="text-decoration: none">
-reimplemented from scratch.</span></font></p>
-<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<br/>
+work and </span><span style="text-decoration: none"><i>Luis F.</i></span><span style="font-variant: normal"><span style="text-decoration: none">
+</span></span><span style="font-variant: normal"><span style="text-decoration: none"><span style="font-style: normal">thesis
+work that was</span></span></span><span style="text-decoration: none">
+also the previous LabView ERYA-Profiling author.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
+<font face="Liberation Serif, serif">Currently, all numerical
+routines on ERYA-Profiling was reimplemented from scratch.</font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<span style="text-decoration: none"> </span><font face="Liberation Serif, serif"><span style="text-decoration: none">For
-each initial energy at any</span><span style="text-decoration: none">
-layer </span><u>E</u><span style="text-decoration: none"><sub>L, </sub></span><span style="text-decoration: none">the
-program evaluate the relativistic velocity </span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>β
+<font face="Liberation Serif, serif"><span style="text-decoration: none">For
+each initial energy at any layer </span><u>E</u><span style="text-decoration: none"><sub>L,
+</sub></span><span style="text-decoration: none">the program evaluate
+the relativistic velocity </span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>β
 </b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif">,
 the energy cut-off </font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>κ</b></font></span><span style="text-decoration: none"><sub><font face="Times New Roman, serif"><b>MAX</b></font></sub></span><span style="text-decoration: none">
 </span><span style="text-decoration: none"><font face="Times New Roman, serif">,
@@ -293,12 +286,11 @@ factors </span></font></span><span style="text-decoration: none"><font face="Tim
 </b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>ξ</b></font></span><span style="text-decoration: none">
 </span><span style="text-decoration: none"><font face="Times New Roman, serif"><span style="font-weight: normal">are
 evaluated, it also evaluates the Bohr variance, requiring to use the
-Mean Ionization Energy, and Density, located on the <a href="Ziegler.html">Ziegler's
-Parameters</a> file.</span></font></span></p>
-<p align="left" style="margin-bottom: 0cm; line-height: 100%"><span style="text-decoration: none">
-</span><span style="text-decoration: none"><font face="Times New Roman, serif"><span style="font-weight: normal">Finally,
-the straggling variance can be evaluated by </span></font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><span style="font-weight: normal">the
-following formula, derived by </span></font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><span lang="en-US"><i>H.
+Mean Ionization Energy, and Density, located on the <a href="Ziegler.html">Stopping-Power</a>
+file.</span></font></span></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><span style="text-decoration: none"><font face="Times New Roman, serif"><span style="font-weight: normal">Finally,
+the straggling variance can be evaluated by the following formula,
+derived by </span></font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><span lang="en-US"><i>H.
 Bichsel</i></span></font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><span style="font-weight: normal">:</span></font></span></p>
 <p align="center" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 <font face="Liberation Serif, serif"><span style="text-decoration: none"><font face="Times New Roman, serif">σ</font></span><span style="text-decoration: none"><sub><font face="Times New Roman, serif">B</font></sub></span><span style="text-decoration: none"><sup><font face="Times New Roman, serif">2</font></sup></span><span style="text-decoration: none">
@@ -315,15 +307,16 @@ I</font></span><span style="text-decoration: none"><sub><font face="Times New Ro
 <p align="center" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
-<p align="left" style="margin-bottom: 0cm; line-height: 100%"> But
-the user can change the straggling variance formula to use the
-Vavilov formula instead, by clicking the <span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">“<a href="Advanced.html">Advanced</a>”
+<p align="left" style="margin-bottom: 0cm; line-height: 100%">But the
+user can change the straggling variance formula to use the Vavilov
+formula instead, by clicking the <span style="text-decoration: none">“</span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal"><a href="Advanced.html">Advanced</a>”
 button:</span></font></span></p>
 <p align="center" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 <font face="Liberation Serif, serif"><span style="text-decoration: none"><font face="Times New Roman, serif">σ</font></span><span style="text-decoration: none"><sub><font face="Times New Roman, serif">V</font></sub></span><span style="text-decoration: none"><sup><font face="Times New Roman, serif">2</font></sup></span><span style="text-decoration: none">
 </span><span style="text-decoration: none"><font face="Times New Roman, serif">=
- ξ</font></span><span style="text-decoration: none"><sup><font face="Times New Roman, serif">2</font></sup></span><span style="text-decoration: none"><font face="Times New Roman, serif">
-* ( 1 - </font></span><span style="text-decoration: none"> </span><span style="text-decoration: none"><font face="Times New Roman, serif">β</font></span><span style="text-decoration: none"><sup><font face="Times New Roman, serif">2</font></sup></span><span style="text-decoration: none">
+ξ</font></span><span style="text-decoration: none"><sup><font face="Times New Roman, serif">2</font></sup></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif">*
+( 1 - β</font></span><span style="text-decoration: none"><sup><font face="Times New Roman, serif">2</font></sup></span><span style="text-decoration: none">
 </span><span style="text-decoration: none"><font face="Times New Roman, serif">/
 2</font></span><span style="text-decoration: none"> </span><span style="text-decoration: none"><font face="Times New Roman, serif">)
 / k</font></span></font></p>
@@ -331,12 +324,11 @@ button:</span></font></span></p>
 
 </p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
- <font face="Times New Roman, serif">A final option to force a
+<font face="Times New Roman, serif">A final option to force a
 Gaussian distribution to the Straggling Distribution (which is fairly
 accurate for bulk samples), will defaults the Vavilov formula to the
 straggling variance.</font></p>
-<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
-<br/>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
@@ -344,12 +336,10 @@ straggling variance.</font></p>
 the whole complex chain of numerical steps, the program will evaluate
 each partial factor <b>β, </b><font face="Liberation Serif, serif"><b>k,
 </b></font><b>ξ, σ</b><sub><b>B</b></sub><sup><b>2</b></sup> <font face="Liberation Serif, serif">along
-each layer a</font><font face="Liberation Serif, serif">nd sum </font><font face="Liberation Serif, serif">such
-factors </font><font face="Liberation Serif, serif">along the
-previous values.</font> The accumulated factors are the main inputs
-for the numerical Vavilov Distribution, and applied according on the
-following rules, if the user don’t force a pure Gaussian
-Distribution: </font>
+each layer and sum such factors along the previous values.</font> The
+accumulated factors are the main inputs for the numerical Vavilov
+Distribution, and applied according on the following rules, if the
+user don’t force a pure Gaussian Distribution: </font>
 </p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
@@ -360,45 +350,50 @@ k=0</b></font></span><span style="text-decoration: none"><font face="Times New R
 the Vavilov Distribution is a degenerate one, a single point handled
 by a </font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>Dirac’s
 Function.</b></font></span></font></p>
-<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<br/>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<font face="Liberation Serif, serif"><span style="text-decoration: none"><font face="Times New Roman, serif"><b>For</b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>
-0&lt;k&lt;0.02</b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif">,
+<font face="Liberation Serif, serif"><span style="text-decoration: none"><font face="Times New Roman, serif"><b>For</b></font></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>0&lt;k&lt;0.02</b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif">,
 the Vavilov Distribution can be approximated by a </font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>Landau
 Function</b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif">.</font></span></font></p>
-<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<br/>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<font face="Liberation Serif, serif"><span style="text-decoration: none"><font face="Times New Roman, serif"><b>For</b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>
-0.02&lt;k&lt;0.235 </b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif">are
+<font face="Liberation Serif, serif"><span style="text-decoration: none"><font face="Times New Roman, serif"><b>For</b></font></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>0.02&lt;k&lt;0.24</b></font></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><font face="Times New Roman, serif">are
 on domain of the </font></span><span style="text-decoration: none"><font face="Times New Roman, serif"><b>Moyal
 Function</b></font></span><span style="text-decoration: none"><font face="Times New Roman, serif">,
 described by </font></span><span style="text-decoration: none"><i>Montagna
 R.</i></span><span style="text-decoration: none"> work on numerical
-approximations of the Vavilov Distributions, but requires additional
-steps to fix incorrect approximations, as also detected on the
-previous LabView ERYA’s author.</span></font></p>
-<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<br/>
+approximations of the Vavilov Distributions.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><span style="text-decoration: none"><b>For
+0.24&lt;k&lt;22</b></span><span style="text-decoration: none">
+</span><span style="text-decoration: none"><span style="font-weight: normal">applies
+the </span></span><span style="text-decoration: none"><b>Airy
+Function, </b></span><span style="text-decoration: none"><span style="font-weight: normal">where
+the distribution maximum will slowly converge to the Gaussian peak.</span></span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 <font face="Liberation Serif, serif"><span style="text-decoration: none"><b>For
-0.235&lt;k&lt;5</b></span><span style="text-decoration: none"> the
+22&lt;k&lt;25</b></span><span style="text-decoration: none"> the
 Vavilov Distribution are approximated by the </span><span style="text-decoration: none"><b>Edgeworth
-Function</b></span><span style="text-decoration: none">.</span></font></p>
-<p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
-<br/>
+Function, </b></span><span style="text-decoration: none">which is a
+small correction of the Gaussian Distribution.</span></font></p>
+<p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
 </p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 <font face="Liberation Serif, serif"><span style="text-decoration: none"><b>Finally
-for k&gt;5</b></span><span style="text-decoration: none">, the
+for k&gt;25</b></span><span style="text-decoration: none">, the
 Vavilov Distribution can be approximate by the </span><span style="text-decoration: none"><b>Gaussian
 Function.</b></span></font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
@@ -419,11 +414,13 @@ Function.</b></span></font></p>
 ERYA-Profiling approximate all distributions by a 3-sigma cut-off,
 since it won’t make sense an unlimited interval on numerical
 integration. Except the Dirac’s Function, that use a single point,
-the other four functions accuracy can be changed on “<a href="Advanced.html">Advanced</a>”
+the </span></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">remaining
+</span></font></span><span style="text-decoration: none"><font face="Liberation Serif, serif"><span style="font-weight: normal">functions
+accuracy can be changed on “<a href="Advanced.html">Advanced</a>”
 button, located on the bottom main interface. </span></font></span>
 </p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%; text-decoration: none">
- <font face="Liberation Serif, serif">Due to the limiting range
+<font face="Liberation Serif, serif">Due to the limiting range
 domain, all distributions should be renormalized, and where the
 program actually makes two double integrals, fortunately with the
 same domain matrix, and divide them to obtain the renormalized value:</font></p>
@@ -432,7 +429,7 @@ same domain matrix, and divide them to obtain the renormalized value:</font></p>
 </span><span style="text-decoration: none"><span style="font-weight: normal">(y)
 F</span></span><span style="text-decoration: none"><sub><span style="font-weight: normal">S</span></sub></span><span style="text-decoration: none">
 </span><span style="text-decoration: none"><span style="font-weight: normal">(x-y)
-σ(</span></span><u><span style="font-weight: normal">E</span></u><span style="text-decoration: none"><sub><span style="font-weight: normal">L</span></sub></span><span style="text-decoration: none"><span style="font-weight: normal">-</span></span><span style="text-decoration: none"><span style="font-weight: normal">x</span></span><span style="text-decoration: none"><span style="font-weight: normal">)
+σ(</span></span><u><span style="font-weight: normal">E</span></u><span style="text-decoration: none"><sub><span style="font-weight: normal">L</span></sub></span><span style="text-decoration: none"><span style="font-weight: normal">-x)
 dx dy / </span></span><span style="text-decoration: none">∫∫ </span><span style="text-decoration: none"><span style="font-weight: normal">F</span></span><span style="text-decoration: none"><sub><span style="font-weight: normal">T</span></sub></span><span style="text-decoration: none">
 </span><span style="text-decoration: none"><span style="font-weight: normal">(y)
 F</span></span><span style="text-decoration: none"><sub><span style="font-weight: normal">S</span></sub></span><span style="text-decoration: none">
@@ -448,8 +445,8 @@ Analysis How-To</b></font></p>
 </p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><span style="font-weight: normal">1.
 You need to check first if you have a functional database. If the
-program warns about an invalid database for Elements, Ziegler or
-Detector Setup, you need to check the source database files (You
+program warns about an invalid database for Elements, Stopping-Power
+or Detector Setup, you need to check the source database files (You
 should put all three in the same directory), or change the <a href="SetupSettings.html">default
 configuration</a>, as explained on “Settings” menu option.</span></font></p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
@@ -464,7 +461,8 @@ at start-up, using the adequate menu.</span></font></p>
 <font face="Liberation Serif, serif"><span style="font-weight: normal">Tip:
 Also check the <a href="Detector.html">Detector Setup</a></span></font>
 <font face="Liberation Serif, serif"><span style="font-weight: normal">and
-<a href="Ziegler.html">Ziegler Parameters</a></span></font> <font face="Liberation Serif, serif"><span style="font-weight: normal">from
+</span></font><a href="Ziegler.html"><font face="Liberation Serif, serif"><span style="font-weight: normal">Stopping-Power</span></font></a>
+<font face="Liberation Serif, serif"><span style="font-weight: normal">from
 the appropriate menu options.</span></font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><br/>
 
@@ -512,9 +510,10 @@ working as expected.</font></p>
 <p align="left" style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><b>In
 Case of an Error:</b></font> <font face="Liberation Serif, serif"><span style="font-weight: normal">If
 an invalid option (non-numerical input, negative values for Energy,
-etc), or an syntax error occurs, the main numerical procedure are
-halted, and return an error, warning the user when (at best possible)
-the first fatal error was found.</span></font></p>
+etc), or an</span></font><font face="Liberation Serif, serif"><span style="font-weight: normal">y</span></font><font face="Liberation Serif, serif"><span style="font-weight: normal">
+syntax error occurs, the main numerical procedure are halted, and
+return an error, warning the user when (at best possible) the first
+fatal error was found.</span></font></p>
 <p align="left" style="margin-bottom: 0cm; font-weight: normal; line-height: 100%">
 <font face="Liberation Serif, serif">The user should make the
 necessary corrections, and try again.</font></p>

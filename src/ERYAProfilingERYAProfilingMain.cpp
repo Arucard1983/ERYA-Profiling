@@ -305,7 +305,7 @@ void ERYAProfilingERYAProfilingMain::OnHelpManual( wxCommandEvent& event )
 
 void ERYAProfilingERYAProfilingMain::OnHelpAbout( wxCommandEvent& event )
 {
- wxMessageBox(wxT("ERYA-Profiling Version 2.40\nBuilt with wxWidgets 3.0.4, with wxMathPlot 0.13 and Custom Simple Xlsx Library 0.1\nCompiling with GCC 6.3.0\n(c) 2018 LIBPHYS"), wxT("Welcome to ERYA Profiling"));
+ wxMessageBox(wxT("ERYA-Profiling Version 2.50\nBuilt with wxWidgets 3.0.4, with wxMathPlot 0.13 and Custom Simple Xlsx Library 0.1\nCompiling with GCC 6.3.0\n(c) 2018 LIBPHYS"), wxT("Welcome to ERYA Profiling"));
 }
 
 void ERYAProfilingERYAProfilingMain::OnNumberElementSpin( wxSpinEvent& event )
@@ -2420,7 +2420,7 @@ bool ERYAProfilingERYAProfilingMain::SaveSetupFile(wxString MainDirectory, wxStr
    wxXmlNode* programdatetime = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Date_File_Creation");
      programdatetime->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, ActualTime));
    wxXmlNode* programversion = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Version");
-     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("2.40")));
+     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("2.50")));
     wxXmlNode* programname = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Name");
      programname->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("ERYA-Profiling")));
   // Save the file

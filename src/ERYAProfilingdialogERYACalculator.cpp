@@ -7,7 +7,8 @@ ERYAProfilingdialogERYACalculator::ERYAProfilingdialogERYACalculator( wxWindow* 
 dialogERYACalculator( parent )
 {
  // Initialize the internal variables
- LastFyx = 0;
+ LastVariables.Clear();
+ LastVector.clear();
  LastAns = 0;
  DecimalPrecision = 10;
 }
@@ -63,7 +64,6 @@ void ERYAProfilingdialogERYACalculator::OnPower( wxCommandEvent& event )
 void ERYAProfilingdialogERYACalculator::OnClearInput( wxCommandEvent& event )
 {
  textCalculatorInput->Clear();
- LastFyx = 0;
 }
 
 void ERYAProfilingdialogERYACalculator::OnAcosh( wxCommandEvent& event )
@@ -118,6 +118,8 @@ void ERYAProfilingdialogERYACalculator::OnClearOutput( wxCommandEvent& event )
 {
  textCalculatorOutput->Clear();
  LastAns = 0;
+ LastVariables.Clear();
+ LastVector.clear();
 }
 
 void ERYAProfilingdialogERYACalculator::OnCos( wxCommandEvent& event )
@@ -256,6 +258,8 @@ void ERYAProfilingdialogERYACalculator::OnFunctionVar( wxCommandEvent& event )
   if(data.ToDouble(&fdata))
   {
    AlgebraicFunction *fx = new AlgebraicFunction(textCalculatorInput->GetValue()); // Compile the user defined function
+   if(fx->IsFunctionWithVectorDefined())
+    fx->SetFunctionNumberParameter(LastVector); // Update the vector parameters
    if(fx->GetErrorString().Len()>0)
    {
     textCalculatorOutput->SetValue(fx->GetErrorString()); //Error due to syntax errors
@@ -265,7 +269,23 @@ void ERYAProfilingdialogERYACalculator::OnFunctionVar( wxCommandEvent& event )
     if(fx->IsFunctionDefined())
     {
      textCalculatorOutput->SetValue(this->GetConversion(fx->GetFyxEval(fdata),false)); // Get the y = f(x) value
-     LastFyx = fx->GetFyxEval(fdata);
+     LastVariables.Clear(); // Dump Variables data
+     for(int i=0; i<fx->GetOnlyConstants().GetCount(); i++)
+     {
+       wxString temp = fx->GetOnlyConstants().Item(i).GetName() + wxT(" = ") + this->GetConversion(fx->GetOnlyConstants().Item(i).GetValue(),false);
+       if (i != (fx->GetOnlyConstants().GetCount()-1))
+        temp = temp + wxT(",");
+       LastVariables = LastVariables + temp + wxT(" ");
+     }
+     if((fx->GetOnlyConstants().GetCount()>0) && (fx->GetOnlyVariables().GetCount()>0) )
+       LastVariables = LastVariables + wxT(", ");
+     for(int j=0; j<fx->GetOnlyVariables().GetCount(); j++)
+     {
+       wxString temp = fx->GetOnlyVariables().Item(j).GetName() + wxT(" = ") + this->GetConversion(fx->GetOnlyVariables().Item(j).GetValue(),false);
+       if (j != (fx->GetOnlyVariables().GetCount()-1))
+        temp = temp + wxT(",");
+       LastVariables = LastVariables + temp + wxT(" ");
+     }
     }
     else
     {
@@ -317,6 +337,23 @@ void ERYAProfilingdialogERYACalculator::OnReturn( wxCommandEvent& event )
  {
   textCalculatorOutput->SetValue(this->GetConversion(fx->GetAnsEval(),false));
   LastAns = fx->GetAnsEval();
+  LastVariables.Clear();
+     for(int i=0; i<fx->GetOnlyConstants().GetCount(); i++)
+     {
+       wxString temp = fx->GetOnlyConstants().Item(i).GetName() + wxT(" = ") + this->GetConversion(fx->GetOnlyConstants().Item(i).GetValue(),false);
+       if (i != (fx->GetOnlyConstants().GetCount()-1))
+        temp = temp + wxT(",");
+       LastVariables = LastVariables + temp + wxT(" ");
+     }
+     if((fx->GetOnlyConstants().GetCount()>0) && (fx->GetOnlyVariables().GetCount()>0) )
+       LastVariables = LastVariables + wxT(", ");
+     for(int j=0; j<fx->GetOnlyVariables().GetCount(); j++)
+     {
+       wxString temp = fx->GetOnlyVariables().Item(j).GetName() + wxT(" = ") + this->GetConversion(fx->GetOnlyVariables().Item(j).GetValue(),false);
+       if (j != (fx->GetOnlyVariables().GetCount()-1))
+        temp = temp + wxT(",");
+       LastVariables = LastVariables + temp + wxT(" ");
+     }
  }
  delete fx;
 }
@@ -340,16 +377,41 @@ void ERYAProfilingdialogERYACalculator::OnAssign( wxCommandEvent& event )
 
 void ERYAProfilingdialogERYACalculator::OnDisplayProgram( wxCommandEvent& event )
 {
- textCalculatorInput->Clear();
- wxString data = wxT("FxAns = ") + this->GetConversion(LastFyx,false);
- textCalculatorInput->WriteText(data);
+ textCalculatorOutput->Clear();
+ textCalculatorOutput->WriteText(LastVariables);
 }
 
 void ERYAProfilingdialogERYACalculator::OnDisplayAnswer( wxCommandEvent& event )
 {
- textCalculatorInput->Clear();
- wxString data = wxT("Ans = ") + this->GetConversion(LastAns,false);
- textCalculatorInput->WriteText(data);
+ wxTextEntryDialog *dialog = new wxTextEntryDialog(this,wxT("Vector Numerical Values"),wxT("Fill up to 16 numerical values, separated by commas, to replace the \"fnvar\" vector values."),wxEmptyString); //Expect a valid variable
+ if (dialog->ShowModal() == wxID_OK)
+ {
+  wxString data = dialog->GetValue();
+  TextLineParser ListVector(data,wxT(","));
+  wxArrayString TokenVector = ListVector.GetUnexcluded();
+  if(TokenVector.GetCount()>0 && TokenVector.GetCount()<17)
+  {
+   LastVector.clear();
+   for(int i=0; i<TokenVector.GetCount(); i++)
+   {
+    double temp;
+    if(TokenVector.Item(i).ToDouble(&temp))
+    {
+      LastVector.push_back(temp);
+    }
+    else
+    {
+     textCalculatorOutput->SetValue(wxT("Declaration Error: Expected a numerical value for all vector terms")); // Error due to non-numeric input.
+    }
+   }
+   textCalculatorOutput->SetValue(this->GetConversion(0.0,false));
+  }
+  else
+  {
+    textCalculatorOutput->SetValue(wxT("Declaration Error: ERYA Macro cannot handle a vector with more than 16 elements.")); // Error due to non-numeric input.
+  }
+ }
+ delete dialog;
 }
 
 void ERYAProfilingdialogERYACalculator::OnLess( wxCommandEvent& event )
@@ -366,7 +428,7 @@ void ERYAProfilingdialogERYACalculator::OnMore( wxCommandEvent& event )
 
 void ERYAProfilingdialogERYACalculator::OnVectorMacro( wxCommandEvent& event )
 {
- wxString data = wxT("fnvar");
+ wxString data = wxT("fnvar =");
  textCalculatorInput->WriteText(data);
 }
 
