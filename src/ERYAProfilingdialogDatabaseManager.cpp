@@ -19,7 +19,7 @@
 
 #include "ERYAProfilingdialogAddDatabase.h"
 #include "ERYAProfilingdialogDatabaseManager.h"
-#include "ERYAProfilingdialogHelp.h"
+#include "ERYAProfilingdialogRemark.h"
 #include "ERYAProfilingERYAProfilingMain.h"
 #include "PlotLibrary.h"
 #include "FileLibrary.h"
@@ -245,6 +245,8 @@ void ERYAProfilingdialogDatabaseManager::OnDatabaseCancel( wxCommandEvent& event
 
 void ERYAProfilingdialogDatabaseManager::OnDatabaseHelp( wxCommandEvent& event )
 {
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("Database.html"));
- help->ShowModal();
+ infoRemark = MainDatabase.GetInfo();
+ ERYAProfilingdialogRemark *remark = new ERYAProfilingdialogRemark(this,infoRemark,1);
+ remark->ShowModal();
+ MainDatabase.SetInfo(infoRemark);
 }

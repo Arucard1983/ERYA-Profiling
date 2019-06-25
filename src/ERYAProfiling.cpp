@@ -90,9 +90,6 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	menuERYAProfilingMain->Append( menuERYATool, wxT("Tools") );
 
 	menuERYAHelp = new wxMenu();
-	wxMenuItem* menuERYAHelpManual;
-	menuERYAHelpManual = new wxMenuItem( menuERYAHelp, wxID_ANY, wxString( wxT("User Guide Manual") ) , wxT("Open the User Manual"), wxITEM_NORMAL );
-	menuERYAHelp->Append( menuERYAHelpManual );
 
 	wxMenuItem* menuERYAHelpAbout;
 	menuERYAHelpAbout = new wxMenuItem( menuERYAHelp, wxID_ANY, wxString( wxT("About ERYA Profiling") ) , wxT("Display program version"), wxITEM_NORMAL );
@@ -131,7 +128,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	buttonElementSave = new wxButton( tabElements, wxID_ANY, wxT("Save Template"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerElementsTools->Add( buttonElementSave, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 
-	buttonElementHelp = new wxButton( tabElements, wxID_ANY, wxT("Help"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonElementHelp = new wxButton( tabElements, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerElementsTools->Add( buttonElementHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 
 
@@ -233,7 +230,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	buttonLayerSave = new wxButton( tabLayers, wxID_ANY, wxT("Save Table"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerLayersTools->Add( buttonLayerSave, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonLayerHelp = new wxButton( tabLayers, wxID_ANY, wxT("Help"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonLayerHelp = new wxButton( tabLayers, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerLayersTools->Add( buttonLayerHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
@@ -277,7 +274,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	wxBoxSizer* sizerDetector;
 	sizerDetector = new wxBoxSizer( wxVERTICAL );
 
-	labelDetectorInfo = new wxStaticText( tabDetector, wxID_ANY, wxT("Configure the Detector main physical parameters here. Optionally, define the ressonance model."), wxDefaultPosition, wxDefaultSize, 0 );
+	labelDetectorInfo = new wxStaticText( tabDetector, wxID_ANY, wxT("Configure the Detector main physical parameters here. Optionally, define the resonance model."), wxDefaultPosition, wxDefaultSize, 0 );
 	labelDetectorInfo->Wrap( -1 );
 	sizerDetector->Add( labelDetectorInfo, 0, wxALL|wxEXPAND, 5 );
 
@@ -287,7 +284,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	buttonDetectorClear = new wxButton( tabDetector, wxID_ANY, wxT("Clear Detector"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerDetectorTools->Add( buttonDetectorClear, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonDetectorReset = new wxButton( tabDetector, wxID_ANY, wxT("Clear Ressonance"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonDetectorReset = new wxButton( tabDetector, wxID_ANY, wxT("Clear Resonance"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerDetectorTools->Add( buttonDetectorReset, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	buttonDetectorFunction = new wxButton( tabDetector, wxID_ANY, wxT("Clear Custom"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -299,7 +296,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	buttonDetectorSave = new wxButton( tabDetector, wxID_ANY, wxT("Save Profile"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerDetectorTools->Add( buttonDetectorSave, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonDetectorHelp = new wxButton( tabDetector, wxID_ANY, wxT("Help"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonDetectorHelp = new wxButton( tabDetector, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerDetectorTools->Add( buttonDetectorHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
@@ -363,26 +360,26 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	sizerDetector->Add( sizerDetectorParameters, 1, wxEXPAND, 5 );
 
 	wxStaticBoxSizer* sizerLorentzianRessonance;
-	sizerLorentzianRessonance = new wxStaticBoxSizer( new wxStaticBox( tabDetector, wxID_ANY, wxT("Lorentzian Ressonance Setup") ), wxVERTICAL );
+	sizerLorentzianRessonance = new wxStaticBoxSizer( new wxStaticBox( tabDetector, wxID_ANY, wxT("Lorentzian Resonance Setup") ), wxVERTICAL );
 
 	wxGridSizer* sizerMainLorentzian;
 	sizerMainLorentzian = new wxGridSizer( 2, 6, 0, 0 );
 
-	labelRessonanceWidth = new wxStaticText( tabDetector, wxID_ANY, wxT("Ressonance Width (keV)"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelRessonanceWidth = new wxStaticText( tabDetector, wxID_ANY, wxT("Resonance Width (keV)"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelRessonanceWidth->Wrap( -1 );
 	sizerMainLorentzian->Add( labelRessonanceWidth, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	textRessonanceWidth = new wxTextCtrl( tabDetector, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	sizerMainLorentzian->Add( textRessonanceWidth, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	labelRessonancePeak = new wxStaticText( tabDetector, wxID_ANY, wxT("Ressonance Peak (milibarn)"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelRessonancePeak = new wxStaticText( tabDetector, wxID_ANY, wxT("Resonance Peak (milibarn)"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelRessonancePeak->Wrap( -1 );
 	sizerMainLorentzian->Add( labelRessonancePeak, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	textRessonancePeak = new wxTextCtrl( tabDetector, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	sizerMainLorentzian->Add( textRessonancePeak, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	labelRessonanceEnergy = new wxStaticText( tabDetector, wxID_ANY, wxT("Ressonance Energy (keV)"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelRessonanceEnergy = new wxStaticText( tabDetector, wxID_ANY, wxT("Resonance Energy (keV)"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelRessonanceEnergy->Wrap( -1 );
 	sizerMainLorentzian->Add( labelRessonanceEnergy, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
@@ -395,14 +392,14 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	checkRessonanceRange = new wxCheckBox( tabDetector, wxID_ANY, wxT("Define a Limited Energy Range ?"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerMainLorentzian->Add( checkRessonanceRange, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	labelRessonanceMinimum = new wxStaticText( tabDetector, wxID_ANY, wxT("Minimum Ressonance\nEnergy (keV)"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelRessonanceMinimum = new wxStaticText( tabDetector, wxID_ANY, wxT("Minimum Resonance\nEnergy (keV)"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelRessonanceMinimum->Wrap( -1 );
 	sizerMainLorentzian->Add( labelRessonanceMinimum, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	textRessonanceMinimum = new wxTextCtrl( tabDetector, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	sizerMainLorentzian->Add( textRessonanceMinimum, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	labelRessonanceMaximum = new wxStaticText( tabDetector, wxID_ANY, wxT("Maximum Ressonance\nEnergy (keV)"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelRessonanceMaximum = new wxStaticText( tabDetector, wxID_ANY, wxT("Maximum Resonance\nEnergy (keV)"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelRessonanceMaximum->Wrap( -1 );
 	sizerMainLorentzian->Add( labelRessonanceMaximum, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
@@ -416,12 +413,12 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	sizerDetector->Add( sizerLorentzianRessonance, 1, wxEXPAND, 5 );
 
 	wxStaticBoxSizer* sizerCustomRessonance;
-	sizerCustomRessonance = new wxStaticBoxSizer( new wxStaticBox( tabDetector, wxID_ANY, wxT("Custom Function Ressonance Setup") ), wxVERTICAL );
+	sizerCustomRessonance = new wxStaticBoxSizer( new wxStaticBox( tabDetector, wxID_ANY, wxT("Custom Function Resonance Setup") ), wxVERTICAL );
 
 	wxBoxSizer* sizerMainCustom;
 	sizerMainCustom = new wxBoxSizer( wxVERTICAL );
 
-	labelMainCustomInfo = new wxStaticText( tabDetector, wxID_ANY, wxT("Write down the algebric function that models the ressonance. When save the Detector profile, any custom function is also stored. Read the User Guide for more information."), wxDefaultPosition, wxDefaultSize, 0 );
+	labelMainCustomInfo = new wxStaticText( tabDetector, wxID_ANY, wxT("Write down the algebraic function that models the resonance. When save the Detector profile, any custom function is also stored. Read the User Guide for more information."), wxDefaultPosition, wxDefaultSize, 0 );
 	labelMainCustomInfo->Wrap( -1 );
 	sizerMainCustom->Add( labelMainCustomInfo, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxEXPAND, 5 );
 
@@ -434,9 +431,9 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 
 	sizerDetector->Add( sizerCustomRessonance, 0, wxEXPAND, 5 );
 
-	wxString radioRessonanceOptionChoices[] = { wxT("Without Ressonance (default)"), wxT("Select Lorentzian Ressonance"), wxT("Select Custom Function Ressonance") };
+	wxString radioRessonanceOptionChoices[] = { wxT("Without Resonance (default)"), wxT("Select Lorentzian Resonance"), wxT("Select Custom Function Resonance") };
 	int radioRessonanceOptionNChoices = sizeof( radioRessonanceOptionChoices ) / sizeof( wxString );
-	radioRessonanceOption = new wxRadioBox( tabDetector, wxID_ANY, wxT("Select Default Ressonance"), wxDefaultPosition, wxDefaultSize, radioRessonanceOptionNChoices, radioRessonanceOptionChoices, 3, wxRA_SPECIFY_ROWS );
+	radioRessonanceOption = new wxRadioBox( tabDetector, wxID_ANY, wxT("Select Default Resonance"), wxDefaultPosition, wxDefaultSize, radioRessonanceOptionNChoices, radioRessonanceOptionChoices, 3, wxRA_SPECIFY_ROWS );
 	radioRessonanceOption->SetSelection( 0 );
 	sizerDetector->Add( radioRessonanceOption, 0, wxALL|wxEXPAND, 5 );
 
@@ -444,7 +441,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	tabDetector->SetSizer( sizerDetector );
 	tabDetector->Layout();
 	sizerDetector->Fit( tabDetector );
-	tabERYAProfilingMain->AddPage( tabDetector, wxT("Detector and Ressonances"), true );
+	tabERYAProfilingMain->AddPage( tabDetector, wxT("Detector and Resonances"), true );
 	tabOutput = new wxPanel( tabERYAProfilingMain, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* sizerOutput;
 	sizerOutput = new wxBoxSizer( wxVERTICAL );
@@ -465,7 +462,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	buttonOutputImageSave = new wxButton( tabOutput, wxID_ANY, wxT("Save as Image"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerOutputMainTools->Add( buttonOutputImageSave, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonOutputHelp = new wxButton( tabOutput, wxID_ANY, wxT("Help"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonOutputHelp = new wxButton( tabOutput, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerOutputMainTools->Add( buttonOutputHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
@@ -492,7 +489,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	sizerTableMainTools->SetFlexibleDirection( wxBOTH );
 	sizerTableMainTools->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
-	labelTabOutputMain = new wxStaticText( tabTable, wxID_ANY, wxT("Displays here the yield results on a spreadsheet table, accordling to the same results from the graphical output."), wxDefaultPosition, wxDefaultSize, 0 );
+	labelTabOutputMain = new wxStaticText( tabTable, wxID_ANY, wxT("Displays here the yield results on a spreadsheet table, according to the same results from the graphical output."), wxDefaultPosition, wxDefaultSize, 0 );
 	labelTabOutputMain->Wrap( -1 );
 	sizerTableMainTools->Add( labelTabOutputMain, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
 
@@ -502,7 +499,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	buttonTableDataSave = new wxButton( tabTable, wxID_ANY, wxT("Save Table Data"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerTableMainTools->Add( buttonTableDataSave, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonTableHelp = new wxButton( tabTable, wxID_ANY, wxT("Help"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonTableHelp = new wxButton( tabTable, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerTableMainTools->Add( buttonTableHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
@@ -552,14 +549,14 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	sizerLogMainTools->SetFlexibleDirection( wxBOTH );
 	sizerLogMainTools->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
-	labelLogOutputMain = new wxStaticText( panelLog, wxID_ANY, wxT("Displays all partial results intended for logging porpouses."), wxDefaultPosition, wxDefaultSize, 0 );
+	labelLogOutputMain = new wxStaticText( panelLog, wxID_ANY, wxT("Displays all partial results intended for logging purpose."), wxDefaultPosition, wxDefaultSize, 0 );
 	labelLogOutputMain->Wrap( -1 );
 	sizerLogMainTools->Add( labelLogOutputMain, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	buttonLogDataSave = new wxButton( panelLog, wxID_ANY, wxT("Save Log Data"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerLogMainTools->Add( buttonLogDataSave, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonLogHelp = new wxButton( panelLog, wxID_ANY, wxT("Help"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonLogHelp = new wxButton( panelLog, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerLogMainTools->Add( buttonLogHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
@@ -624,7 +621,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	buttonMainLog = new wxButton( this, wxID_ANY, wxT("Export Log to File"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerERYAMainTools->Add( buttonMainLog, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonMainHelp = new wxButton( this, wxID_ANY, wxT("Open User Guide"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonMainHelp = new wxButton( this, wxID_ANY, wxT("Quit ERYA Profiling"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerERYAMainTools->Add( buttonMainHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
@@ -652,7 +649,6 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	this->Connect( menuERYAToolSRIM->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ERYAProfilingMain::OnSRIMImport ) );
 	this->Connect( menuERYAToolLabView->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ERYAProfilingMain::OnLabViewImport ) );
 	this->Connect( menuERYAToolCalculator->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ERYAProfilingMain::OnCalculator ) );
-	this->Connect( menuERYAHelpManual->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ERYAProfilingMain::OnHelpManual ) );
 	this->Connect( menuERYAHelpAbout->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ERYAProfilingMain::OnHelpAbout ) );
 	spinNumberElements->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( ERYAProfilingMain::OnNumberElementSpin ), NULL, this );
 	spinNumberElements->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ERYAProfilingMain::OnNumberElementEnter ), NULL, this );
@@ -679,7 +675,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	buttonOutputDataImport->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnOutputData ), NULL, this );
 	buttonOutputImageSave->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnOutputImage ), NULL, this );
 	buttonOutputHelp->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnOutputHelp ), NULL, this );
-        buttonTableDataImport->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnImportData ), NULL, this );
+    buttonTableDataImport->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnImportData ), NULL, this );
 	buttonTableDataSave->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnTableSave ), NULL, this );
 	buttonTableHelp->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnTableHelp ), NULL, this );
 	buttonLogDataSave->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnLogSave ), NULL, this );
@@ -709,7 +705,6 @@ ERYAProfilingMain::~ERYAProfilingMain()
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ERYAProfilingMain::OnSRIMImport ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ERYAProfilingMain::OnLabViewImport ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ERYAProfilingMain::OnCalculator ) );
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ERYAProfilingMain::OnHelpManual ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ERYAProfilingMain::OnHelpAbout ) );
 	spinNumberElements->Disconnect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( ERYAProfilingMain::OnNumberElementSpin ), NULL, this );
 	spinNumberElements->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ERYAProfilingMain::OnNumberElementEnter ), NULL, this );
@@ -741,7 +736,7 @@ ERYAProfilingMain::~ERYAProfilingMain()
 	buttonTableHelp->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnTableHelp ), NULL, this );
 	buttonLogDataSave->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnLogSave ), NULL, this );
 	buttonLogHelp->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnLogHelp ), NULL, this );
-        buttonMainNew->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnMainNew ), NULL, this );
+    buttonMainNew->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnMainNew ), NULL, this );
 	buttonMainAdvanced->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnMainAdvanced ), NULL, this );
 	buttonMainRun->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnMainRun ), NULL, this );
 	buttonMainSave->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnMainSave ), NULL, this );
@@ -887,7 +882,7 @@ dialogDatabaseManager::dialogDatabaseManager( wxWindow* parent, wxWindowID id, c
 	buttonCancel = new wxButton( this, wxID_ANY, wxT("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerButtons->Add( buttonCancel, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonHelp = new wxButton( this, wxID_ANY, wxT("Help"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonHelp = new wxButton( this, wxID_ANY, wxT("Get Info"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerButtons->Add( buttonHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
@@ -1053,7 +1048,7 @@ dialogAddDatabase::dialogAddDatabase( wxWindow* parent, wxWindowID id, const wxS
 	buttonEditCancel = new wxButton( this, wxID_ANY, wxT("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerEditButtons->Add( buttonEditCancel, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonEditHelp = new wxButton( this, wxID_ANY, wxT("Help"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonEditHelp = new wxButton( this, wxID_ANY, wxT("Get Info"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerEditButtons->Add( buttonEditHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
@@ -1173,7 +1168,7 @@ dialogDetectorSetup::dialogDetectorSetup( wxWindow* parent, wxWindowID id, const
 	buttonEficiencyCancel = new wxButton( this, wxID_ANY, wxT("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerButtonSetup->Add( buttonEficiencyCancel, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonEficiencyHelp = new wxButton( this, wxID_ANY, wxT("Help"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonEficiencyHelp = new wxButton( this, wxID_ANY, wxT("Get Info"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerButtonSetup->Add( buttonEficiencyHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
@@ -1418,7 +1413,7 @@ dialogZieglerParameters::dialogZieglerParameters( wxWindow* parent, wxWindowID i
 	buttonZieglerCancel = new wxButton( this, wxID_ANY, wxT("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerZieglerButtons->Add( buttonZieglerCancel, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonZieglerHelp = new wxButton( this, wxID_ANY, wxT("Help"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonZieglerHelp = new wxButton( this, wxID_ANY, wxT("get Info"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerZieglerButtons->Add( buttonZieglerHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
@@ -1467,70 +1462,6 @@ dialogZieglerParameters::~dialogZieglerParameters()
 	buttonZieglerOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogZieglerParameters::OnZieglerOK ), NULL, this );
 	buttonZieglerCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogZieglerParameters::OnZieglerCancel ), NULL, this );
 	buttonZieglerHelp->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogZieglerParameters::OnZieglerHelp ), NULL, this );
-
-}
-
-dialogHelp::dialogHelp( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
-{
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
-
-	wxBoxSizer* sizerHelpViewer;
-	sizerHelpViewer = new wxBoxSizer( wxVERTICAL );
-
-	pageHelpViewer = new wxHtmlWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHW_SCROLLBAR_AUTO );
-	sizerHelpViewer->Add( pageHelpViewer, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxEXPAND, 5 );
-
-	lineHelpViewer = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	sizerHelpViewer->Add( lineHelpViewer, 0, wxEXPAND | wxALL, 5 );
-
-	wxGridSizer* sizerHelpButtons;
-	sizerHelpButtons = new wxGridSizer( 1, 6, 0, 0 );
-
-	buttonHelpMain = new wxButton( this, wxID_ANY, wxT("Main Page"), wxDefaultPosition, wxDefaultSize, 0 );
-	sizerHelpButtons->Add( buttonHelpMain, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
-
-	buttonHelpIndex = new wxButton( this, wxID_ANY, wxT("Index"), wxDefaultPosition, wxDefaultSize, 0 );
-	sizerHelpButtons->Add( buttonHelpIndex, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
-
-	buttonHelpReadme = new wxButton( this, wxID_ANY, wxT("Read Me"), wxDefaultPosition, wxDefaultSize, 0 );
-	sizerHelpButtons->Add( buttonHelpReadme, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
-
-	buttonHelpBack = new wxButton( this, wxID_ANY, wxT("Back"), wxDefaultPosition, wxDefaultSize, 0 );
-	sizerHelpButtons->Add( buttonHelpBack, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
-
-	buttonHelpForward = new wxButton( this, wxID_ANY, wxT("Forward"), wxDefaultPosition, wxDefaultSize, 0 );
-	sizerHelpButtons->Add( buttonHelpForward, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
-
-	buttonHelpClose = new wxButton( this, wxID_ANY, wxT("Close"), wxDefaultPosition, wxDefaultSize, 0 );
-	sizerHelpButtons->Add( buttonHelpClose, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
-
-
-	sizerHelpViewer->Add( sizerHelpButtons, 0, wxEXPAND, 5 );
-
-
-	this->SetSizer( sizerHelpViewer );
-	this->Layout();
-
-	this->Centre( wxBOTH );
-
-	// Connect Events
-	buttonHelpMain->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogHelp::OnHelpMain ), NULL, this );
-	buttonHelpIndex->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogHelp::OnHelpIndex ), NULL, this );
-	buttonHelpReadme->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogHelp::OnHelpReadme ), NULL, this );
-	buttonHelpBack->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogHelp::OnHelpBack ), NULL, this );
-	buttonHelpForward->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogHelp::OnHelpForward ), NULL, this );
-	buttonHelpClose->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogHelp::OnHelpClose ), NULL, this );
-}
-
-dialogHelp::~dialogHelp()
-{
-	// Disconnect Events
-	buttonHelpMain->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogHelp::OnHelpMain ), NULL, this );
-	buttonHelpIndex->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogHelp::OnHelpIndex ), NULL, this );
-	buttonHelpReadme->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogHelp::OnHelpReadme ), NULL, this );
-	buttonHelpBack->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogHelp::OnHelpBack ), NULL, this );
-	buttonHelpForward->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogHelp::OnHelpForward ), NULL, this );
-	buttonHelpClose->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogHelp::OnHelpClose ), NULL, this );
 
 }
 
@@ -1595,7 +1526,7 @@ dialogERYACalculator::dialogERYACalculator( wxWindow* parent, wxWindowID id, con
 	buttonClearInput = new wxButton( this, wxID_ANY, wxT("ClrProg"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerCalculatorTools->Add( buttonClearInput, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonHelp = new wxButton( this, wxID_ANY, wxT("Help"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonHelp = new wxButton( this, wxID_ANY, wxT("Quit"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerCalculatorTools->Add( buttonHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	buttonAsinh = new wxButton( this, wxID_ANY, wxT("asinh"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -2380,7 +2311,7 @@ dialogSetup::dialogSetup( wxWindow* parent, wxWindowID id, const wxString& title
 	sizerSetup->Add( lineSetupButton, 0, wxEXPAND|wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 
 	wxGridSizer* sizerSetupButtons;
-	sizerSetupButtons = new wxGridSizer( 1, 5, 0, 0 );
+	sizerSetupButtons = new wxGridSizer( 1, 4, 0, 0 );
 
 	buttonDefaultSave = new wxButton( this, wxID_ANY, wxT("Save"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerSetupButtons->Add( buttonDefaultSave, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
@@ -2393,9 +2324,6 @@ dialogSetup::dialogSetup( wxWindow* parent, wxWindowID id, const wxString& title
 
 	buttonDefaultQuit = new wxButton( this, wxID_ANY, wxT("Quit"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerSetupButtons->Add( buttonDefaultQuit, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
-
-    buttonDefaultHelp = new wxButton( this, wxID_ANY, wxT("Help"), wxDefaultPosition, wxDefaultSize, 0 );
-	sizerSetupButtons->Add( buttonDefaultHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	sizerSetup->Add( sizerSetupButtons, 0, wxEXPAND, 5 );
 
@@ -2410,7 +2338,6 @@ dialogSetup::dialogSetup( wxWindow* parent, wxWindowID id, const wxString& title
 	buttonDefaultReset->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogSetup::OnDefaultReset ), NULL, this );
 	buttonDefaultDelete->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogSetup::OnDefaultDelete ), NULL, this );
 	buttonDefaultQuit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogSetup::OnDefaultQuit ), NULL, this );
-    buttonDefaultHelp->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogSetup::OnDefaultHelp ), NULL, this );
 }
 
 dialogSetup::~dialogSetup()
@@ -2420,7 +2347,6 @@ dialogSetup::~dialogSetup()
 	buttonDefaultReset->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogSetup::OnDefaultReset ), NULL, this );
 	buttonDefaultDelete->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogSetup::OnDefaultDelete ), NULL, this );
 	buttonDefaultQuit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogSetup::OnDefaultQuit ), NULL, this );
-    buttonDefaultHelp->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogSetup::OnDefaultHelp ), NULL, this );
 }
 
 
@@ -2473,7 +2399,7 @@ dialogR33DataImport::dialogR33DataImport( wxWindow* parent, wxWindowID id, const
 	buttonR33DataReset = new wxButton( this, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerR33DataButtons->Add( buttonR33DataReset, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonR33DataHelp = new wxButton( this, wxID_ANY, wxT("Help"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonR33DataHelp = new wxButton( this, wxID_ANY, wxT("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerR33DataButtons->Add( buttonR33DataHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	sizerDataImport->Add( sizerR33DataButtons, 0, wxEXPAND, 5 );
@@ -2553,7 +2479,7 @@ dialogXlsxDataImport::dialogXlsxDataImport( wxWindow* parent, wxWindowID id, con
 	buttonXlsxDataReset = new wxButton( this, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerXlsxDataButtons->Add( buttonXlsxDataReset, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonXlsxDataHelp = new wxButton( this, wxID_ANY, wxT("Help"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonXlsxDataHelp = new wxButton( this, wxID_ANY, wxT("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerXlsxDataButtons->Add( buttonXlsxDataHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	sizerDataImport->Add( sizerXlsxDataButtons, 0, wxEXPAND, 5 );
@@ -2679,7 +2605,7 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	buttonAdvancedDefault = new wxButton( this, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerERYAProfilingTools->Add( buttonAdvancedDefault, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonAdvancedHelp = new wxButton( this, wxID_ANY, wxT("Help"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonAdvancedHelp = new wxButton( this, wxID_ANY, wxT("Reset & Quit"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerERYAProfilingTools->Add( buttonAdvancedHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
@@ -2705,5 +2631,51 @@ dialogERYAProfilingAdvanced::~dialogERYAProfilingAdvanced()
 	buttonAdvancedDefault->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogERYAProfilingAdvanced::OnAdvancedDefault ), NULL, this );
 	buttonAdvancedCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogERYAProfilingAdvanced::OnAdvancedCancel ), NULL, this );
 	buttonAdvancedHelp->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogERYAProfilingAdvanced::OnAdvancedHelp ), NULL, this );
+
+}
+
+dialogRemark::dialogRemark( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxBoxSizer* sizerRemark;
+	sizerRemark = new wxBoxSizer( wxVERTICAL );
+
+	textRemark = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxTE_MULTILINE|wxTE_RICH|wxTE_WORDWRAP );
+	sizerRemark->Add( textRemark, 1, wxALL|wxEXPAND, 5 );
+
+	wxGridSizer* sizerRemarkButton;
+	sizerRemarkButton = new wxGridSizer( 1, 3, 0, 0 );
+
+	buttonSave = new wxButton( this, wxID_ANY, wxT("Save"), wxDefaultPosition, wxDefaultSize, 0 );
+	sizerRemarkButton->Add( buttonSave, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	buttonClear = new wxButton( this, wxID_ANY, wxT("Clear"), wxDefaultPosition, wxDefaultSize, 0 );
+	sizerRemarkButton->Add( buttonClear, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	buttonQuit = new wxButton( this, wxID_ANY, wxT("Quit"), wxDefaultPosition, wxDefaultSize, 0 );
+	sizerRemarkButton->Add( buttonQuit, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+
+	sizerRemark->Add( sizerRemarkButton, 0, wxEXPAND, 5 );
+
+
+	this->SetSizer( sizerRemark );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	buttonSave->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogRemark::OnRemarkSave ), NULL, this );
+	buttonClear->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogRemark::OnRemarkClear ), NULL, this );
+	buttonQuit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogRemark::OnRemarkQuit ), NULL, this );
+}
+
+dialogRemark::~dialogRemark()
+{
+	// Disconnect Events
+	buttonSave->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogRemark::OnRemarkSave ), NULL, this );
+	buttonClear->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogRemark::OnRemarkClear ), NULL, this );
+	buttonQuit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogRemark::OnRemarkQuit ), NULL, this );
 
 }

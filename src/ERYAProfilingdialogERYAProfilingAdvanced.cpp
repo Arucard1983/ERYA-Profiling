@@ -1,6 +1,5 @@
 #include "ERYAProfilingdialogERYAProfilingAdvanced.h"
 #include "ERYAProfilingERYAProfilingMain.h"
-#include "ERYAProfilingdialogHelp.h"
 
 ERYAProfilingdialogERYAProfilingAdvanced::ERYAProfilingdialogERYAProfilingAdvanced( wxWindow* parent )
 :
@@ -65,6 +64,8 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedCancel( wxCommandEvent&
 
 void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedHelp( wxCommandEvent& event )
 {
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("Advanced.html"));
- help->ShowModal();
+ // Call the parent frame
+ ERYAProfilingERYAProfilingMain *Parent = (ERYAProfilingERYAProfilingMain *) GetParent();
+ Parent->SetPrecisionParameters(10,60,10,70,100,284,1,false);
+ Close();
 }

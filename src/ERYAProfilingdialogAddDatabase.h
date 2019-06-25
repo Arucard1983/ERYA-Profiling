@@ -24,6 +24,7 @@ class ERYAProfilingdialogAddDatabase : public dialogAddDatabase
 	private:
 	int Units,Angles,Profile;
 	bool IgnoreLine;
+	wxString infoRemark;
 	protected:
 		// Handlers for dialogAddDatabase events.
 		void OnDatabaseSelect( wxGridRangeSelectEvent& event );
@@ -42,6 +43,7 @@ class ERYAProfilingdialogAddDatabase : public dialogAddDatabase
 	    void SetSelectAngle(int SigmaAngle){Angles = SigmaAngle; return;}
 	    void SetSelectMode(int SigmaProfile){Profile = SigmaProfile; return;}
 	    void SetIgnoreInvalidLine(bool ParserErrorDisable){IgnoreLine = ParserErrorDisable; return;}
+	    void SetRemark(wxString &info){infoRemark = info; return;};
 
 	//// end generated class members
 

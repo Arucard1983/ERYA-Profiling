@@ -31,9 +31,10 @@ class ElementDatabase
    wxArrayString dataEnergyError;
    wxArrayString dataSigma;
    wxArrayString dataSigmaError;
+   wxString infoElement;
    public:
    ElementDatabase() {};
-   ElementDatabase(wxString Name, wxString Gamma, wxString Number, wxString Abundance, wxString Atomic, wxString Isotopic, wxArrayString Energy, wxArrayString EnergyError, wxArrayString Sigma, wxArrayString SigmaError);
+   ElementDatabase(wxString Name, wxString Gamma, wxString Number, wxString Abundance, wxString Atomic, wxString Isotopic, wxArrayString Energy, wxArrayString EnergyError, wxArrayString Sigma, wxArrayString SigmaError, wxString Info);
    ElementDatabase(wxTextCtrl* EditElement, wxTextCtrl* EditGamma, wxTextCtrl* EditNumber, wxTextCtrl* EditAbundance, wxTextCtrl* EditAtomic, wxTextCtrl* EditIsotopic, wxGrid* DataEditor);
    bool SetElement(wxString NewName){ dataEditElement = NewName; return true;};
    bool CheckElement();
@@ -47,7 +48,9 @@ class ElementDatabase
    wxArrayString GetEnergyError(){return dataEnergyError;};
    wxArrayString GetSigma(){return dataSigma;};
    wxArrayString GetSigmaError(){return dataSigmaError;};
-   bool GetAllElementInfo(wxTextCtrl* &SetElement, wxTextCtrl* &SetGammaPeak, wxTextCtrl* &SetNumber, wxTextCtrl* &SetAbundance, wxTextCtrl* &SetMass, wxTextCtrl* &SetIsotopic, wxGrid* &SetEnergySigmaErrorTable);
+   void SetInfo(wxString f){infoElement = f; return;};
+   wxString GetInfo(){return infoElement;};
+   bool GetAllElementInfo(wxTextCtrl* &SetElement, wxTextCtrl* &SetGammaPeak, wxTextCtrl* &SetNumber, wxTextCtrl* &SetAbundance, wxTextCtrl* &SetMass, wxTextCtrl* &SetIsotopic, wxString &SetInfo, wxGrid* &SetEnergySigmaErrorTable);
 };
 
 class ElementDatabaseArray : public ElementDatabaseList
@@ -56,6 +59,7 @@ class ElementDatabaseArray : public ElementDatabaseList
   int CharToNumber(wxString c);
   double StringToNumber(wxString s);
   bool SwapStrings(wxString a, wxString b);
+  wxString infoDatabase;
   public:
   ElementDatabaseArray(){};
   bool NewElement(ElementDatabase CandidateElement, bool Overwrite);
@@ -67,6 +71,8 @@ class ElementDatabaseArray : public ElementDatabaseList
   bool ResetElementGammaMenu(wxChoice* &ElementList, wxChoice* &GammaPeakList){ return  this->RebuildElementGammaMenu(ElementList, GammaPeakList, -1); };
   wxArrayString GetAllListElements();
   wxArrayString GetAllListGammaPeaks(wxString SearchElement);
+  void SetInfo(wxString f){infoDatabase = f; return;};
+  wxString GetInfo(){return infoDatabase;};
   bool SortElementDatabase();
 };
 
@@ -77,15 +83,18 @@ class DetectorParameters
    wxString DetectorFunction;
    wxArrayString DetectorEnergy;
    wxArrayString DetectorEfficiency;
+   wxString infoDetector;
   public:
    DetectorParameters(){};
-   DetectorParameters(wxTextCtrl* textFunctionEficiency, wxGrid* tableConstantEficiency);
+   DetectorParameters(wxTextCtrl* textFunctionEficiency, wxGrid* tableConstantEficiency, wxString &info);
    wxString GetDetectorFunction(){return DetectorFunction;};
    wxArrayString GetDetectorEnergy(){return DetectorEnergy;};
    wxArrayString GetDetectorEfficiency(){return DetectorEfficiency;};
    void SetDetectorFunction(wxString f){ DetectorFunction = f; return;};
    void AddEnergyEfficiencyData(wxString Energy, wxString Efficiency){ DetectorEnergy.Add(Energy); DetectorEfficiency.Add(Efficiency); return;};
    bool GetDisplay(wxTextCtrl* &SetDetectorFunction, wxGrid* &DetectorTable);
+   void SetInfo(wxString f){infoDetector = f; return;};
+   wxString GetInfo(){return infoDetector;};
    void Clear();
 };
 
@@ -143,10 +152,11 @@ class ZieglerParameters
    wxArrayString ZieglerBloch;
    wxString ZieglerVersion;
    wxString ZieglerFunction;
+   wxString infoZiegler;
   public:
    ZieglerParameters(){};
-   ZieglerParameters( wxChoice* choiceZieglerVersion, wxGrid* tableZieglerParameters);
-   ZieglerParameters( wxTextCtrl* textZieglerFunction, wxChoice* choiceZieglerVersion, wxGrid* tableZieglerParameters);
+   ZieglerParameters( wxChoice* choiceZieglerVersion, wxGrid* tableZieglerParameters, wxString &info);
+   ZieglerParameters( wxTextCtrl* textZieglerFunction, wxChoice* choiceZieglerVersion, wxGrid* tableZieglerParameters, wxString &info);
    wxArrayString GetZieglerElements(){return ZieglerElements;};
    wxArrayString GetZieglerValues1(){return ZieglerValues1;};
    wxArrayString GetZieglerValues2(){return ZieglerValues2;};
@@ -175,6 +185,8 @@ class ZieglerParameters
    void Clear();
    void SetZieglerFunction(wxString f){ ZieglerFunction = f; return;};
    wxString GetZieglerFunction(){return ZieglerFunction;};
+   void SetInfo(wxString f){infoZiegler = f; return;};
+   wxString GetInfo(){return infoZiegler;};
 };
 
 

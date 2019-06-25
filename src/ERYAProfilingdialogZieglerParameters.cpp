@@ -8,7 +8,7 @@
  **************************************************************/
 
 #include "ERYAProfilingdialogZieglerParameters.h"
-#include "ERYAProfilingdialogHelp.h"
+#include "ERYAProfilingdialogRemark.h"
 #include "ERYAProfilingERYAProfilingMain.h"
 
 
@@ -189,7 +189,7 @@ wxFileDialog *OpenDialog = new wxFileDialog(this, wxT("Select the desired Ziegle
  wxString ERYAProfilingZieglerPath = OpenDialog->GetPath();
  wxFileName ZieglerFileName(ERYAProfilingZieglerPath);
  wxString Version = ZieglerFileName.GetExt();
- ZieglerParameters LocalParameters(textZieglerFunction, choiceZieglerVersion, tableZieglerParameters);
+ ZieglerParameters LocalParameters(textZieglerFunction, choiceZieglerVersion, tableZieglerParameters,infoRemark);
  int DefaultMode;
  if (tabZieglerTables->GetSelection()==1)
     DefaultMode = 0;
@@ -217,7 +217,7 @@ wxFileDialog *SaveDialog = new wxFileDialog(this, wxT("Save the current Ziegler 
  if (SaveDialog->ShowModal() == wxID_OK)
  {
   wxString ERYAProfilingZieglerPath = SaveDialog->GetPath();
-  ZieglerParameters LocalZiegler(textZieglerFunction, choiceZieglerVersion,tableZieglerParameters);
+  ZieglerParameters LocalZiegler(textZieglerFunction, choiceZieglerVersion,tableZieglerParameters,infoRemark);
   wxFileName ZieglerFileName(ERYAProfilingZieglerPath);
   wxString Version = ZieglerFileName.GetExt();
   int DefaultMode;
@@ -260,7 +260,7 @@ void ERYAProfilingdialogZieglerParameters::OnZieglerOK( wxCommandEvent& event )
   // Call the parent frame
  ERYAProfilingERYAProfilingMain *Parent = (ERYAProfilingERYAProfilingMain *) GetParent();
  // Get the current local frame data
- ZieglerParameters LocalZiegler(textZieglerFunction,choiceZieglerVersion,tableZieglerParameters);
+ ZieglerParameters LocalZiegler(textZieglerFunction,choiceZieglerVersion,tableZieglerParameters,infoRemark);
  // Store the local data from child frame to parent frame
  Parent->SaveZiegler(LocalZiegler);
  Parent->SaveSRIM(LocalSRIMTable);
@@ -277,7 +277,7 @@ void ERYAProfilingdialogZieglerParameters::OnZieglerOK( wxCommandEvent& event )
     // Call the parent frame
     ERYAProfilingERYAProfilingMain *Parent = (ERYAProfilingERYAProfilingMain *) GetParent();
     // Get the current local frame data
-    ZieglerParameters LocalZiegler(textZieglerFunction,choiceZieglerVersion,tableZieglerParameters);
+    ZieglerParameters LocalZiegler(textZieglerFunction,choiceZieglerVersion,tableZieglerParameters,infoRemark);
     // Store the local data from child frame to parent frame
     Parent->SaveZiegler(LocalZiegler);
     Parent->SaveSRIM(LocalSRIMTable);
@@ -305,6 +305,6 @@ Close();
 
 void ERYAProfilingdialogZieglerParameters::OnZieglerHelp( wxCommandEvent& event )
 {
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("Ziegler.html"));
- help->ShowModal();
+ ERYAProfilingdialogRemark *remark = new ERYAProfilingdialogRemark(this,infoRemark,3);
+ remark->ShowModal();
 }

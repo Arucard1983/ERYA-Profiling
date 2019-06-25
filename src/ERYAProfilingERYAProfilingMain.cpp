@@ -2,7 +2,7 @@
 #include "ERYAProfilingdialogDatabaseManager.h"
 #include "ERYAProfilingdialogDetectorSetup.h"
 #include "ERYAProfilingdialogZieglerParameters.h"
-#include "ERYAProfilingdialogHelp.h"
+#include "ERYAProfilingdialogRemark.h"
 #include "ERYAProfilingdialogERYACalculator.h"
 #include "ERYAProfilingwizardFirstRun.h"
 #include "ERYAProfilingwizardLabViewImport.h"
@@ -297,11 +297,6 @@ void ERYAProfilingERYAProfilingMain::OnCalculator( wxCommandEvent& event )
  calculator->ShowModal();
 }
 
-void ERYAProfilingERYAProfilingMain::OnHelpManual( wxCommandEvent& event )
-{
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("MainManual.html"));
- help->ShowModal();
-}
 
 void ERYAProfilingERYAProfilingMain::OnHelpAbout( wxCommandEvent& event )
 {
@@ -433,8 +428,10 @@ void ERYAProfilingERYAProfilingMain::OnElementSave( wxCommandEvent& event )
 
 void ERYAProfilingERYAProfilingMain::OnElementHelp( wxCommandEvent& event )
 {
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("ElementProfiler.html"));
- help->ShowModal();
+ this->GenerateTable(1);
+ this->GenerateTable();
+ this->GenerateResult();
+ this->GenerateLog();
 }
 
 void ERYAProfilingERYAProfilingMain::OnElementNameChoice( wxCommandEvent& event )
@@ -647,8 +644,9 @@ void ERYAProfilingERYAProfilingMain::OnLayerSave( wxCommandEvent& event )
 
 void ERYAProfilingERYAProfilingMain::OnLayerHelp( wxCommandEvent& event )
 {
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("LayerEditor.html"));
- help->ShowModal();
+ gridLayerEditor->ClearGrid();
+ this->GenerateLayer(1);
+ this->GenerateLayer();
 }
 
 void ERYAProfilingERYAProfilingMain::OnDetectorClear( wxCommandEvent& event )
@@ -735,8 +733,20 @@ void ERYAProfilingERYAProfilingMain::OnDetectorSave( wxCommandEvent& event )
 
 void ERYAProfilingERYAProfilingMain::OnDetectorHelp( wxCommandEvent& event )
 {
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("DetectorProfile.html"));
- help->ShowModal();
+ textBeamEnergy->Clear();
+ textTemperature->Clear();
+ textCharge->Clear();
+ textEnergyStep->Clear();
+ textMaximumEnergy->Clear();
+ textMinimumEnergy->Clear();
+ textRessonanceWidth->Clear();
+ textRessonancePeak->Clear();
+ textRessonanceEnergy->Clear();
+ checkRessonanceRange->SetValue(false);
+ textRessonanceMinimum->Clear();
+ textRessonanceMaximum->Clear();
+ textCustomRessonance->Clear();
+ radioRessonanceOption->SetSelection(0);
 }
 
 void ERYAProfilingERYAProfilingMain::OnRessonanceRange( wxCommandEvent& event )
@@ -1063,8 +1073,13 @@ void ERYAProfilingERYAProfilingMain::OnOutputImage( wxCommandEvent& event )
 
 void ERYAProfilingERYAProfilingMain::OnOutputHelp( wxCommandEvent& event )
 {
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("Graphics.html"));
- help->ShowModal();
+ renderOutputData->DelAllLayers(false,true);
+ gridTableData->ClearGrid();
+ gridLogData->ClearGrid();
+ this->GenerateLog(1);
+ this->GenerateLog();
+ this->GenerateResult(1);
+ this->GenerateResult();
 }
 
 void ERYAProfilingERYAProfilingMain::OnMainNew( wxCommandEvent& event )
@@ -1077,6 +1092,7 @@ void ERYAProfilingERYAProfilingMain::OnMainNew( wxCommandEvent& event )
  this->GenerateResult();
  this->GenerateLog();
  gridLayerEditor->ClearGrid();
+ gridLogData->ClearGrid();
  renderOutputData->DelAllLayers(false,true);
  textBeamEnergy->Clear();
  textTemperature->Clear();
@@ -1446,8 +1462,13 @@ SaveDialog->Destroy();
 
 void ERYAProfilingERYAProfilingMain::OnTableHelp( wxCommandEvent& event )
 {
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("Graphics.html"));
- help->ShowModal();
+ renderOutputData->DelAllLayers(false,true);
+ gridTableData->ClearGrid();
+ gridLogData->ClearGrid();
+ this->GenerateLog(1);
+ this->GenerateLog();
+ this->GenerateResult(1);
+ this->GenerateResult();
 }
 
 void ERYAProfilingERYAProfilingMain::OnLogSave( wxCommandEvent& event )
@@ -1517,8 +1538,9 @@ SaveDialog->Destroy();
 
 void ERYAProfilingERYAProfilingMain::OnLogHelp( wxCommandEvent& event )
 {
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("Graphics.html"));
- help->ShowModal();
+ gridLogData->ClearGrid();
+ this->GenerateLog(1);
+ this->GenerateLog();
 }
 
 void ERYAProfilingERYAProfilingMain::OnMainCheck( wxCommandEvent& event )
@@ -1709,8 +1731,11 @@ void ERYAProfilingERYAProfilingMain::OnMainRun( wxCommandEvent& event )
 
 void ERYAProfilingERYAProfilingMain::OnMainHelp( wxCommandEvent& event )
 {
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("HowTo.html"));
- help->ShowModal();
+ wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Do you want to quit?\nAll opened data will be lost."), wxT("Quit?"), wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
+ if (dial->ShowModal() == wxID_YES)
+ {
+ Close();
+ }
 }
 
 void ERYAProfilingERYAProfilingMain::OnMainSave( wxCommandEvent& event )

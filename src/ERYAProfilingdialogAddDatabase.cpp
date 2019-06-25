@@ -19,7 +19,7 @@
 
 #include "ERYAProfilingdialogAddDatabase.h"
 #include "ERYAProfilingdialogDatabaseManager.h"
-#include "ERYAProfilingdialogHelp.h"
+#include "ERYAProfilingdialogRemark.h"
 #include "ERYAProfilingdialogR33DataImport.h"
 #include "ERYAProfilingdialogXlsxDataImport.h"
 #include "R33Library.h"
@@ -40,7 +40,7 @@ dialogAddDatabase( parent )
  {
    ElementDatabase OpenActualElement;
    Parent->GetElement(OpenActualElement);
-   OpenActualElement.GetAllElementInfo(textEditElement,textEditGamma,textEditNumber,textEditAbundance,textEditAtomic,textEditIsotopic,tableDataEditor);
+   OpenActualElement.GetAllElementInfo(textEditElement,textEditGamma,textEditNumber,textEditAbundance,textEditAtomic,textEditIsotopic,infoRemark,tableDataEditor);
  }
 }
 
@@ -131,7 +131,7 @@ wxFileName file(CurrentIBANDLFilePath);
 if(file.GetExt() == wxT("r33"))
 {
  R33File openfile(CurrentIBANDLFilePath);
- if(openfile.IBANDLFileLoad(tableDataEditor,textEditElement,textEditGamma,textEditNumber,textEditAbundance,textEditAtomic,textEditIsotopic))
+ if(openfile.IBANDLFileLoad(tableDataEditor,textEditElement,textEditGamma,textEditNumber,textEditAbundance,textEditAtomic,textEditIsotopic,infoRemark))
  {
  wxMessageDialog *info = new wxMessageDialog(NULL, wxT("Current Element imported from file sucefully!") , wxT("Export Suceful!"), wxOK);
  info->ShowModal();
@@ -266,7 +266,7 @@ else
  ERYAProfilingdialogR33DataImport* datapanel = new ERYAProfilingdialogR33DataImport(this);
  datapanel->ShowModal();
  ITNFile openfile(CurrentIBANDLFilePath,Units,Angles,IgnoreLine);
- if(openfile.ITNFileLoad(tableDataEditor,textEditElement,textEditGamma,textEditNumber,textEditAbundance,textEditAtomic,textEditIsotopic))
+ if(openfile.ITNFileLoad(tableDataEditor,textEditElement,textEditGamma,textEditNumber,textEditAbundance,textEditAtomic,textEditIsotopic,infoRemark))
  {
  wxMessageDialog *info = new wxMessageDialog(NULL, wxT("Current Element imported from file sucefully!") , wxT("Export Suceful!"), wxOK);
  info->ShowModal();
@@ -299,7 +299,7 @@ wxFileName file(CurrentIBANDLFilePath);
 if(file.GetExt() == wxT("r33"))
 {
  R33File savefile(CurrentIBANDLFilePath);
- if(savefile.IBANDLFileSave(tableDataEditor,textEditElement,textEditGamma,textEditNumber,textEditAbundance,textEditAtomic,textEditIsotopic)) // Save the IBANDL file to the built-in data editor
+ if(savefile.IBANDLFileSave(tableDataEditor,textEditElement,textEditGamma,textEditNumber,textEditAbundance,textEditAtomic,textEditIsotopic,infoRemark)) // Save the IBANDL file to the built-in data editor
  {
  wxMessageDialog *info = new wxMessageDialog(NULL, wxT("Current Element exported to file sucefully!") , wxT("Export Suceful!"), wxOK);
  info->ShowModal();
@@ -385,7 +385,7 @@ else if (file.GetExt() == wxT("xlsx"))
 else
 {
  ITNFile savefile(CurrentIBANDLFilePath);
- if(savefile.ITNFileSave(tableDataEditor,textEditElement,textEditGamma,textEditNumber,textEditAbundance,textEditAtomic,textEditIsotopic))
+ if(savefile.ITNFileSave(tableDataEditor,textEditElement,textEditGamma,textEditNumber,textEditAbundance,textEditAtomic,textEditIsotopic,infoRemark))
  {
  wxMessageDialog *info = new wxMessageDialog(NULL, wxT("Current Element exported to file successfully!") , wxT("Export Successful!"), wxOK);
  info->ShowModal();
@@ -448,6 +448,6 @@ Close();
 
 void ERYAProfilingdialogAddDatabase::OnEditHelp( wxCommandEvent& event )
 {
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("Element.html"));
- help->ShowModal();
+ ERYAProfilingdialogRemark *remark = new ERYAProfilingdialogRemark(this,infoRemark,0);
+ remark->ShowModal();
 }

@@ -34,7 +34,6 @@ class ERYAProfilingERYAProfilingMain : public ERYAProfilingMain
 		void OnSRIMImport( wxCommandEvent& event );
 		void OnLabViewImport( wxCommandEvent& event );
 		void OnCalculator( wxCommandEvent& event );
-		void OnHelpManual( wxCommandEvent& event );
 		void OnHelpAbout( wxCommandEvent& event );
 		void OnNumberElementSpin( wxSpinEvent& event );
 		void OnNumberElementEnter( wxCommandEvent& event );

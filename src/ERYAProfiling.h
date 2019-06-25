@@ -466,39 +466,6 @@ class dialogZieglerParameters : public wxDialog
 };
 
 
-///////////////////////////////////////////////////////////////////////////////
-/// Class dialogHelp
-///////////////////////////////////////////////////////////////////////////////
-class dialogHelp : public wxDialog
-{
-	private:
-
-	protected:
-	    wxString helpMainPage;
-		wxHtmlWindow* pageHelpViewer;
-		wxStaticLine* lineHelpViewer;
-		wxButton* buttonHelpMain;
-		wxButton* buttonHelpIndex;
-		wxButton* buttonHelpReadme;
-		wxButton* buttonHelpBack;
-		wxButton* buttonHelpForward;
-		wxButton* buttonHelpClose;
-
-		// Virtual event handlers, overide them in your derived class
-		virtual void OnHelpMain( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnHelpIndex( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnHelpReadme( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnHelpBack( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnHelpForward( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnHelpClose( wxCommandEvent& event ) { event.Skip(); }
-
-
-	public:
-
-		dialogHelp( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("ERYA-Profiling Help Viewer"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1200, 720 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
-		~dialogHelp();
-
-};
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class dialogERYACalculator
@@ -910,6 +877,32 @@ class dialogERYAProfilingAdvanced : public wxDialog
 
 		dialogERYAProfilingAdvanced( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("ERYA Profiling Advanced Precision Settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 700,550 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~dialogERYAProfilingAdvanced();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class dialogRemark
+///////////////////////////////////////////////////////////////////////////////
+class dialogRemark : public wxDialog
+{
+	private:
+
+	protected:
+		wxTextCtrl* textRemark;
+		wxButton* buttonSave;
+		wxButton* buttonClear;
+		wxButton* buttonQuit;
+
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnRemarkSave( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRemarkClear( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRemarkQuit( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		dialogRemark( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Database Remark Editor"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 650,480 ), long style = wxCLOSE_BOX|wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~dialogRemark();
 
 };
 

@@ -9,7 +9,6 @@
 
  #include "ERYAProfilingdialogXlsxDataImport.h"
  #include "ERYAProfilingdialogAddDatabase.h"
- #include "ERYAProfilingdialogHelp.h"
 
 ERYAProfilingdialogXlsxDataImport::ERYAProfilingdialogXlsxDataImport( wxWindow* parent)
 :
@@ -45,6 +44,8 @@ void ERYAProfilingdialogXlsxDataImport::OnDataImportReset( wxCommandEvent& event
 
 void ERYAProfilingdialogXlsxDataImport::OnDataImportHelp( wxCommandEvent& event )
 {
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("Element.html"));
- help->ShowModal();
+ radioDataImportUnits->SetSelection(0);
+ radioDataImportAngle->SetSelection(0);
+ radioDataImportColumn->SetSelection(0);
+ Close();
 }

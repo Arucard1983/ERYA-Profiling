@@ -9,7 +9,6 @@
 
 #include "ERYAProfilingdialogSetup.h"
 #include "ERYAProfilingERYAProfilingMain.h"
-#include "ERYAProfilingdialogHelp.h"
 
 
 ERYAProfilingdialogSetup::ERYAProfilingdialogSetup( wxWindow* parent )
@@ -220,9 +219,4 @@ void ERYAProfilingdialogSetup::OnDefaultQuit( wxCommandEvent& event )
      Close();
 }
 
-// Open the help file
-void ERYAProfilingdialogSetup::OnDefaultHelp( wxCommandEvent& event )
-{
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("SetupSettings.html"));
- help->ShowModal();
-}
+

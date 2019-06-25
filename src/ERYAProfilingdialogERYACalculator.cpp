@@ -1,5 +1,4 @@
 #include "ERYAProfilingdialogERYACalculator.h"
-#include "ERYAProfilingdialogHelp.h"
 #include "ParserLibrary.h"
 
 ERYAProfilingdialogERYACalculator::ERYAProfilingdialogERYACalculator( wxWindow* parent )
@@ -360,8 +359,7 @@ void ERYAProfilingdialogERYACalculator::OnReturn( wxCommandEvent& event )
 
 void ERYAProfilingdialogERYACalculator::OnHelp( wxCommandEvent& event )
 {
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("Calculator.html"));
- help->ShowModal();
+ Close();
 }
 
 void ERYAProfilingdialogERYACalculator::OnBackSpace( wxCommandEvent& event )

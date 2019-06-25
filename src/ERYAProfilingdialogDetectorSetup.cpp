@@ -8,7 +8,7 @@
  **************************************************************/
 
 #include "ERYAProfilingdialogDetectorSetup.h"
-#include "ERYAProfilingdialogHelp.h"
+#include "ERYAProfilingdialogRemark.h"
 #include "ERYAProfilingERYAProfilingMain.h"
 
 
@@ -116,7 +116,7 @@ if (OpenDialog->ShowModal() == wxID_OK)
 {
 wxString ERYAProfilingSetupPath = OpenDialog->GetPath();
 wxFileName file(ERYAProfilingSetupPath);
-DetectorParameters LocalDetector(textFunctionEficiency, tableConstantEficiency);
+DetectorParameters LocalDetector(textFunctionEficiency, tableConstantEficiency, infoRemark);
 DetectorFile localfile(ERYAProfilingSetupPath,file.GetExt(),LocalDetector);
 if (localfile.DetectorFileLoad())
  {
@@ -147,7 +147,7 @@ if (SaveDialog->ShowModal() == wxID_OK)
 wxString ERYAProfilingSetupPath = SaveDialog->GetPath();
 // If the user choose the legacy version, the custom function are ignored.
 wxFileName file(ERYAProfilingSetupPath);
-DetectorParameters LocalDetector(textFunctionEficiency, tableConstantEficiency);
+DetectorParameters LocalDetector(textFunctionEficiency, tableConstantEficiency,infoRemark);
 DetectorFile localfile(ERYAProfilingSetupPath,file.GetExt(),LocalDetector);
 if (!(localfile.DetectorFileSave()))
  {
@@ -181,7 +181,7 @@ void ERYAProfilingdialogDetectorSetup::OnEficiencyOK( wxCommandEvent& event )
    // Call the parent frame
   ERYAProfilingERYAProfilingMain *Parent = (ERYAProfilingERYAProfilingMain *) GetParent();
   // Get the current local frame data
-  DetectorParameters LocalDetector(textFunctionEficiency, tableConstantEficiency);
+  DetectorParameters LocalDetector(textFunctionEficiency, tableConstantEficiency, infoRemark);
   // Store the local data from child frame to parent frame
   Parent->SaveDetector(LocalDetector);
    // Return to parent frame
@@ -204,7 +204,7 @@ void ERYAProfilingdialogDetectorSetup::OnEficiencyOK( wxCommandEvent& event )
    // Call the parent frame
   ERYAProfilingERYAProfilingMain *Parent = (ERYAProfilingERYAProfilingMain *) GetParent();
   // Get the current local frame data
-  DetectorParameters LocalDetector(textFunctionEficiency, tableConstantEficiency);
+  DetectorParameters LocalDetector(textFunctionEficiency, tableConstantEficiency,infoRemark);
   // Store the local data from child frame to parent frame
   Parent->SaveDetector(LocalDetector);
    // Return to parent frame
@@ -219,6 +219,6 @@ void ERYAProfilingdialogDetectorSetup::OnEficiencyCancel( wxCommandEvent& event 
 
 void ERYAProfilingdialogDetectorSetup::OnEficiencyHelp( wxCommandEvent& event )
 {
- ERYAProfilingdialogHelp* help = new ERYAProfilingdialogHelp(this,wxT("Detector.html"));
- help->ShowModal();
+ ERYAProfilingdialogRemark *remark = new ERYAProfilingdialogRemark(this,infoRemark,2);
+ remark->ShowModal();
 }

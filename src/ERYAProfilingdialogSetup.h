@@ -28,7 +28,6 @@ class ERYAProfilingdialogSetup : public dialogSetup
 		void OnDefaultReset( wxCommandEvent& event );
 		void OnDefaultDelete( wxCommandEvent& event );
 		void OnDefaultQuit( wxCommandEvent& event );
-		void OnDefaultHelp( wxCommandEvent& event );
 	public:
 		/** Constructor */
         ERYAProfilingdialogSetup( wxWindow* parent );
