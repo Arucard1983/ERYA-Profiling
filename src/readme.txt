@@ -1,4 +1,4 @@
-ERYA-Profiling 2.50 ReadMe
+ERYA-Profiling 2.60 ReadMe
 ----------------------------------------
 
 Testing Release
@@ -112,6 +112,8 @@ This interim release had the following features:
 # The window sizes can be resized with a mouse.
 # SRIM tables are the default setting for the Stopping-Power.
 # Added Airy Function as an approximation of the Vavilov Distribution, fixing abnormal oscillations on sharp resonances profiles.
+# Help files was removed in favour to a unified PDF manual.
+# Support to comment/remark on databases, while adding a simple text editor to edit/replace/clear them.
 
 7. Future Improvements
 
