@@ -1,4 +1,4 @@
-ERYA-Profiling 2.60 ReadMe
+ERYA-Profiling 2.70 ReadMe
 ----------------------------------------
 
 Testing Release
@@ -8,7 +8,7 @@ Testing Release
 1. Minimum Requirements
 
 ERYA-Profiling requires a computer with an supported operating system or architecture.
-- Windows 7, 10 or greater (Windows XP may work), Mac OS X 10.11 or greater (Mac OS X 10.10 may work), Linux Debian 9 or Ubuntu 18.04 or greater.
+- Windows 7, 10 or greater (Windows XP may work), Mac OS X 10.11 or greater (Mac OS X 10.10 may work), Linux Debian 10 or Ubuntu 18.04 or greater.
 - 64-bit x86-64 is the default suported architecture for all operating systems listed before. Windows and Linux 32-bit versions are provided for legacy systems.
 - ARM binary versions are also provided for Linux systems.
 - The minimum usefull screen resolution is 1280*720, but it is highly recommended to use a FullHD display (1920*1080) for better view.
@@ -28,7 +28,6 @@ ERYA-Profiling requires a computer with an supported operating system or archite
 
 # Linux Instructions
 3.1. Check first if your Linux distribution are compatible with Debian 9 or Ubuntu 18.04 codebase.
-- Debian 9 Stretch require to enable the stretch-backports in order to install the updated wxWidgets libraries.
 
 3.2. Download the correct arch version to your computer, then open a Terminal window on the same folder of the downloaded package.
 - For Ubuntu systems, it's not necessary to open a root shell before install programs:
@@ -96,12 +95,12 @@ This interim release had the following features:
 # The numerical physics libraries should work as expected, generating the output, than can be stored as an image file, or a spreadsheet file.
 # The ported tools for Database Management from the ERYA-Bulk program works as expected.
 # Revamping of importing tools, including a wizard to export binary databases from Labview to the native ERYA-Profiling XML format.
-- The import/export tools on "Database Manager" still works to convert different file formats. 
+- The import/export tools on "Database Manager" still works to convert different file formats.
 # All on-line help contents are completed.
 # It's now possible to choose between two asymptotic limits of Vavilov Distribution on "Advanced Settings": The Vavilov-Gauss limit, or the Bohr formula limit.
 # Pure Gaussian mode to override the Vavilov Distribution are now avaliable on "Advanced Settings".
 # An option to turn-on and turn-off the partial yields logs (that appears on the last tab on main program window) calculation on "Advanced Settings".
-# With long samples, it avoids to create huge memory logs that can increase the computation and rendering time. 
+# With long samples, it avoids to create huge memory logs that can increase the computation and rendering time.
 # The main calculation progress now displays an additional gauge window, along the status bar. It also enables the user to abort the whole process.
 # Fixed some bugs on the built-in ERYA's macro language:
 - Expressions such as "(-3)", or "(+3)" now return "-3" and "3", instead the wrong "-" token error, due to an absent rule to the lexer when face a plus/minus signal and the left parenthesis, and split the signal before the number, instead to read the signed number as a whole token.

@@ -646,8 +646,12 @@ bool ElementDatabaseArray::FindGetAllElementInfo(wxString GetElement, wxString G
 // Generate the two pull-downs menus from the current database. The Element Index will generate the gamma peak options from the selected Element.
 bool ElementDatabaseArray::RebuildElementGammaMenu(wxChoice* &ElementList, wxChoice* &GammaPeakList, int SelectedElementIndex)
 {
- if (this->GetCount() == 0)
+ if (this->GetCount() == 0) // Abort the process if the database are empty
+ {
+  ElementList->Clear();
+  GammaPeakList->Clear();
   return false;
+ }
  if(SelectedElementIndex < 0) // Recycle the Element menu
  {
   SelectedElementIndex = 0;
@@ -666,7 +670,7 @@ bool ElementDatabaseArray::RebuildElementGammaMenu(wxChoice* &ElementList, wxCho
  {
   GammaPeakList->Clear(); // It is not necessary to delete the Element Menu
  }
- // Get the Element name from the menu
+  // Get the Element name from the menu
   wxString SelectedElement = ElementList->GetString(SelectedElementIndex);
   if (SelectedElement.Len()>0)
   {

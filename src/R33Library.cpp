@@ -46,6 +46,10 @@ bool R33File::IBANDLFileLoad(wxGrid* &tableDataEditor, wxTextCtrl* &textEditElem
     {
       endDataBlock = k;
     }
+    else if(database.GetLine(k).Trim().Contains(wxT("Source:")))
+    {
+      infoRemark = infoRemark + database.GetLine(k) + wxT("\n");
+    }
   }
    // Process the first part of file, and extract the relevant information
  for(int i=0; i<beginDataBlock; i++)
@@ -209,7 +213,7 @@ bool R33File::IBANDLFileSave(wxGrid *tableDataEditor, wxTextCtrl* textEditElemen
  file.AddLine( wxEmptyString);
  file.AddLine( wxT("Version: R33") );
  file.AddLine( wxT("Source: ERYA") );
- file.AddLine( wxT("Name: ERYA Profiling v2.60") );
+ file.AddLine( wxT("Name: ERYA Profiling v2.70") );
  file.AddLine( wxT("Address1:") );
  file.AddLine( wxT("SubFile:" ) );
  file.AddLine( wxT("Serial Number:") );
