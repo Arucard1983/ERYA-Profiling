@@ -46,6 +46,10 @@ dialogDatabaseManager( parent )
            wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("The Element Database consistency are damaged. Please, reload with a new one."), wxT("Database is Corrupted!"), wxOK | wxICON_ERROR);
            dial->ShowModal();
            }
+           else
+           {
+            infoRemark = MainDatabase.GetInfo();
+           }
  }
 }
 
@@ -170,7 +174,7 @@ void ERYAProfilingdialogDatabaseManager::OnDatabaseLoad( wxCommandEvent& event )
 ERYAProfilingERYAProfilingMain *Parent = (ERYAProfilingERYAProfilingMain *) GetParent();
 wxString DefaultDatabaseDirectory;
 Parent->GetConfig(DefaultDatabaseDirectory);
-wxFileDialog *OpenDialog = new wxFileDialog(this, _("Select a ERYA-Profiling Database to open"), DefaultDatabaseDirectory, wxEmptyString, wxT("ERYA-Profiling database (*.epd)|*.epd|LabView ERYA database (*.txt)|*.txt"), wxFD_OPEN, wxDefaultPosition);
+wxFileDialog *OpenDialog = new wxFileDialog(this, wxT("Select a ERYA-Profiling Database to open"), DefaultDatabaseDirectory, wxEmptyString, wxT("ERYA-Profiling database (*.epd)|*.epd|LabView ERYA database (*.txt)|*.txt"), wxFD_OPEN, wxDefaultPosition);
 if (OpenDialog->ShowModal() == wxID_OK)
 {
 MainDatabaseFile = OpenDialog->GetPath();
@@ -189,6 +193,10 @@ wxString DatabaseVersion = DatabaseFileName.GetExt();
            {
            wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("The Element Database consistency are damaged. Please, reload with a new one."), wxT("Database is Corrupted!"), wxOK | wxICON_ERROR);
            dial->ShowModal();
+           }
+           else
+           {
+            infoRemark = MainDatabase.GetInfo();
            }
    }
   }

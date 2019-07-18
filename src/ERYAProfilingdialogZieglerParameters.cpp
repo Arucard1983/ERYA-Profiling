@@ -25,6 +25,7 @@ dialogZieglerParameters( parent )
  Parent->GetSRIM(LocalSRIMTable);
  // And display the content
  LocalZiegler.GetDisplay(textZieglerFunction, choiceZieglerVersion, tableZieglerParameters);
+ infoRemark = LocalZiegler.GetInfo();
  spinZieglerSRIMCurrentElement->SetValue(1);
  tabZieglerTables->SetSelection(0);
  if(!(LocalSRIMTable.GetDisplay(1,tableZieglerSRIM)))
@@ -201,6 +202,7 @@ wxFileDialog *OpenDialog = new wxFileDialog(this, wxT("Select the desired Ziegle
    LocalParameters = file.GetParameters();
    LocalParameters.GetDisplay(textZieglerFunction, choiceZieglerVersion, tableZieglerParameters);
    LocalSRIMTable = file.GetTables();
+   infoRemark = LocalParameters.GetInfo();
     if(!(LocalSRIMTable.GetDisplay(spinZieglerSRIMCurrentElement->GetValue(),tableZieglerSRIM)))
         tableZieglerSRIM->ClearGrid();
   }

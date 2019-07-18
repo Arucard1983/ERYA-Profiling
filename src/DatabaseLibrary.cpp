@@ -24,7 +24,7 @@ WX_DEFINE_OBJARRAY(ElementDatabaseList);
 WX_DEFINE_OBJARRAY(ElementSRIMList);
 
 // Element Database standard constructor
-ElementDatabase::ElementDatabase(wxTextCtrl* EditElement, wxTextCtrl* EditGamma, wxTextCtrl* EditNumber, wxTextCtrl* EditAbundance, wxTextCtrl* EditAtomic, wxTextCtrl* EditIsotopic, wxGrid* DataEditor)
+ElementDatabase::ElementDatabase(wxTextCtrl* EditElement, wxTextCtrl* EditGamma, wxTextCtrl* EditNumber, wxTextCtrl* EditAbundance, wxTextCtrl* EditAtomic, wxTextCtrl* EditIsotopic, wxGrid* DataEditor, wxString Info)
 {
    dataEditElement = EditElement->GetValue();
    dataEditGamma = EditGamma->GetValue();
@@ -36,6 +36,7 @@ ElementDatabase::ElementDatabase(wxTextCtrl* EditElement, wxTextCtrl* EditGamma,
    dataEnergyError.Clear();
    dataSigma.Clear();
    dataSigmaError.Clear();
+   infoElement = Info;
    for(int i=0;i<DataEditor->GetNumberRows();i++)
    {
    wxString temp0 = DataEditor->GetCellValue(i,0);
