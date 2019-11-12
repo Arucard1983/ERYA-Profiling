@@ -1793,6 +1793,7 @@ wizardLabViewImport::wizardLabViewImport( wxWindow* parent, wxWindowID id, const
 {
 	this->Create( parent, id, title, bitmap, pos, style );
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	this->SetPageSize(wxSize( 700,400 ));
 
 	wxWizardPageSimple* wizardlabViewImport1 = new wxWizardPageSimple( this );
 	m_pages.Add( wizardlabViewImport1 );
@@ -1986,6 +1987,7 @@ wizardFirstRun::wizardFirstRun( wxWindow* parent, wxWindowID id, const wxString&
 {
 	this->Create( parent, id, title, bitmap, pos, style );
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	this->SetPageSize(wxSize( 700,400 ));
 
 	wxWizardPageSimple* wizardFirstRun1 = new wxWizardPageSimple( this );
 	m_pages.Add( wizardFirstRun1 );
@@ -2113,6 +2115,7 @@ wizardSRIMImport::wizardSRIMImport( wxWindow* parent, wxWindowID id, const wxStr
 {
 	this->Create( parent, id, title, bitmap, pos, style );
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	this->SetPageSize(wxSize( 700,400 ));
 
 	wxWizardPageSimple* pageSRIMImport1 = new wxWizardPageSimple( this );
 	m_pages.Add( pageSRIMImport1 );
@@ -2538,7 +2541,7 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	labelGaussPrecision->Wrap( -1 );
 	sizerERYAProfilingSettings->Add( labelGaussPrecision, 0, wxALL, 5 );
 
-	spinGaussPrecision = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 10, 100, 60 );
+	spinGaussPrecision = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 5, 100, 60 );
 	sizerERYAProfilingSettings->Add( spinGaussPrecision, 0, wxALL, 5 );
 
 	labelVavilovMoyal = new wxStaticText( this, wxID_ANY, wxT("Number of Points per Lambda Step for Vavilov-Moyal Distribution:"), wxDefaultPosition, wxDefaultSize, 0 );
