@@ -156,6 +156,7 @@ public:
 ElementVector(){};
 double GetTotalStoichiometry();
 double GetTotalMass();
+double GetWeightStoichiometry(int i);
 double EvaluateCrossSection(int ElementID, double AtEnergy);
 double EvaluateBragg(double AtEnergy);
 double GetMolarMass();

@@ -889,6 +889,7 @@ double Element::EvaluateZiegler(double AtEnergy)
  return 0; // Default Value
 }
 
+
 // Evaluates the total stoichiometry of all Elements found on main spreadsheet
 double ElementVector::GetTotalStoichiometry()
 {
@@ -920,13 +921,31 @@ double ElementVector::EvaluateCrossSection(int ElementID, double AtEnergy)
  return this->Item(ElementID).EvaluateSigma(AtEnergy);
 }
 
+// Evaluate the weight stoichiometry ratio
+double ElementVector::GetWeightStoichiometry(int i)
+{
+ double WeightStoichiometry = 0;
+ for(int k=0; k<this->GetCount(); k++)
+ {
+   WeightStoichiometry = WeightStoichiometry + this->Item(k).GetStoichiometry() * this->Item(k).GetAtomicMass();
+ }
+ if(std::abs(WeightStoichiometry)>0)
+ {
+   return this->Item(i).GetStoichiometry() * this->Item(i).GetAtomicMass() / WeightStoichiometry;
+ }
+ else
+ {
+   return 0;
+ }
+}
+
 // Evaluate the stopping power of all Elements, combined with the Bragg´s Law.
 double ElementVector::EvaluateBragg(double AtEnergy)
 {
  double StoppingPowerSum = 0;
  for (int i=0; i<this->GetCount(); i++)
  {
-  StoppingPowerSum = StoppingPowerSum + this->Item(i).EvaluateZiegler(AtEnergy) * this->Item(i).GetStoichiometry();
+  StoppingPowerSum = StoppingPowerSum + this->Item(i).EvaluateZiegler(AtEnergy) * this->GetWeightStoichiometry(i);
  }
  return StoppingPowerSum;
 }
