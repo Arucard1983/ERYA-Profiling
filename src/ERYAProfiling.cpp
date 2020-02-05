@@ -2608,7 +2608,7 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	buttonAdvancedDefault = new wxButton( this, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerERYAProfilingTools->Add( buttonAdvancedDefault, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonAdvancedHelp = new wxButton( this, wxID_ANY, wxT("Reset & Quit"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonAdvancedHelp = new wxButton( this, wxID_ANY, wxT("Reset and Quit"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerERYAProfilingTools->Add( buttonAdvancedHelp, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 

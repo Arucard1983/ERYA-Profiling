@@ -213,7 +213,7 @@ bool R33File::IBANDLFileSave(wxGrid *tableDataEditor, wxTextCtrl* textEditElemen
  file.AddLine( wxEmptyString);
  file.AddLine( wxT("Version: R33") );
  file.AddLine( wxT("Source: ERYA") );
- file.AddLine( wxT("Name: ERYA Profiling v2.70") );
+ file.AddLine( wxT("Name: ERYA Profiling v2.80") );
  file.AddLine( wxT("Address1:") );
  file.AddLine( wxT("SubFile:" ) );
  file.AddLine( wxT("Serial Number:") );
