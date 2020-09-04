@@ -924,19 +924,7 @@ double ElementVector::EvaluateCrossSection(int ElementID, double AtEnergy)
 // Evaluate the weight stoichiometry ratio
 double ElementVector::GetWeightStoichiometry(int i)
 {
- double WeightStoichiometry = 0;
- for(int k=0; k<this->GetCount(); k++)
- {
-   WeightStoichiometry = WeightStoichiometry + this->Item(k).GetStoichiometry() * this->Item(k).GetAtomicMass();
- }
- if(std::abs(WeightStoichiometry)>0)
- {
-   return this->Item(i).GetStoichiometry() * this->Item(i).GetAtomicMass() / WeightStoichiometry;
- }
- else
- {
-   return 0;
- }
+ return this->Item(i).GetStoichiometry();
 }
 
 // Evaluate the stopping power of all Elements, combined with the Bragg´s Law.
