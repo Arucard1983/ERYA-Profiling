@@ -56,6 +56,7 @@ class ERYAProfilingERYAProfilingMain : public ERYAProfilingMain
 		void OnDetectorSave( wxCommandEvent& event );
 		void OnDetectorHelp( wxCommandEvent& event );
 		void OnRessonanceRange( wxCommandEvent& event );
+		void OnRessonanceRange1( wxCommandEvent& event );
 		void OnRessonanceOption( wxCommandEvent& event );
 		void OnOutputData( wxCommandEvent& event );
 		void OnOutputImage( wxCommandEvent& event );

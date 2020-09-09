@@ -29,7 +29,8 @@ class RessonanceFunction
 private:
 int RFMode;
 std::vector<double> BWEnergy, BWWidth, BWPeak, BWmin, BWmax;
-double GBWmin, GBWmax;
+double GBWmin, GBWmax, GBAtomicMass;
+double StrenghtEnergy(double Energy);
 double BrietWigner(double Energy);
 double CRFunction(double Energy);
 AlgebraicFunction CustomRessonanceFunction;
@@ -40,8 +41,11 @@ public:
 RessonanceFunction(){};
 RessonanceFunction(wxString CustomMacro);
 RessonanceFunction(wxString RessonanceWidth, wxString RessonancePeak, wxString RessonanceEnergy);
+RessonanceFunction(wxString RessonanceWidth, wxString RessonanceStrenght, wxString RessonanceEnergy, wxString RessonanceAtomicMass);
 RessonanceFunction(wxString RessonanceWidth, wxString RessonancePeak, wxString RessonanceEnergy, wxString RessonanceMinimum, wxString RessonanceMaximum);
+RessonanceFunction(wxString RessonanceWidth, wxString RessonanceStrenght, wxString RessonanceEnergy, wxString RessonanceAtomicMass, wxString RessonanceMinimum, wxString RessonanceMaximum);
 void ResetFunction(){RFMode = 0; return;};
+void SetAtomicMass(double AtomicMass){GBAtomicMass = AtomicMass; return;}
 double GetValue(double Energy);
 double GetDomainMinimum();
 double GetDomainMaximum();
@@ -213,6 +217,7 @@ int GetElementsCount(){return LayerCompound.GetCount();};
 double GetGammaPeakAt(int ElementID){return LayerCompound.Item(ElementID).GetGammaPeak();};
 double GetAbundanceAt(int ElementID){return LayerCompound.Item(ElementID).GetAbundance();};
 double GetAtomicMassAt(int ElementID){return LayerCompound.Item(ElementID).GetAtomicMass();};
+double GetWeightAtomicMass();
 double GetMassFractionAt(int ElementID){return LayerCompound.GetMassFraction(ElementID);};
 double GetAverageMolarMass();
 double GetTotalThickness();
@@ -351,7 +356,7 @@ class ReactionProfiling
  bool StartProcedure(wxStatusBar* progress);
  bool SampleSetup(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, DetectorParameters ThisDetector, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass,ArrayAtomicMass textAtomicMass);
  bool SetOverrideParameters(unsigned int SamplePrecision, unsigned int GaussPrecision, unsigned int VavilovMoyalPrecision, unsigned int VavilovEdgeworthPrecision, unsigned int VavilovAiryPrecision, unsigned int LandauPrecision, unsigned int ThreadPrecision, bool EnableLog);
- bool SetInitialParameters(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueRessonanceFunction, bool boolRessonanceLorentzian, int intRessonanceMode);
+ bool SetInitialParameters(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueStrenghtWidth, wxTextCtrl* valueStrenghtPeak, wxTextCtrl *valueStrenghtEnergy, wxTextCtrl *valueStrenghtMinimum, wxTextCtrl* valueStrenghtMaximum, wxTextCtrl* valueRessonanceFunction, bool boolRessonanceLorentzian, bool boolRessonanceStrenght, int intRessonanceMode);
  wxString GetErrorCode(){return LastErrorCode;};
  std::vector<double> GetEnergyRange(){return LocalResults.GetEnergy();};
  std::vector<double> GetElementYield(int ElementID){return LocalResults.GetYieldAt(ElementID);};

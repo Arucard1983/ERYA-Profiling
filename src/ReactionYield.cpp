@@ -80,6 +80,53 @@ RessonanceFunction::RessonanceFunction(wxString RessonanceWidth, wxString Resson
  }
 }
 
+//Alternative constructor, when a list of several resonance strenghts are defined.
+//The function domain are defined between the lower peak, and the higher peak.
+RessonanceFunction::RessonanceFunction(wxString RessonanceWidth, wxString RessonanceStrenght, wxString RessonanceEnergy, wxString RessonanceAtomicMass)
+{
+ if(this->ParseRessonanceList(RessonanceWidth,RessonanceStrenght,RessonanceEnergy))
+ {
+  if(RessonanceAtomicMass.ToDouble(&GBAtomicMass))
+  {
+   RFMode = 3;
+   CheckStatus = true;
+   ErrorMessage.Clear();
+  }
+  else
+  {
+   CheckStatus = false;
+   ErrorMessage = wxT("Data Error: Non-numerical values found on Lorentzian Ressonance Strenght Parameters.");
+  }
+ }
+ else
+ {
+   CheckStatus = false;
+ }
+}
+
+RessonanceFunction::RessonanceFunction(wxString RessonanceWidth, wxString RessonanceStrenght, wxString RessonanceEnergy, wxString RessonanceAtomicMass, wxString RessonanceMinimum, wxString RessonanceMaximum)
+{
+ if(this->ParseRessonanceList(RessonanceWidth,RessonanceStrenght,RessonanceEnergy))
+ {
+  if(RessonanceMinimum.ToDouble(&GBWmin) && RessonanceMaximum.ToDouble(&GBWmax) && RessonanceAtomicMass.ToDouble(&GBAtomicMass))
+  {
+   RFMode = 3;
+   CheckStatus = true;
+   ErrorMessage.Clear();
+  }
+  else
+  {
+   CheckStatus = false;
+   ErrorMessage = wxT("Data Error: Non-numerical values found on Lorentzian Ressonance Strenght Parameters.");
+  }
+ }
+ else
+ {
+   CheckStatus = false;
+ }
+}
+
+
 // private function to handle the list of values
 bool RessonanceFunction::ParseRessonanceList(wxString RessonanceWidth, wxString RessonancePeak, wxString RessonanceEnergy)
 {
@@ -179,6 +226,27 @@ double RessonanceFunction::BrietWigner(double Energy)
  }
 }
 
+//Evaluate the Briet-Wigner with a Resonance Strenght at a certain energy.
+// f(x) = (constant * strenght * width / 4 )/ (width^2 / 4 + (x-energy)^2)
+// constant are equal to 656600/(A*E) mili-barn
+double RessonanceFunction::StrenghtEnergy(double Energy)
+{
+ if(GBWmin <= Energy && Energy <= GBWmax)
+ {
+   double BWSum = 0;
+   for(int i=0; i<BWEnergy.size(); i++)
+   {
+    if(BWmin.at(i) <= Energy && Energy <= BWmax.at(i))
+     BWSum = BWSum + (BWPeak.at(i) * BWWidth.at(i) * 656600 / (Energy * GBAtomicMass) ) / (BWWidth.at(i) * BWWidth.at(i) / 4 + std::pow(Energy - BWEnergy.at(i),2));
+   }
+  return BWSum;
+ }
+ else
+ {
+   return 0;
+ }
+}
+
 //Evaluate the Custom Ressonance Function
 double RessonanceFunction::CRFunction(double Energy)
 {
@@ -195,6 +263,8 @@ double RessonanceFunction::GetValue(double Energy)
   return this->CRFunction(Energy);
  else if (RFMode == 2)
   return this->BrietWigner(Energy);
+ else if (RFMode == 3)
+  return this->StrenghtEnergy(Energy);
  else
   return 0;
 }
@@ -205,6 +275,8 @@ double RessonanceFunction::GetDomainMinimum()
   return CustomRessonanceFunction.GetFunctionMinimum();
  else if (RFMode == 2)
   return GBWmin;
+ else if (RFMode == 3)
+  return GBWmin;
  else
   return NAN;
 }
@@ -214,6 +286,8 @@ double RessonanceFunction::GetDomainMaximum()
  if(RFMode == 1)
   return CustomRessonanceFunction.GetFunctionMaximum();
  else if (RFMode == 2)
+  return GBWmax;
+ else if (RFMode == 3)
   return GBWmax;
  else
   return NAN;
@@ -1172,6 +1246,7 @@ double LayerVector::GetAverageMolarMass()
  }
 }
 
+
 double LayerVector::GetTotalThickness()
 {
  double TotalThickess = 0;
@@ -1317,6 +1392,8 @@ double Yield::YieldFunction(int LayerNumber, double Energy)
  double ElementSigma = this->SigmaDistributionConvolution(LayerNumber,Energy);
  double ElementStoppingPower = BraggFactor / ElementMass;
  double YieldLayer = YieldNull * ElementSigma * YieldStep / ElementStoppingPower;
+ double LayerAtomicMass = LocalSample.Item(LayerNumber).GetMolarMass();
+ ElementRessonance.SetAtomicMass(LayerAtomicMass);
  // In some circumstances, it may occur a numerical overflow (Stopping-Power equal to zero are the most common one), without physical meaning.
  if (!(std::isfinite(YieldLayer)))
     YieldLayer = 0.0;
@@ -1677,7 +1754,7 @@ bool ReactionProfiling::SetOverrideParameters(unsigned int SamplePrecision, unsi
 }
 
 // Set additional values
-bool ReactionProfiling::SetInitialParameters(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueRessonanceFunction, bool boolRessonanceLorentzian, int intRessonanceMode)
+bool ReactionProfiling::SetInitialParameters(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueStrenghtWidth, wxTextCtrl* valueStrenghtPeak, wxTextCtrl *valueStrenghtEnergy, wxTextCtrl *valueStrenghtMinimum, wxTextCtrl* valueStrenghtMaximum, wxTextCtrl* valueRessonanceFunction, bool boolRessonanceLorentzian, bool boolRessonanceStrenght, int intRessonanceMode)
 {
  //Define the physics distribution object, first.
  LocalDistribution = PhysicsDistribution(valueBeamResolution->GetValue(),valueTemperature->GetValue());
@@ -1724,7 +1801,38 @@ bool ReactionProfiling::SetInitialParameters(wxTextCtrl* valueBeamResolution, wx
      }
    }
   }
-  else if (intRessonanceMode == 2) //Custom function
+  else if(intRessonanceMode == 2) //Resonance Strenght
+  {
+   if(boolRessonanceStrenght)
+   {
+     LocalRessonance = RessonanceFunction(valueStrenghtWidth->GetValue(),valueStrenghtPeak->GetValue(),valueStrenghtEnergy->GetValue(),wxT("1"),valueStrenghtMinimum->GetValue(),valueStrenghtMaximum->GetValue());
+     if(!(LocalRessonance.IsValid()))
+     {
+       InputComplete = false;
+       LastErrorCode = wxT("Numerical Resonance Error: Failure on Runtime\n") + LocalRessonance.GetErrorMessage();
+       return false;
+     }
+     else
+     {
+      RequireRessonance = true;
+     }
+   }
+   else
+   {
+     LocalRessonance = RessonanceFunction(valueStrenghtWidth->GetValue(),valueStrenghtPeak->GetValue(),valueStrenghtEnergy->GetValue(),wxT("1"));
+     if(!(LocalRessonance.IsValid()))
+     {
+       InputComplete = false;
+       LastErrorCode = wxT("Numerical Resonance Error: Failure on Runtime\n") +  LocalRessonance.GetErrorMessage();
+       return false;
+     }
+     else
+     {
+       RequireRessonance = true;
+     }
+   }
+  }
+  else if (intRessonanceMode == 3) //Custom function
   {
     LocalRessonance = RessonanceFunction(valueRessonanceFunction->GetValue());
     if(!(LocalRessonance.IsValid()))

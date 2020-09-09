@@ -758,6 +758,15 @@ void ERYAProfilingERYAProfilingMain::OnRessonanceRange( wxCommandEvent& event )
  }
 }
 
+void ERYAProfilingERYAProfilingMain::OnRessonanceRange1( wxCommandEvent& event )
+{
+ if(!(checkRessonanceRange1->GetValue()))
+ {
+  textRessonanceMinimum1->Clear();
+  textRessonanceMaximum1->Clear();
+ }
+}
+
 void ERYAProfilingERYAProfilingMain::OnRessonanceOption( wxCommandEvent& event )
 {
  RessonanceMode = radioRessonanceOption->GetSelection();
@@ -1616,7 +1625,7 @@ void ERYAProfilingERYAProfilingMain::OnMainAdvanced( wxCommandEvent& event )
 void ERYAProfilingERYAProfilingMain::OnMainRun( wxCommandEvent& event )
 {
  ReactionProfiling* main = new ReactionProfiling();
-  if(main->SetInitialParameters(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,checkRessonanceRange->GetValue(),radioRessonanceOption->GetSelection()))
+  if(main->SetInitialParameters(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textRessonanceWidth1,textRessonancePeak1,textRessonanceEnergy1,textRessonanceMinimum1,textRessonanceMaximum1,textCustomRessonance,checkRessonanceRange->GetValue(),checkRessonanceRange1->GetValue(),radioRessonanceOption->GetSelection()))
   {
    statusERYAProfiling->SetStatusText(wxT("Prepare simulation, please wait...") ,0);
    main->SetOverrideParameters(SamplePrecision,GaussPrecision,VavilovMoyalPrecision,VavilovEdgeworthPrecision,VavilovAiryPrecision,LandauPrecision,ThreadPrecision,EnableLog);

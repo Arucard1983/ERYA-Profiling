@@ -412,6 +412,59 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 
 	sizerDetector->Add( sizerLorentzianRessonance, 1, wxEXPAND, 5 );
 
+	wxStaticBoxSizer* sizerLorentzianRessonance1;
+	sizerLorentzianRessonance1 = new wxStaticBoxSizer( new wxStaticBox( tabDetector, wxID_ANY, wxT("Lorentzian Ressonance Strenght Setup") ), wxVERTICAL );
+
+	wxGridSizer* sizerMainLorentzian1;
+	sizerMainLorentzian1 = new wxGridSizer( 2, 6, 0, 0 );
+
+	labelRessonanceWidth1 = new wxStaticText( sizerLorentzianRessonance1->GetStaticBox(), wxID_ANY, wxT("Ressonance Width (keV)"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelRessonanceWidth1->Wrap( -1 );
+	sizerMainLorentzian1->Add( labelRessonanceWidth1, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	textRessonanceWidth1 = new wxTextCtrl( sizerLorentzianRessonance1->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	sizerMainLorentzian1->Add( textRessonanceWidth1, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	labelRessonancePeak1 = new wxStaticText( sizerLorentzianRessonance1->GetStaticBox(), wxID_ANY, wxT("Ressonance Strenght (keV)"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelRessonancePeak1->Wrap( -1 );
+	sizerMainLorentzian1->Add( labelRessonancePeak1, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	textRessonancePeak1 = new wxTextCtrl( sizerLorentzianRessonance1->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	sizerMainLorentzian1->Add( textRessonancePeak1, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	labelRessonanceEnergy1 = new wxStaticText( sizerLorentzianRessonance1->GetStaticBox(), wxID_ANY, wxT("Ressonance Energy (keV)"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelRessonanceEnergy1->Wrap( -1 );
+	sizerMainLorentzian1->Add( labelRessonanceEnergy1, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	textRessonanceEnergy1 = new wxTextCtrl( sizerLorentzianRessonance1->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	sizerMainLorentzian1->Add( textRessonanceEnergy1, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+
+	sizerMainLorentzian1->Add( 0, 0, 1, wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	checkRessonanceRange1 = new wxCheckBox( sizerLorentzianRessonance1->GetStaticBox(), wxID_ANY, wxT("Define a Limited Energy Range ?"), wxDefaultPosition, wxDefaultSize, 0 );
+	sizerMainLorentzian1->Add( checkRessonanceRange1, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	labelRessonanceMinimum1 = new wxStaticText( sizerLorentzianRessonance1->GetStaticBox(), wxID_ANY, wxT("Minimum Ressonance\nEnergy (keV)"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelRessonanceMinimum1->Wrap( -1 );
+	sizerMainLorentzian1->Add( labelRessonanceMinimum1, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	textRessonanceMinimum1 = new wxTextCtrl( sizerLorentzianRessonance1->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	sizerMainLorentzian1->Add( textRessonanceMinimum1, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	labelRessonanceMaximum1 = new wxStaticText( sizerLorentzianRessonance1->GetStaticBox(), wxID_ANY, wxT("Maximum Ressonance\nEnergy (kev)"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelRessonanceMaximum1->Wrap( -1 );
+	sizerMainLorentzian1->Add( labelRessonanceMaximum1, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	textRessonanceMaximum1 = new wxTextCtrl( sizerLorentzianRessonance1->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	sizerMainLorentzian1->Add( textRessonanceMaximum1, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+
+	sizerLorentzianRessonance1->Add( sizerMainLorentzian1, 1, wxEXPAND, 5 );
+
+
+	sizerDetector->Add( sizerLorentzianRessonance1, 1, wxEXPAND, 5 );
+
 	wxStaticBoxSizer* sizerCustomRessonance;
 	sizerCustomRessonance = new wxStaticBoxSizer( new wxStaticBox( tabDetector, wxID_ANY, wxT("Custom Function Resonance Setup") ), wxVERTICAL );
 
@@ -431,9 +484,9 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 
 	sizerDetector->Add( sizerCustomRessonance, 0, wxEXPAND, 5 );
 
-	wxString radioRessonanceOptionChoices[] = { wxT("Without Resonance (default)"), wxT("Select Lorentzian Resonance"), wxT("Select Custom Function Resonance") };
+	wxString radioRessonanceOptionChoices[] = { wxT("Without Resonance (default)"), wxT("Select Lorentzian Resonance"), wxT("Select Lorentzian Resonance Strenght"), wxT("Select Custom Function Resonance") };
 	int radioRessonanceOptionNChoices = sizeof( radioRessonanceOptionChoices ) / sizeof( wxString );
-	radioRessonanceOption = new wxRadioBox( tabDetector, wxID_ANY, wxT("Select Default Resonance"), wxDefaultPosition, wxDefaultSize, radioRessonanceOptionNChoices, radioRessonanceOptionChoices, 3, wxRA_SPECIFY_ROWS );
+	radioRessonanceOption = new wxRadioBox( tabDetector, wxID_ANY, wxT("Select Default Resonance"), wxDefaultPosition, wxDefaultSize, radioRessonanceOptionNChoices, radioRessonanceOptionChoices, 4, wxRA_SPECIFY_ROWS );
 	radioRessonanceOption->SetSelection( 0 );
 	sizerDetector->Add( radioRessonanceOption, 0, wxALL|wxEXPAND, 5 );
 
@@ -671,6 +724,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	buttonDetectorSave->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnDetectorSave ), NULL, this );
 	buttonDetectorHelp->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnDetectorHelp ), NULL, this );
 	checkRessonanceRange->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnRessonanceRange ), NULL, this );
+	checkRessonanceRange1->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnRessonanceRange1 ), NULL, this );
 	radioRessonanceOption->Connect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( ERYAProfilingMain::OnRessonanceOption ), NULL, this );
 	buttonOutputDataImport->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnOutputData ), NULL, this );
 	buttonOutputImageSave->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnOutputImage ), NULL, this );
@@ -727,6 +781,7 @@ ERYAProfilingMain::~ERYAProfilingMain()
 	buttonDetectorSave->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnDetectorSave ), NULL, this );
 	buttonDetectorHelp->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnDetectorHelp ), NULL, this );
 	checkRessonanceRange->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnRessonanceRange ), NULL, this );
+	checkRessonanceRange1->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnRessonanceRange1 ), NULL, this );
 	radioRessonanceOption->Disconnect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( ERYAProfilingMain::OnRessonanceOption ), NULL, this );
 	buttonOutputDataImport->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnOutputData ), NULL, this );
 	buttonOutputImageSave->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnOutputImage ), NULL, this );

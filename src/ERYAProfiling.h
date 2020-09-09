@@ -160,6 +160,17 @@ class ERYAProfilingMain : public wxFrame
 		wxTextCtrl* textRessonanceMinimum;
 		wxStaticText* labelRessonanceMaximum;
 		wxTextCtrl* textRessonanceMaximum;
+		wxStaticText* labelRessonanceWidth1;
+		wxTextCtrl* textRessonanceWidth1;
+		wxStaticText* labelRessonancePeak1;
+		wxTextCtrl* textRessonancePeak1;
+		wxStaticText* labelRessonanceEnergy1;
+		wxTextCtrl* textRessonanceEnergy1;
+		wxCheckBox* checkRessonanceRange1;
+		wxStaticText* labelRessonanceMinimum1;
+		wxTextCtrl* textRessonanceMinimum1;
+		wxStaticText* labelRessonanceMaximum1;
+		wxTextCtrl* textRessonanceMaximum1;
 		wxStaticText* labelMainCustomInfo;
 		wxTextCtrl* textCustomRessonance;
 		wxRadioBox* radioRessonanceOption;
@@ -170,7 +181,7 @@ class ERYAProfilingMain : public wxFrame
 		wxButton* buttonOutputHelp;
 		wxStaticLine* lineOutputTools;
 		mpWindow* renderOutputData;
-                wxPanel* tabTable;
+        wxPanel* tabTable;
 		wxStaticText* labelTabOutputMain;
 		wxButton* buttonTableDataImport;
 		wxButton* buttonTableDataSave;
@@ -228,6 +239,7 @@ class ERYAProfilingMain : public wxFrame
 		virtual void OnDetectorSave( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDetectorHelp( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRessonanceRange( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRessonanceRange1( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRessonanceOption( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOutputData( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOutputImage( wxCommandEvent& event ) { event.Skip(); }
