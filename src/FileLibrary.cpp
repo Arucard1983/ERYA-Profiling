@@ -635,7 +635,7 @@ bool ERYAProfilingLayerFile::ERYAProfilingLayerXlsxSave(wxGrid* LayerTable, Elem
 }
 
 // Load the detector settings file
-bool ERYAProfilingRessonanceFile::ERYAProfilingRessonanceLoad(wxTextCtrl* &valueBeamResolution, wxTextCtrl* &valueTemperature, wxTextCtrl* &valueCharge, wxTextCtrl* &valueEnergyStep, wxTextCtrl* &valueMinimumEnergy, wxTextCtrl* &valueMaximumEnergy, wxTextCtrl* &valueRessonanceWidth, wxTextCtrl* &valueRessonancePeak, wxTextCtrl* &valueRessonanceEnergy, wxTextCtrl* &valueRessonanceMinimum, wxTextCtrl* &valueRessonanceMaximum, wxTextCtrl* &valueRessonanceFunction, bool& boolRessonanceLorentzian, int& intRessonanceMode)
+bool ERYAProfilingRessonanceFile::ERYAProfilingRessonanceLoad(wxTextCtrl* &valueBeamResolution, wxTextCtrl* &valueTemperature, wxTextCtrl* &valueCharge, wxTextCtrl* &valueEnergyStep, wxTextCtrl* &valueMinimumEnergy, wxTextCtrl* &valueMaximumEnergy, wxTextCtrl* &valueRessonanceWidth, wxTextCtrl* &valueRessonancePeak, wxTextCtrl* &valueRessonanceEnergy, wxTextCtrl* &valueRessonanceMinimum, wxTextCtrl* &valueRessonanceMaximum, wxTextCtrl* &valueRessonanceFunction, wxTextCtrl* &valueStrenghtWidth, wxTextCtrl* &valueStrenghtPeak, wxTextCtrl* &valueStrenghtEnergy, wxTextCtrl* &valueStrenghtMinimum, wxTextCtrl* &valueStrenghtMaximum, bool& boolRessonanceLorentzian, bool& boolRessonanceStrenght, int& intRessonanceMode)
 {
  // Process the XML document
   wxXmlDocument RessonanceDocument;
@@ -664,7 +664,7 @@ bool ERYAProfilingRessonanceFile::ERYAProfilingRessonanceLoad(wxTextCtrl* &value
         wxXmlNode *RessonanceValues = RessonanceData->GetChildren();
         if(RessonanceValues->GetName() == wxT("Ressonance_Values"))
         {
-         wxString BeamResolution,Temperature,Charge,EnergyStep,MinimumEnergy,MaximumEnergy,RessonanceWidth,RessonancePeak,RessonanceEnergy,RessonanceMinimum,RessonanceMaximum,RessonanceOption,RessonanceMode;
+         wxString BeamResolution,Temperature,Charge,EnergyStep,MinimumEnergy,MaximumEnergy,RessonanceWidth,RessonancePeak,RessonanceEnergy,RessonanceMinimum,RessonanceMaximum,StrenghtWidth,StrenghtPeak,StrenghtEnergy,StrenghtMinimum,StrenghtMaximum,RessonanceOption,StrenghtOption,RessonanceMode;
          BeamResolution = RessonanceValues->GetAttribute(wxT("Beam_Resolution"),wxT("0"));
          Temperature = RessonanceValues->GetAttribute(wxT("Temperature"),wxT("300"));
          Charge = RessonanceValues->GetAttribute(wxT("Charge"),wxT("1"));
@@ -676,7 +676,13 @@ bool ERYAProfilingRessonanceFile::ERYAProfilingRessonanceLoad(wxTextCtrl* &value
          RessonanceEnergy = RessonanceValues->GetAttribute(wxT("Ressonance_Energy"),wxT("0"));
          RessonanceMinimum = RessonanceValues->GetAttribute(wxT("Ressonance_Minimum"),wxT("0"));
          RessonanceMaximum = RessonanceValues->GetAttribute(wxT("Ressonance_Maximum"),wxT("0"));
+         StrenghtWidth = RessonanceValues->GetAttribute(wxT("Strenght_Width"),wxT("0"));
+         StrenghtPeak = RessonanceValues->GetAttribute(wxT("Strenght_Peak"),wxT("0"));
+         StrenghtEnergy = RessonanceValues->GetAttribute(wxT("Strenght_Energy"),wxT("0"));
+         StrenghtMinimum = RessonanceValues->GetAttribute(wxT("Strenght_Minimum"),wxT("0"));
+         StrenghtMaximum = RessonanceValues->GetAttribute(wxT("Strenght_Maximum"),wxT("0"));
          RessonanceOption = RessonanceValues->GetAttribute(wxT("Ressonance_Lorentzian"),wxT("0"));
+         StrenghtOption = RessonanceValues->GetAttribute(wxT("Strenght_Lorentzian"),wxT("0"));
          RessonanceMode = RessonanceValues->GetAttribute(wxT("Ressonance_Mode"),wxT("0"));
          valueBeamResolution->SetValue(BeamResolution);
          valueTemperature->SetValue(Temperature);
@@ -689,10 +695,19 @@ bool ERYAProfilingRessonanceFile::ERYAProfilingRessonanceLoad(wxTextCtrl* &value
          valueRessonanceEnergy->SetValue(RessonanceEnergy);
          valueRessonanceMinimum->SetValue(RessonanceMinimum);
          valueRessonanceMaximum->SetValue(RessonanceMaximum);
+         valueStrenghtWidth->SetValue(StrenghtWidth);
+         valueStrenghtPeak->SetValue(StrenghtPeak);
+         valueStrenghtEnergy->SetValue(StrenghtEnergy);
+         valueStrenghtMinimum->SetValue(StrenghtMinimum);
+         valueStrenghtMaximum->SetValue(StrenghtMaximum);
          if(RessonanceOption == wxT("1"))
            boolRessonanceLorentzian = true;
          else
            boolRessonanceLorentzian = false;
+         if(StrenghtOption == wxT("1"))
+           boolRessonanceStrenght = true;
+         else
+           boolRessonanceStrenght = false;
          long value;
          if(RessonanceMode.ToLong(&value))
            intRessonanceMode = value;
@@ -722,14 +737,18 @@ bool ERYAProfilingRessonanceFile::ERYAProfilingRessonanceLoad(wxTextCtrl* &value
 }
 
 // Save the detector settings file
-bool ERYAProfilingRessonanceFile::ERYAProfilingRessonanceSave(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueRessonanceFunction, bool boolRessonanceLorentzian, int intRessonanceMode)
+bool ERYAProfilingRessonanceFile::ERYAProfilingRessonanceSave(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueRessonanceFunction, wxTextCtrl* valueStrenghtWidth, wxTextCtrl* valueStrenghtPeak, wxTextCtrl* valueStrenghtEnergy, wxTextCtrl* valueStrenghtMinimum, wxTextCtrl* valueStrenghtMaximum, bool boolRessonanceLorentzian, bool boolRessonanceStrenght, int intRessonanceMode)
 {
  // Global variables
- wxString RessonanceOption, RessonanceMode;
+ wxString RessonanceOption, StrenghtOption, RessonanceMode;
  if(boolRessonanceLorentzian)
     RessonanceOption = wxT("1");
  else
     RessonanceOption = wxT("0");
+ if(boolRessonanceStrenght)
+    StrenghtOption = wxT("1");
+ else
+    StrenghtOption = wxT("0");
  RessonanceMode = wxString::Format("%i",intRessonanceMode);
  // Create the XML file structure
  // An xml file when written, all node are declared backwards, but any attribute of the same node should be declared forwards
@@ -750,7 +769,13 @@ bool ERYAProfilingRessonanceFile::ERYAProfilingRessonanceSave(wxTextCtrl* valueB
      datalabel->AddAttribute(wxT("Ressonance_Energy"),valueRessonanceEnergy->GetValue());
      datalabel->AddAttribute(wxT("Ressonance_Minimum"),valueRessonanceMinimum->GetValue());
      datalabel->AddAttribute(wxT("Ressonance_Maximum"),valueRessonanceMaximum->GetValue());
+     datalabel->AddAttribute(wxT("Strenght_Width"),valueStrenghtWidth->GetValue());
+     datalabel->AddAttribute(wxT("Strenght_Peak"),valueStrenghtPeak->GetValue());
+     datalabel->AddAttribute(wxT("Strenght_Energy"),valueStrenghtEnergy->GetValue());
+     datalabel->AddAttribute(wxT("Strenght_Minimum"),valueStrenghtMinimum->GetValue());
+     datalabel->AddAttribute(wxT("Strenght_Maximum"),valueStrenghtMaximum->GetValue());
      datalabel->AddAttribute(wxT("Ressonance_Lorentzian"),RessonanceOption);
+     datalabel->AddAttribute(wxT("Strenght_Lorentzian"),StrenghtOption);
      datalabel->AddAttribute(wxT("Ressonance_Mode"),RessonanceMode);
   wxXmlNode* custom = new wxXmlNode(data, wxXML_ELEMENT_NODE, "Ressonance_Function");
    wxXmlNode* customvalue = new wxXmlNode(custom, wxXML_ELEMENT_NODE, "macro");
@@ -767,7 +792,7 @@ bool ERYAProfilingRessonanceFile::ERYAProfilingRessonanceSave(wxTextCtrl* valueB
 }
 
 // Global ERYA profiling file loading
-bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamResolution, wxTextCtrl* &valueTemperature, wxTextCtrl* &valueCharge, wxTextCtrl* &valueEnergyStep, wxTextCtrl* &valueMinimumEnergy, wxTextCtrl* &valueMaximumEnergy, wxTextCtrl* &valueRessonanceWidth, wxTextCtrl* &valueRessonancePeak, wxTextCtrl* &valueRessonanceEnergy, wxTextCtrl* &valueRessonanceMinimum, wxTextCtrl* &valueRessonanceMaximum, wxTextCtrl* &valueRessonanceFunction, bool& boolRessonanceLorentzian, int& intRessonanceMode, wxArrayString& ListElements, wxArrayString& ListGammaPeaks, wxArrayString& ListNumber, wxArrayString& ListAbundance, wxArrayString& ListIsotopic, wxArrayString& ListAtomic, wxArrayString& LayerGridData, ElementDatabaseArray OpenDatabase, unsigned int& SampleStep, unsigned int& GaussStep, unsigned int& MoyalStep, unsigned int& EdgeworthStep, unsigned int& AiryStep, unsigned int& LandauStep, unsigned int& VavilovLimit, unsigned int& EnableLog)
+bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamResolution, wxTextCtrl* &valueTemperature, wxTextCtrl* &valueCharge, wxTextCtrl* &valueEnergyStep, wxTextCtrl* &valueMinimumEnergy, wxTextCtrl* &valueMaximumEnergy, wxTextCtrl* &valueRessonanceWidth, wxTextCtrl* &valueRessonancePeak, wxTextCtrl* &valueRessonanceEnergy, wxTextCtrl* &valueRessonanceMinimum, wxTextCtrl* &valueRessonanceMaximum, wxTextCtrl* &valueRessonanceFunction, wxTextCtrl* &valueStrenghtWidth, wxTextCtrl* &valueStrenghtPeak, wxTextCtrl* &valueStrenghtEnergy, wxTextCtrl* &valueStrenghtMinimum, wxTextCtrl* &valueStrenghtMaximum, bool& boolRessonanceLorentzian, bool& boolRessonanceStrenght, int& intRessonanceMode, wxArrayString& ListElements, wxArrayString& ListGammaPeaks, wxArrayString& ListNumber, wxArrayString& ListAbundance, wxArrayString& ListIsotopic, wxArrayString& ListAtomic, wxArrayString& LayerGridData, ElementDatabaseArray OpenDatabase, unsigned int& SampleStep, unsigned int& GaussStep, unsigned int& MoyalStep, unsigned int& EdgeworthStep, unsigned int& AiryStep, unsigned int& LandauStep, unsigned int& VavilovLimit, unsigned int& EnableLog)
 {
  // Process the initial globl variables
     wxXmlDocument LocalFile;
@@ -812,7 +837,7 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamReso
         wxXmlNode *RessonanceValues = RessonanceData->GetChildren();
         if(RessonanceValues->GetName() == wxT("Ressonance_Values"))
         {
-         wxString BeamResolution,Temperature,Charge,EnergyStep,MinimumEnergy,MaximumEnergy,RessonanceWidth,RessonancePeak,RessonanceEnergy,RessonanceMinimum,RessonanceMaximum,RessonanceOption,RessonanceMode;
+         wxString BeamResolution,Temperature,Charge,EnergyStep,MinimumEnergy,MaximumEnergy,RessonanceWidth,RessonancePeak,RessonanceEnergy,RessonanceMinimum,RessonanceMaximum,StrenghtWidth,StrenghtPeak,StrenghtEnergy,StrenghtMinimum,StrenghtMaximum,RessonanceOption,StrenghtOption,RessonanceMode;
          BeamResolution = RessonanceValues->GetAttribute(wxT("Beam_Resolution"),wxT("0"));
          Temperature = RessonanceValues->GetAttribute(wxT("Temperature"),wxT("300"));
          Charge = RessonanceValues->GetAttribute(wxT("Charge"),wxT("1"));
@@ -824,7 +849,13 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamReso
          RessonanceEnergy = RessonanceValues->GetAttribute(wxT("Ressonance_Energy"),wxT("0"));
          RessonanceMinimum = RessonanceValues->GetAttribute(wxT("Ressonance_Minimum"),wxT("0"));
          RessonanceMaximum = RessonanceValues->GetAttribute(wxT("Ressonance_Maximum"),wxT("0"));
+         StrenghtWidth = RessonanceValues->GetAttribute(wxT("Strenght_Width"),wxT("0"));
+         StrenghtPeak = RessonanceValues->GetAttribute(wxT("Strenght_Peak"),wxT("0"));
+         StrenghtEnergy = RessonanceValues->GetAttribute(wxT("Strenght_Energy"),wxT("0"));
+         StrenghtMinimum = RessonanceValues->GetAttribute(wxT("Strenght_Minimum"),wxT("0"));
+         StrenghtMaximum = RessonanceValues->GetAttribute(wxT("Strenght_Maximum"),wxT("0"));
          RessonanceOption = RessonanceValues->GetAttribute(wxT("Ressonance_Lorentzian"),wxT("0"));
+         StrenghtOption = RessonanceValues->GetAttribute(wxT("Strenght_Lorentzian"),wxT("0"));
          RessonanceMode = RessonanceValues->GetAttribute(wxT("Ressonance_Mode"),wxT("0"));
          valueBeamResolution->SetValue(BeamResolution);
          valueTemperature->SetValue(Temperature);
@@ -837,10 +868,19 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamReso
          valueRessonanceEnergy->SetValue(RessonanceEnergy);
          valueRessonanceMinimum->SetValue(RessonanceMinimum);
          valueRessonanceMaximum->SetValue(RessonanceMaximum);
+         valueStrenghtWidth->SetValue(StrenghtWidth);
+         valueStrenghtPeak->SetValue(StrenghtPeak);
+         valueStrenghtEnergy->SetValue(StrenghtEnergy);
+         valueStrenghtMinimum->SetValue(StrenghtMinimum);
+         valueStrenghtMaximum->SetValue(StrenghtMaximum);
          if(RessonanceOption == wxT("1"))
            boolRessonanceLorentzian = true;
          else
            boolRessonanceLorentzian = false;
+         if(StrenghtOption == wxT("1"))
+           boolRessonanceStrenght = true;
+         else
+           boolRessonanceStrenght = false;
          long value;
          if(RessonanceMode.ToLong(&value))
            intRessonanceMode = value;
@@ -1078,14 +1118,18 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamReso
 }
 
 // Global ERYA profilng file saving
-bool ERYAProfilingGlobalFile::ERYAProfilingGlobalSave(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueRessonanceFunction, bool boolRessonanceLorentzian, int intRessonanceMode, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass, ArrayAtomicMass textAtomicMass,wxGrid* LayerTable, ElementDatabaseArray OpenDatabase, unsigned int SampleStep, unsigned int GaussStep, unsigned int MoyalStep, unsigned int EdgeworthStep, unsigned int AiryStep, unsigned int LandauStep, unsigned int VavilovLimit, unsigned int EnableLog)
+bool ERYAProfilingGlobalFile::ERYAProfilingGlobalSave(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueRessonanceFunction, wxTextCtrl* valueStrenghtWidth, wxTextCtrl* valueStrenghtPeak, wxTextCtrl* valueStrenghtEnergy, wxTextCtrl* valueStrenghtMinimum, wxTextCtrl* valueStrenghtMaximum, bool boolRessonanceLorentzian, bool boolRessonanceStrenght, int intRessonanceMode, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass, ArrayAtomicMass textAtomicMass,wxGrid* LayerTable, ElementDatabaseArray OpenDatabase, unsigned int SampleStep, unsigned int GaussStep, unsigned int MoyalStep, unsigned int EdgeworthStep, unsigned int AiryStep, unsigned int LandauStep, unsigned int VavilovLimit, unsigned int EnableLog)
 {
  // Global variables
- wxString RessonanceOption, RessonanceMode;
+ wxString RessonanceOption, StrenghtOption, RessonanceMode;
  if(boolRessonanceLorentzian)
     RessonanceOption = wxT("1");
  else
     RessonanceOption = wxT("0");
+ if(boolRessonanceStrenght)
+    StrenghtOption = wxT("1");
+ else
+    StrenghtOption = wxT("0");
  RessonanceMode = wxString::Format("%i",intRessonanceMode);
  int LayerNumberLayers = LayerTable->GetNumberRows();
  int LayerNumberElements = LayerTable->GetNumberCols();
@@ -1116,7 +1160,13 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalSave(wxTextCtrl* valueBeamResol
      datalabel->AddAttribute(wxT("Ressonance_Energy"),valueRessonanceEnergy->GetValue());
      datalabel->AddAttribute(wxT("Ressonance_Minimum"),valueRessonanceMinimum->GetValue());
      datalabel->AddAttribute(wxT("Ressonance_Maximum"),valueRessonanceMaximum->GetValue());
+     datalabel->AddAttribute(wxT("Strenght_Width"),valueStrenghtWidth->GetValue());
+     datalabel->AddAttribute(wxT("Strenght_Peak"),valueStrenghtPeak->GetValue());
+     datalabel->AddAttribute(wxT("Strenght_Energy"),valueStrenghtEnergy->GetValue());
+     datalabel->AddAttribute(wxT("Strenght_Minimum"),valueStrenghtMinimum->GetValue());
+     datalabel->AddAttribute(wxT("Strenght_Maximum"),valueStrenghtMaximum->GetValue());
      datalabel->AddAttribute(wxT("Ressonance_Lorentzian"),RessonanceOption);
+     datalabel->AddAttribute(wxT("Strenght_Lorentzian"),StrenghtOption);
      datalabel->AddAttribute(wxT("Ressonance_Mode"),RessonanceMode);
   wxXmlNode* custom = new wxXmlNode(data, wxXML_ELEMENT_NODE, "Ressonance_Function");
    wxXmlNode* customvalue = new wxXmlNode(custom, wxXML_ELEMENT_NODE, "macro");

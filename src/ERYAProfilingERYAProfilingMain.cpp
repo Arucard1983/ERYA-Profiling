@@ -47,6 +47,12 @@ void ERYAProfilingERYAProfilingMain::OnFileNew( wxCommandEvent& event )
  checkRessonanceRange->SetValue(false);
  textRessonanceMinimum->Clear();
  textRessonanceMaximum->Clear();
+ textRessonanceWidth1->Clear();
+ textRessonancePeak1->Clear();
+ textRessonanceEnergy1->Clear();
+ checkRessonanceRange1->SetValue(false);
+ textRessonanceMinimum1->Clear();
+ textRessonanceMaximum1->Clear();
  textCustomRessonance->Clear();
  radioRessonanceOption->SetSelection(0);
  }
@@ -65,8 +71,8 @@ void ERYAProfilingERYAProfilingMain::OnFileOpen( wxCommandEvent& event )
   wxArrayString Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,LayerTableData;
   int ActualMode;
   unsigned int ActiveLog;
-  bool IsLorentzian;
-  if(openfile.ERYAProfilingGlobalLoad(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,IsLorentzian,ActualMode,Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,LayerTableData,OpenDatabase,SamplePrecision,GaussPrecision,VavilovMoyalPrecision,VavilovEdgeworthPrecision,VavilovAiryPrecision,LandauPrecision,ThreadPrecision,ActiveLog))
+  bool IsLorentzian,IsStrenght;
+  if(openfile.ERYAProfilingGlobalLoad(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,textRessonanceWidth1,textRessonancePeak1,textRessonanceEnergy1,textRessonanceMinimum1,textRessonanceMaximum1,IsLorentzian,IsStrenght,ActualMode,Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,LayerTableData,OpenDatabase,SamplePrecision,GaussPrecision,VavilovMoyalPrecision,VavilovEdgeworthPrecision,VavilovAiryPrecision,LandauPrecision,ThreadPrecision,ActiveLog))
   {
    this->GenerateTable(Elements.GetCount());
    for(int k=0; k<Elements.GetCount(); k++)
@@ -91,6 +97,7 @@ void ERYAProfilingERYAProfilingMain::OnFileOpen( wxCommandEvent& event )
       gridLayerEditor->SetCellValue(i,j,LayerTableData.Item(k));
      }
    checkRessonanceRange->SetValue(IsLorentzian);
+   checkRessonanceRange1->SetValue(IsStrenght);
    radioRessonanceOption->SetSelection(ActualMode);
    if (ActiveLog == 0)
      EnableLog = false;
@@ -128,7 +135,7 @@ void ERYAProfilingERYAProfilingMain::OnFileSave( wxCommandEvent& event )
         ActiveLog = 1;
     else
         ActiveLog = 0;
-    if(!(file.ERYAProfilingGlobalSave(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,checkRessonanceRange->GetValue(),radioRessonanceOption->GetSelection(),choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,gridLayerEditor,OpenDatabase,SamplePrecision,GaussPrecision,VavilovMoyalPrecision,VavilovEdgeworthPrecision,VavilovAiryPrecision,LandauPrecision,ThreadPrecision,ActiveLog)))
+    if(!(file.ERYAProfilingGlobalSave(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,textRessonanceWidth1,textRessonancePeak1,textRessonanceEnergy1,textRessonanceMinimum1,textRessonanceMaximum1,checkRessonanceRange->GetValue(),checkRessonanceRange1->GetValue(),radioRessonanceOption->GetSelection(),choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,gridLayerEditor,OpenDatabase,SamplePrecision,GaussPrecision,VavilovMoyalPrecision,VavilovEdgeworthPrecision,VavilovAiryPrecision,LandauPrecision,ThreadPrecision,ActiveLog)))
     {
       wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Unexpected error when ERYA-Profiling try to write file."), wxT("Error on file save!"), wxOK | wxICON_ERROR);
       dial->ShowModal();
@@ -158,7 +165,7 @@ void ERYAProfilingERYAProfilingMain::OnFileSaveAs( wxCommandEvent& event )
         ActiveLog = 1;
     else
         ActiveLog = 0;
-    if(!(file.ERYAProfilingGlobalSave(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,checkRessonanceRange->GetValue(),radioRessonanceOption->GetSelection(),choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,gridLayerEditor,OpenDatabase,SamplePrecision,GaussPrecision,VavilovMoyalPrecision,VavilovEdgeworthPrecision,VavilovAiryPrecision,LandauPrecision,ThreadPrecision,ActiveLog)))
+    if(!(file.ERYAProfilingGlobalSave(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,textRessonanceWidth1,textRessonancePeak1,textRessonanceEnergy1,textRessonanceMinimum1,textRessonanceMaximum1,checkRessonanceRange->GetValue(),checkRessonanceRange1->GetValue(),radioRessonanceOption->GetSelection(),choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,gridLayerEditor,OpenDatabase,SamplePrecision,GaussPrecision,VavilovMoyalPrecision,VavilovEdgeworthPrecision,VavilovAiryPrecision,LandauPrecision,ThreadPrecision,ActiveLog)))
     {
       wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Unexpected error when ERYA-Profiling try to write file."), wxT("Error on file save!"), wxOK | wxICON_ERROR);
       dial->ShowModal();
@@ -667,6 +674,12 @@ void ERYAProfilingERYAProfilingMain::OnDetectorReset( wxCommandEvent& event )
  checkRessonanceRange->SetValue(false);
  textRessonanceMinimum->Clear();
  textRessonanceMaximum->Clear();
+ textRessonanceWidth1->Clear();
+ textRessonancePeak1->Clear();
+ textRessonanceEnergy1->Clear();
+ checkRessonanceRange1->SetValue(false);
+ textRessonanceMinimum1->Clear();
+ textRessonanceMaximum1->Clear();
 }
 
 void ERYAProfilingERYAProfilingMain::OnDetectorFunction( wxCommandEvent& event )
@@ -685,11 +698,12 @@ void ERYAProfilingERYAProfilingMain::OnDetectorLoad( wxCommandEvent& event )
   if(Version == wxT("eprs"))
   {
     ERYAProfilingRessonanceFile file(CurrentERYAProfilingFilePath);
-    bool IsLorentzian;
+    bool IsLorentzian,IsStrenght;
     int ActualMode;
-    if(file.ERYAProfilingRessonanceLoad(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,IsLorentzian,ActualMode))
+    if(file.ERYAProfilingRessonanceLoad(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,textRessonanceWidth1,textRessonancePeak1,textRessonanceEnergy1,textRessonanceMinimum1,textRessonanceMaximum1,IsLorentzian,IsStrenght,ActualMode))
     {
       checkRessonanceRange->SetValue(IsLorentzian);
+      checkRessonanceRange1->SetValue(IsStrenght);
       radioRessonanceOption->SetSelection(ActualMode);
     }
     else
@@ -717,7 +731,7 @@ void ERYAProfilingERYAProfilingMain::OnDetectorSave( wxCommandEvent& event )
   if(Version == wxT("eprs"))
   {
     ERYAProfilingRessonanceFile file(CurrentERYAProfilingFilePath);
-    if(!(file.ERYAProfilingRessonanceSave(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,checkRessonanceRange->GetValue(),radioRessonanceOption->GetSelection())))
+    if(!(file.ERYAProfilingRessonanceSave(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,textRessonanceWidth1,textRessonancePeak1,textRessonanceEnergy1,textRessonanceMinimum1,textRessonanceMaximum1,checkRessonanceRange->GetValue(),checkRessonanceRange1->GetValue(),radioRessonanceOption->GetSelection())))
     {
       wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Unexpected error when ERYA-Profiling try to write file."), wxT("Error on file save!"), wxOK | wxICON_ERROR);
       dial->ShowModal();
@@ -745,6 +759,12 @@ void ERYAProfilingERYAProfilingMain::OnDetectorHelp( wxCommandEvent& event )
  checkRessonanceRange->SetValue(false);
  textRessonanceMinimum->Clear();
  textRessonanceMaximum->Clear();
+ textRessonanceWidth1->Clear();
+ textRessonancePeak1->Clear();
+ textRessonanceEnergy1->Clear();
+ checkRessonanceRange1->SetValue(false);
+ textRessonanceMinimum1->Clear();
+ textRessonanceMaximum1->Clear();
  textCustomRessonance->Clear();
  radioRessonanceOption->SetSelection(0);
 }
@@ -1115,6 +1135,12 @@ void ERYAProfilingERYAProfilingMain::OnMainNew( wxCommandEvent& event )
  checkRessonanceRange->SetValue(false);
  textRessonanceMinimum->Clear();
  textRessonanceMaximum->Clear();
+ textRessonanceWidth1->Clear();
+ textRessonancePeak1->Clear();
+ textRessonanceEnergy1->Clear();
+ checkRessonanceRange1->SetValue(false);
+ textRessonanceMinimum1->Clear();
+ textRessonanceMaximum1->Clear();
  textCustomRessonance->Clear();
  radioRessonanceOption->SetSelection(0);
  }
