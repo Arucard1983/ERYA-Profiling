@@ -207,7 +207,7 @@ bool RessonanceFunction::ParseRessonanceList(wxString RessonanceWidth, wxString 
 }
 
 //Evaluate the Briet-Wigner at a certain energy.
-// f(x) = (peak * width^2 / 4 )/ (width^2 / 4 + (x-energy)^2)
+// f(E) = (energy / E) * (peak * width^2 / 4 ) / (width^2 / 4 + (E-energy)^2)
 double RessonanceFunction::BrietWigner(double Energy)
 {
  if(GBWmin <= Energy && Energy <= GBWmax)
@@ -216,7 +216,7 @@ double RessonanceFunction::BrietWigner(double Energy)
    for(int i=0; i<BWEnergy.size(); i++)
    {
     if(BWmin.at(i) <= Energy && Energy <= BWmax.at(i))
-     BWSum = BWSum + (BWPeak.at(i) * BWWidth.at(i) * BWWidth.at(i) / 4 ) / (BWWidth.at(i) * BWWidth.at(i) / 4 + std::pow(Energy - BWEnergy.at(i),2));
+     BWSum = BWSum + (BWEnergy.at(i) / Energy) * (BWPeak.at(i) * BWWidth.at(i) * BWWidth.at(i) / 4 ) / (BWWidth.at(i) * BWWidth.at(i) / 4 + std::pow(Energy - BWEnergy.at(i),2));
    }
   return BWSum;
  }
@@ -227,7 +227,7 @@ double RessonanceFunction::BrietWigner(double Energy)
 }
 
 //Evaluate the Briet-Wigner with a Resonance Strenght at a certain energy.
-// f(x) = (constant * strenght * width / 4 )/ (width^2 / 4 + (x-energy)^2)
+// f(E) = (constant * strenght * width / 4 )/ (width^2 / 4 + (E-energy)^2)
 // constant are equal to 656600/(A*E) mili-barn
 double RessonanceFunction::StrenghtEnergy(double Energy)
 {
