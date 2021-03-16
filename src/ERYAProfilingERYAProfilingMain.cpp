@@ -68,11 +68,11 @@ void ERYAProfilingERYAProfilingMain::OnFileOpen( wxCommandEvent& event )
  if(file.GetExt() == wxT("epgs"))
  {
   ERYAProfilingGlobalFile openfile(CurrentERYAProfilingFilePath);
-  wxArrayString Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,LayerTableData;
+  wxArrayString Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,Calibration,LayerTableData;
   int ActualMode;
   unsigned int ActiveLog;
   bool IsLorentzian,IsStrenght;
-  if(openfile.ERYAProfilingGlobalLoad(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,textRessonanceWidth1,textRessonancePeak1,textRessonanceEnergy1,textRessonanceMinimum1,textRessonanceMaximum1,IsLorentzian,IsStrenght,ActualMode,Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,LayerTableData,OpenDatabase,SamplePrecision,GaussPrecision,VavilovMoyalPrecision,VavilovEdgeworthPrecision,VavilovAiryPrecision,LandauPrecision,ThreadPrecision,ActiveLog))
+  if(openfile.ERYAProfilingGlobalLoad(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,textRessonanceWidth1,textRessonancePeak1,textRessonanceEnergy1,textRessonanceMinimum1,textRessonanceMaximum1,IsLorentzian,IsStrenght,ActualMode,Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,Calibration,LayerTableData,OpenDatabase,SamplePrecision,GaussPrecision,VavilovMoyalPrecision,VavilovEdgeworthPrecision,VavilovAiryPrecision,LandauPrecision,ThreadPrecision,ActiveLog))
   {
    this->GenerateTable(Elements.GetCount());
    for(int k=0; k<Elements.GetCount(); k++)
@@ -86,6 +86,8 @@ void ERYAProfilingERYAProfilingMain::OnFileOpen( wxCommandEvent& event )
      textIsotopicMass.Item(k)->SetValue(Isotopic.Item(k));
     if(Atomic.Item(k).Len() > 0)
      textAtomicMass.Item(k)->SetValue(Atomic.Item(k));
+    if(Calibration.Item(k).Len() > 0)
+     textCalibrationFactor.Item(k)->SetValue(Calibration.Item(k));
    }
    this->GenerateLayer();
    this->GenerateLayer(LayerTableData.GetCount()/(Elements.GetCount()+1));
@@ -135,7 +137,7 @@ void ERYAProfilingERYAProfilingMain::OnFileSave( wxCommandEvent& event )
         ActiveLog = 1;
     else
         ActiveLog = 0;
-    if(!(file.ERYAProfilingGlobalSave(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,textRessonanceWidth1,textRessonancePeak1,textRessonanceEnergy1,textRessonanceMinimum1,textRessonanceMaximum1,checkRessonanceRange->GetValue(),checkRessonanceRange1->GetValue(),radioRessonanceOption->GetSelection(),choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,gridLayerEditor,OpenDatabase,SamplePrecision,GaussPrecision,VavilovMoyalPrecision,VavilovEdgeworthPrecision,VavilovAiryPrecision,LandauPrecision,ThreadPrecision,ActiveLog)))
+    if(!(file.ERYAProfilingGlobalSave(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,textRessonanceWidth1,textRessonancePeak1,textRessonanceEnergy1,textRessonanceMinimum1,textRessonanceMaximum1,checkRessonanceRange->GetValue(),checkRessonanceRange1->GetValue(),radioRessonanceOption->GetSelection(),choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,textCalibrationFactor,gridLayerEditor,OpenDatabase,SamplePrecision,GaussPrecision,VavilovMoyalPrecision,VavilovEdgeworthPrecision,VavilovAiryPrecision,LandauPrecision,ThreadPrecision,ActiveLog)))
     {
       wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Unexpected error when ERYA-Profiling try to write file."), wxT("Error on file save!"), wxOK | wxICON_ERROR);
       dial->ShowModal();
@@ -165,7 +167,7 @@ void ERYAProfilingERYAProfilingMain::OnFileSaveAs( wxCommandEvent& event )
         ActiveLog = 1;
     else
         ActiveLog = 0;
-    if(!(file.ERYAProfilingGlobalSave(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,textRessonanceWidth1,textRessonancePeak1,textRessonanceEnergy1,textRessonanceMinimum1,textRessonanceMaximum1,checkRessonanceRange->GetValue(),checkRessonanceRange1->GetValue(),radioRessonanceOption->GetSelection(),choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,gridLayerEditor,OpenDatabase,SamplePrecision,GaussPrecision,VavilovMoyalPrecision,VavilovEdgeworthPrecision,VavilovAiryPrecision,LandauPrecision,ThreadPrecision,ActiveLog)))
+    if(!(file.ERYAProfilingGlobalSave(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,textRessonanceWidth1,textRessonancePeak1,textRessonanceEnergy1,textRessonanceMinimum1,textRessonanceMaximum1,checkRessonanceRange->GetValue(),checkRessonanceRange1->GetValue(),radioRessonanceOption->GetSelection(),choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,textCalibrationFactor,gridLayerEditor,OpenDatabase,SamplePrecision,GaussPrecision,VavilovMoyalPrecision,VavilovEdgeworthPrecision,VavilovAiryPrecision,LandauPrecision,ThreadPrecision,ActiveLog)))
     {
       wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Unexpected error when ERYA-Profiling try to write file."), wxT("Error on file save!"), wxOK | wxICON_ERROR);
       dial->ShowModal();
@@ -206,6 +208,7 @@ void ERYAProfilingERYAProfilingMain::OnDatabaseElements( wxCommandEvent& event )
   {
    OpenDatabase.ResetElementGammaMenu(choiceElementName.Item(k),choiceGammaPeak.Item(k));
    OpenDatabase.FindGetAllElementInfo(choiceElementName.Item(k)->GetString(0),choiceGammaPeak.Item(k)->GetString(0), choiceElementName.Item(k), choiceGammaPeak.Item(k), textAtomicNumber.Item(k), textAbundance.Item(k), textAtomicMass.Item(k), textIsotopicMass.Item(k));
+   textCalibrationFactor.Item(k)->SetValue(wxT("1"));
   }
   this->GenerateLayer();
  }
@@ -343,8 +346,8 @@ void ERYAProfilingERYAProfilingMain::OnElementLoad( wxCommandEvent& event )
  if(file.GetExt() == wxT("epcs"))
  {
   ERYAProfilingSampleFile openfile(CurrentERYAProfilingFilePath);
-  wxArrayString Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic;
-  if(openfile.ERYAProfilingSampleLoad(Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,OpenDatabase))
+  wxArrayString Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,Calibration;
+  if(openfile.ERYAProfilingSampleLoad(Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,Calibration,OpenDatabase))
   {
    this->GenerateTable(Elements.GetCount());
    for(int k=0; k<choiceElementName.GetCount(); k++)
@@ -358,6 +361,8 @@ void ERYAProfilingERYAProfilingMain::OnElementLoad( wxCommandEvent& event )
      textIsotopicMass.Item(k)->SetValue(Isotopic.Item(k));
     if(Atomic.Item(k).Len() > 0)
      textAtomicMass.Item(k)->SetValue(Atomic.Item(k));
+    if(Calibration.Item(k).Len() > 0)
+     textCalibrationFactor.Item(k)->SetValue(Calibration.Item(k));
    }
    this->GenerateLayer();
    this->GenerateResult();
@@ -372,8 +377,8 @@ void ERYAProfilingERYAProfilingMain::OnElementLoad( wxCommandEvent& event )
  else if(file.GetExt() == wxT("xlsx"))
  {
   ERYAProfilingSampleFile openfile(CurrentERYAProfilingFilePath);
-  wxArrayString Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic;
-  if(openfile.ERYAProfilingSampleXlsxLoad(Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,OpenDatabase))
+  wxArrayString Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,Calibration;
+  if(openfile.ERYAProfilingSampleXlsxLoad(Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,Calibration,OpenDatabase))
   {
    this->GenerateTable(Elements.GetCount());
    for(int k=0; k<choiceElementName.GetCount(); k++)
@@ -387,6 +392,8 @@ void ERYAProfilingERYAProfilingMain::OnElementLoad( wxCommandEvent& event )
      textIsotopicMass.Item(k)->SetValue(Isotopic.Item(k));
     if(Atomic.Item(k).Len() > 0)
      textAtomicMass.Item(k)->SetValue(Atomic.Item(k));
+    if(Atomic.Item(k).Len() > 0)
+     textCalibrationFactor.Item(k)->SetValue(Calibration.Item(k));
    }
    this->GenerateLayer();
    this->GenerateResult();
@@ -418,12 +425,12 @@ void ERYAProfilingERYAProfilingMain::OnElementSave( wxCommandEvent& event )
   if(Version == wxT("epcs"))
   {
     ERYAProfilingSampleFile file(CurrentERYAProfilingFilePath);
-    file.ERYAProfilingSampleSave(choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,OpenDatabase);
+    file.ERYAProfilingSampleSave(choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,textCalibrationFactor,OpenDatabase);
   }
   else if(Version == wxT("xlsx"))
   {
     ERYAProfilingSampleFile file(CurrentERYAProfilingFilePath);
-    file.ERYAProfilingSampleXlsxSave(choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,OpenDatabase);
+    file.ERYAProfilingSampleXlsxSave(choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,textCalibrationFactor,OpenDatabase);
   }
   else
   {
@@ -1655,7 +1662,7 @@ void ERYAProfilingERYAProfilingMain::OnMainRun( wxCommandEvent& event )
   {
    statusERYAProfiling->SetStatusText(wxT("Prepare simulation, please wait...") ,0);
    main->SetOverrideParameters(SamplePrecision,GaussPrecision,VavilovMoyalPrecision,VavilovEdgeworthPrecision,VavilovAiryPrecision,LandauPrecision,ThreadPrecision,EnableLog);
-   if(main->SampleSetup(OpenDatabase,CurrentZieglerParameters,CurrentDetectorParameters,CurrentSRIMTables,gridLayerEditor,choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass))
+   if(main->SampleSetup(OpenDatabase,CurrentZieglerParameters,CurrentDetectorParameters,CurrentSRIMTables,gridLayerEditor,choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,textCalibrationFactor))
    {
      if(main->StartProcedure(statusERYAProfiling))
      {
@@ -2041,6 +2048,9 @@ void ERYAProfilingERYAProfilingMain::GenerateTable(int Number )
 	textAtomicMass.Add(new wxTextCtrl( scrollElementTable, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(140,-1), 0 ));
 	sizerElementEditor->Add( textAtomicMass.Last(), 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
+	textCalibrationFactor.Add(new wxTextCtrl( scrollElementTable, wxID_ANY, wxT("1"), wxDefaultPosition, wxSize(140,-1), 0 ));
+	sizerElementEditor->Add( textCalibrationFactor.Last(), 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
      choiceElementName.Last()->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( ERYAProfilingERYAProfilingMain::OnElementNameChoice ), NULL, this );
 	 choiceGammaPeak.Last()->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( ERYAProfilingERYAProfilingMain::OnGammaPeakChoice ), NULL, this );
 
@@ -2072,7 +2082,7 @@ void ERYAProfilingERYAProfilingMain::GenerateTable(int Number )
 // If the number of elements will increase
 if (ChangeElements < 0)
 {
- int NumberRemovedElements = std::abs(ChangeElements * 6); //Obtain the number of retired objects
+ int NumberRemovedElements = std::abs(ChangeElements * 7); //Obtain the number of retired objects
  for (int i=0; i<NumberRemovedElements; i++)
  {
    int CurrentNumberElements = sizerElementEditor->GetItemCount();
@@ -2087,6 +2097,7 @@ if (ChangeElements < 0)
    textIsotopicMass.RemoveAt(textIsotopicMass.GetCount()-1);
    textAbundance.RemoveAt(textAbundance.GetCount()-1);
    textAtomicMass.RemoveAt(textAtomicMass.GetCount()-1);
+   textCalibrationFactor.RemoveAt(textCalibrationFactor.GetCount()-1);
  }
  // Redraw the new elements on screen
     scrollElementTable->SetAutoLayout(true);

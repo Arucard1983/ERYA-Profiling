@@ -10,7 +10,7 @@
 #include "FileLibrary.h"
 
 // Load a predefined list of elements
-bool ERYAProfilingSampleFile::ERYAProfilingSampleLoad(wxArrayString& ListElements, wxArrayString& ListGammaPeaks, wxArrayString& ListNumber, wxArrayString& ListAbundance, wxArrayString& ListIsotopic, wxArrayString& ListAtomic, ElementDatabaseArray OpenDatabase)
+bool ERYAProfilingSampleFile::ERYAProfilingSampleLoad(wxArrayString& ListElements, wxArrayString& ListGammaPeaks, wxArrayString& ListNumber, wxArrayString& ListAbundance, wxArrayString& ListIsotopic, wxArrayString& ListAtomic, wxArrayString& ListCalibration, ElementDatabaseArray OpenDatabase)
 {
   // Process the list of elements, while check their presence on main database.
     wxXmlDocument LocalCompoundFile;
@@ -20,6 +20,7 @@ bool ERYAProfilingSampleFile::ERYAProfilingSampleLoad(wxArrayString& ListElement
     wxString CurrentAbundance;
     wxString CurrentAtomic;
     wxString CurrentIsotopic;
+    wxString CurrentCalibration;
     wxString CurrentID;
     ListElements.Clear();
     ListGammaPeaks.Clear();
@@ -60,6 +61,7 @@ bool ERYAProfilingSampleFile::ERYAProfilingSampleLoad(wxArrayString& ListElement
             CurrentAbundance = CompoundSector->GetAttribute(wxT("Abundance"),wxT("0"));
             CurrentAtomic = CompoundSector->GetAttribute(wxT("Atomic_Mass"),wxT("0"));
             CurrentIsotopic = CompoundSector->GetAttribute(wxT("Isotopic_Mass"),wxT("0"));
+            CurrentCalibration = CompoundSector->GetAttribute(wxT("Calibration_Factor"),wxT("1"));
             // Element exists?
             if(OpenDatabase.FindElement(CurrentElement,CurrentGamma) != wxNOT_FOUND)
             {
@@ -69,6 +71,7 @@ bool ERYAProfilingSampleFile::ERYAProfilingSampleLoad(wxArrayString& ListElement
              ListAbundance.Add(CurrentAbundance);
              ListIsotopic.Add(CurrentIsotopic);
              ListAtomic.Add(CurrentAtomic);
+             ListCalibration.Add(CurrentCalibration);
             }
             else
             {
@@ -87,7 +90,7 @@ bool ERYAProfilingSampleFile::ERYAProfilingSampleLoad(wxArrayString& ListElement
 }
 
 // Save a predefined list of elements
-bool ERYAProfilingSampleFile::ERYAProfilingSampleSave(ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass, ArrayAtomicMass textAtomicMass, ElementDatabaseArray OpenDatabase)
+bool ERYAProfilingSampleFile::ERYAProfilingSampleSave(ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass, ArrayAtomicMass textAtomicMass, ArrayCalibrationFactor textCalibrationFactor, ElementDatabaseArray OpenDatabase)
 {
   // An xml file when written, all node are declared backwarks, but any atribute of the same node should be declared forwards
   wxXmlDocument LocalDatabase;
@@ -119,6 +122,9 @@ bool ERYAProfilingSampleFile::ERYAProfilingSampleSave(ArrayElement choiceElement
    wxString c5 = textAtomicMass.Item(CurrentValue-1)->GetValue();
    if(c5.Len()==0)
     c5 = wxT("0");
+   wxString c6 = textCalibrationFactor.Item(CurrentValue-1)->GetValue();
+   if(c6.Len()==0)
+    c6 = wxT("1");
    // Check Element ID
    int ElementRegister = OpenDatabase.FindElement(c0,c1);
    if(ElementRegister == wxNOT_FOUND)
@@ -133,6 +139,7 @@ bool ERYAProfilingSampleFile::ERYAProfilingSampleSave(ArrayElement choiceElement
     header->AddAttribute(wxT("Abundance"),c3);
     header->AddAttribute(wxT("Atomic_Mass"),c4);
     header->AddAttribute(wxT("Isotopic_Mass"),c5);
+    header->AddAttribute(wxT("Calibration_Factor"),c6);
   }
   // Save file header
   wxXmlNode* fileversion = new wxXmlNode(database, wxXML_ELEMENT_NODE, "File_Details");
@@ -146,7 +153,7 @@ bool ERYAProfilingSampleFile::ERYAProfilingSampleSave(ArrayElement choiceElement
 }
 
 // Load a predefined list of elements, using the text version
-bool ERYAProfilingSampleFile::ERYAProfilingSampleXlsxLoad(wxArrayString& ListElements, wxArrayString& ListGammaPeaks, wxArrayString& ListNumber, wxArrayString& ListAbundance, wxArrayString& ListIsotopic, wxArrayString& ListAtomic, ElementDatabaseArray OpenDatabase)
+bool ERYAProfilingSampleFile::ERYAProfilingSampleXlsxLoad(wxArrayString& ListElements, wxArrayString& ListGammaPeaks, wxArrayString& ListNumber, wxArrayString& ListAbundance, wxArrayString& ListIsotopic, wxArrayString& ListAtomic, wxArrayString& ListCalibration, ElementDatabaseArray OpenDatabase)
 {
  XlsxFile file(SampleFileName);
  if(file.LoadFile())
@@ -158,24 +165,26 @@ bool ERYAProfilingSampleFile::ERYAProfilingSampleXlsxLoad(wxArrayString& ListEle
   ListAbundance.Clear();
   ListIsotopic.Clear();
   ListAtomic.Clear();
+  ListCalibration.Clear();
   //Extract the Excel file contents
   int SampleColumns,SampleRows;
   TableMatrix data = file.GetTableMatrix();
   data.GetRealMatrixSize(SampleRows,SampleColumns);
-  // It is expected a six-column data, where the first column is an element name, and other columns should contains only numeric values. Any line that violates the template are discarded.
-  if(SampleColumns>=6)
+  // It is expected a seven-column data, where the first column is an element name, and other columns should contains only numeric values. Any line that violates the template are discarded.
+  if(SampleColumns>=7)
   {
    for(int i=0; i<SampleRows; i++) //Read a row each time
    {
-    wxString c0,c1,c2,c3,c4,c5;
-    int i0,i1,i2,i3,i4,i5;
+    wxString c0,c1,c2,c3,c4,c5,c6;
+    int i0,i1,i2,i3,i4,i5,i6;
     c0 = data.GetTableMatrixValueAt(i,0,i0);
     c1 = data.GetTableMatrixValueAt(i,1,i1);
     c2 = data.GetTableMatrixValueAt(i,2,i2);
     c3 = data.GetTableMatrixValueAt(i,3,i3);
     c4 = data.GetTableMatrixValueAt(i,4,i4);
     c5 = data.GetTableMatrixValueAt(i,5,i5);
-    if(c0.Len()>0 && c1.Len()>0 && c2.Len()>0 && c3.Len()>0 && c4.Len()>0 && c5.Len()>0 && i0 == 0 && i1 == 1 && i2 == 1 && i3 == 1 && i4 == 1 && i5 == 1)
+    c6 = data.GetTableMatrixValueAt(i,6,i6);
+    if(c0.Len()>0 && c1.Len()>0 && c2.Len()>0 && c3.Len()>0 && c4.Len()>0 && c5.Len()>0 && c6.Len()>0 && i0 == 0 && i1 == 1 && i2 == 1 && i3 == 1 && i4 == 1 && i5 == 1 && i6 == 1)
     {
      //A compatible line
       if(OpenDatabase.FindElement(c0,c1) != wxNOT_FOUND) // Check the presence of the Element on Database
@@ -186,6 +195,7 @@ bool ERYAProfilingSampleFile::ERYAProfilingSampleXlsxLoad(wxArrayString& ListEle
       ListAbundance.Add(c3);
       ListIsotopic.Add(c4);
       ListAtomic.Add(c5);
+      ListCalibration.Add(c6);
       }
       else
       {
@@ -208,16 +218,17 @@ bool ERYAProfilingSampleFile::ERYAProfilingSampleXlsxLoad(wxArrayString& ListEle
  }
 }
 
-bool ERYAProfilingSampleFile::ERYAProfilingSampleXlsxSave(ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass, ArrayAtomicMass textAtomicMass, ElementDatabaseArray OpenDatabase)
+bool ERYAProfilingSampleFile::ERYAProfilingSampleXlsxSave(ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass, ArrayAtomicMass textAtomicMass, ArrayCalibrationFactor textCalibrationFactor, ElementDatabaseArray OpenDatabase)
 {
 // Create the transference matrix
-TableMatrix data(choiceElementName.GetCount()+1,6);
+TableMatrix data(choiceElementName.GetCount()+1,7);
 data.Add(TableNode(wxT("Element Name")));
 data.Add(TableNode(wxT("Gamma Peak (keV)")));
 data.Add(TableNode(wxT("Atomic Number")));
 data.Add(TableNode(wxT("Abundance")));
 data.Add(TableNode(wxT("Isotopic Mass")));
 data.Add(TableNode(wxT("Atomic Mass")));
+data.Add(TableNode(wxT("Calibration Factor")));
 // Allocate the data
  for(int k=0; k<choiceElementName.GetCount(); k++)
  {
@@ -229,6 +240,7 @@ data.Add(TableNode(wxT("Atomic Mass")));
   data.Add(TableNode(textAbundance.Item(k)->GetValue(),1));
   data.Add(TableNode(textIsotopicMass.Item(k)->GetValue(),1));
   data.Add(TableNode(textAtomicMass.Item(k)->GetValue(),1));
+  data.Add(TableNode(textCalibrationFactor.Item(k)->GetValue(),1));
  }
  // Save the file
  XlsxFile file(SampleFileName,data,wxT("A1"));
@@ -792,7 +804,7 @@ bool ERYAProfilingRessonanceFile::ERYAProfilingRessonanceSave(wxTextCtrl* valueB
 }
 
 // Global ERYA profiling file loading
-bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamResolution, wxTextCtrl* &valueTemperature, wxTextCtrl* &valueCharge, wxTextCtrl* &valueEnergyStep, wxTextCtrl* &valueMinimumEnergy, wxTextCtrl* &valueMaximumEnergy, wxTextCtrl* &valueRessonanceWidth, wxTextCtrl* &valueRessonancePeak, wxTextCtrl* &valueRessonanceEnergy, wxTextCtrl* &valueRessonanceMinimum, wxTextCtrl* &valueRessonanceMaximum, wxTextCtrl* &valueRessonanceFunction, wxTextCtrl* &valueStrenghtWidth, wxTextCtrl* &valueStrenghtPeak, wxTextCtrl* &valueStrenghtEnergy, wxTextCtrl* &valueStrenghtMinimum, wxTextCtrl* &valueStrenghtMaximum, bool& boolRessonanceLorentzian, bool& boolRessonanceStrenght, int& intRessonanceMode, wxArrayString& ListElements, wxArrayString& ListGammaPeaks, wxArrayString& ListNumber, wxArrayString& ListAbundance, wxArrayString& ListIsotopic, wxArrayString& ListAtomic, wxArrayString& LayerGridData, ElementDatabaseArray OpenDatabase, unsigned int& SampleStep, unsigned int& GaussStep, unsigned int& MoyalStep, unsigned int& EdgeworthStep, unsigned int& AiryStep, unsigned int& LandauStep, unsigned int& VavilovLimit, unsigned int& EnableLog)
+bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamResolution, wxTextCtrl* &valueTemperature, wxTextCtrl* &valueCharge, wxTextCtrl* &valueEnergyStep, wxTextCtrl* &valueMinimumEnergy, wxTextCtrl* &valueMaximumEnergy, wxTextCtrl* &valueRessonanceWidth, wxTextCtrl* &valueRessonancePeak, wxTextCtrl* &valueRessonanceEnergy, wxTextCtrl* &valueRessonanceMinimum, wxTextCtrl* &valueRessonanceMaximum, wxTextCtrl* &valueRessonanceFunction, wxTextCtrl* &valueStrenghtWidth, wxTextCtrl* &valueStrenghtPeak, wxTextCtrl* &valueStrenghtEnergy, wxTextCtrl* &valueStrenghtMinimum, wxTextCtrl* &valueStrenghtMaximum, bool& boolRessonanceLorentzian, bool& boolRessonanceStrenght, int& intRessonanceMode, wxArrayString& ListElements, wxArrayString& ListGammaPeaks, wxArrayString& ListNumber, wxArrayString& ListAbundance, wxArrayString& ListIsotopic, wxArrayString& ListAtomic, wxArrayString& ListCalibration, wxArrayString& LayerGridData, ElementDatabaseArray OpenDatabase, unsigned int& SampleStep, unsigned int& GaussStep, unsigned int& MoyalStep, unsigned int& EdgeworthStep, unsigned int& AiryStep, unsigned int& LandauStep, unsigned int& VavilovLimit, unsigned int& EnableLog)
 {
  // Process the initial globl variables
     wxXmlDocument LocalFile;
@@ -802,6 +814,7 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamReso
     wxString CurrentAbundance;
     wxString CurrentAtomic;
     wxString CurrentIsotopic;
+    wxString CurrentCalibration;
     wxString CurrentID;
     ListElements.Clear();
     ListGammaPeaks.Clear();
@@ -809,6 +822,7 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamReso
     ListAbundance.Clear();
     ListIsotopic.Clear();
     ListAtomic.Clear();
+    ListCalibration.Clear();
     wxArrayString ListLabels;
     LayerGridData.Clear();
  // Process the XML document
@@ -1077,6 +1091,7 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamReso
             CurrentAbundance = CompoundSector->GetAttribute(wxT("Abundance"),wxT("0"));
             CurrentAtomic = CompoundSector->GetAttribute(wxT("Atomic_Mass"),wxT("0"));
             CurrentIsotopic = CompoundSector->GetAttribute(wxT("Isotopic_Mass"),wxT("0"));
+            CurrentCalibration = CompoundSector->GetAttribute(wxT("Calibration_Factor"),wxT("1"));
             // Element exists?
             if(OpenDatabase.FindElement(CurrentElement,CurrentGamma) != wxNOT_FOUND)
             {
@@ -1086,6 +1101,7 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamReso
              ListAbundance.Add(CurrentAbundance);
              ListIsotopic.Add(CurrentIsotopic);
              ListAtomic.Add(CurrentAtomic);
+             ListCalibration.Add(CurrentCalibration);
             }
             else
             {
@@ -1118,7 +1134,7 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamReso
 }
 
 // Global ERYA profilng file saving
-bool ERYAProfilingGlobalFile::ERYAProfilingGlobalSave(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueRessonanceFunction, wxTextCtrl* valueStrenghtWidth, wxTextCtrl* valueStrenghtPeak, wxTextCtrl* valueStrenghtEnergy, wxTextCtrl* valueStrenghtMinimum, wxTextCtrl* valueStrenghtMaximum, bool boolRessonanceLorentzian, bool boolRessonanceStrenght, int intRessonanceMode, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass, ArrayAtomicMass textAtomicMass,wxGrid* LayerTable, ElementDatabaseArray OpenDatabase, unsigned int SampleStep, unsigned int GaussStep, unsigned int MoyalStep, unsigned int EdgeworthStep, unsigned int AiryStep, unsigned int LandauStep, unsigned int VavilovLimit, unsigned int EnableLog)
+bool ERYAProfilingGlobalFile::ERYAProfilingGlobalSave(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueRessonanceFunction, wxTextCtrl* valueStrenghtWidth, wxTextCtrl* valueStrenghtPeak, wxTextCtrl* valueStrenghtEnergy, wxTextCtrl* valueStrenghtMinimum, wxTextCtrl* valueStrenghtMaximum, bool boolRessonanceLorentzian, bool boolRessonanceStrenght, int intRessonanceMode, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass, ArrayAtomicMass textAtomicMass, ArrayCalibrationFactor textCalibrationFactor, wxGrid* LayerTable, ElementDatabaseArray OpenDatabase, unsigned int SampleStep, unsigned int GaussStep, unsigned int MoyalStep, unsigned int EdgeworthStep, unsigned int AiryStep, unsigned int LandauStep, unsigned int VavilovLimit, unsigned int EnableLog)
 {
  // Global variables
  wxString RessonanceOption, StrenghtOption, RessonanceMode;
@@ -1235,6 +1251,9 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalSave(wxTextCtrl* valueBeamResol
    wxString c5 = textAtomicMass.Item(CurrentValue-1)->GetValue();
    if(c5.Len()==0)
     c5 = wxT("0");
+   wxString c6 = textCalibrationFactor.Item(CurrentValue-1)->GetValue();
+   if(c6.Len()==0)
+    c6 = wxT("1");
    // Check Element ID
    int ElementRegister = OpenDatabase.FindElement(c0,c1);
    if(ElementRegister == wxNOT_FOUND)
@@ -1249,6 +1268,7 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalSave(wxTextCtrl* valueBeamResol
     header->AddAttribute(wxT("Abundance"),c3);
     header->AddAttribute(wxT("Atomic_Mass"),c4);
     header->AddAttribute(wxT("Isotopic_Mass"),c5);
+    header->AddAttribute(wxT("Calibration_Factor"),c6);
   }
   // Save file header
   wxXmlNode* fileversion = new wxXmlNode(global, wxXML_ELEMENT_NODE, "File_Details");

@@ -13,6 +13,7 @@ WX_DEFINE_OBJARRAY( ArrayAtomicNumber);
 WX_DEFINE_OBJARRAY( ArrayAbundance);
 WX_DEFINE_OBJARRAY( ArrayIsotopicMass);
 WX_DEFINE_OBJARRAY( ArrayAtomicMass);
+WX_DEFINE_OBJARRAY( ArrayCalibrationFactor);
 ///////////////////////////////////////////////////////////////////////////
 
 ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
@@ -139,13 +140,14 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 
 	scrollElementTable = new wxScrolledWindow( tabElements, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxVSCROLL );
 	scrollElementTable->SetScrollRate( 5, 5 );
-	sizerElementEditor = new wxFlexGridSizer( 0, 6, 30, 30 );
+	sizerElementEditor = new wxFlexGridSizer( 0, 7, 30, 30 );
 	sizerElementEditor->AddGrowableCol( 0 );
 	sizerElementEditor->AddGrowableCol( 1 );
 	sizerElementEditor->AddGrowableCol( 2 );
 	sizerElementEditor->AddGrowableCol( 3 );
 	sizerElementEditor->AddGrowableCol( 4 );
 	sizerElementEditor->AddGrowableCol( 5 );
+	sizerElementEditor->AddGrowableCol( 6 );
 	sizerElementEditor->SetFlexibleDirection( wxBOTH );
 
 	labelElementName = new wxStaticText( scrollElementTable, wxID_ANY, wxT("Element Name"), wxDefaultPosition, wxSize(140,-1), 0 );
@@ -172,6 +174,10 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	labelAtomicMass->Wrap( -1 );
 	sizerElementEditor->Add( labelAtomicMass, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
+	labelCalibrationFactor = new wxStaticText( scrollElementTable, wxID_ANY, wxT("Cross Section\nCalibration Factor"), wxDefaultPosition, wxSize(140,-1), 0 );
+	labelCalibrationFactor->Wrap( -1 );
+	sizerElementEditor->Add( labelCalibrationFactor, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
 	choiceElementName.Add(new wxChoice( scrollElementTable, wxID_ANY, wxDefaultPosition, wxSize(140,-1), choiceElementNameChoices, 0 ));
 	choiceElementName.Last()->SetSelection( 0 );
 	sizerElementEditor->Add( choiceElementName.Last(), 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
@@ -191,6 +197,9 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 
 	textAtomicMass.Add(new wxTextCtrl( scrollElementTable, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(140,-1), 0 ));
 	sizerElementEditor->Add( textAtomicMass.Last(), 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	textCalibrationFactor.Add(new wxTextCtrl( scrollElementTable, wxID_ANY, wxT("1"), wxDefaultPosition, wxSize(140,-1), 0 ));
+	sizerElementEditor->Add( textCalibrationFactor.Last(), 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
 	scrollElementTable->SetSizer( sizerElementEditor );
@@ -494,7 +503,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	tabDetector->SetSizer( sizerDetector );
 	tabDetector->Layout();
 	sizerDetector->Fit( tabDetector );
-	tabERYAProfilingMain->AddPage( tabDetector, wxT("Detector and Resonances"), true );
+	tabERYAProfilingMain->AddPage( tabDetector, wxT("Beam and Resonances"), true );
 	tabOutput = new wxPanel( tabERYAProfilingMain, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* sizerOutput;
 	sizerOutput = new wxBoxSizer( wxVERTICAL );
@@ -531,7 +540,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	tabOutput->SetSizer( sizerOutput );
 	tabOutput->Layout();
 	sizerOutput->Fit( tabOutput );
-	tabERYAProfilingMain->AddPage( tabOutput, wxT("Output Results"), false );
+	tabERYAProfilingMain->AddPage( tabOutput, wxT("Graphical Output"), false );
         tabTable = new wxPanel( tabERYAProfilingMain, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* sizerTable;
 	sizerTable = new wxBoxSizer( wxVERTICAL );

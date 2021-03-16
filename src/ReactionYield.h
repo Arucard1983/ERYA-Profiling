@@ -118,6 +118,7 @@ long ZieglerModel;
 double Abundance;
 double Atomic;
 double Isotopic;
+double CalibrationFactor;
 double Density;
 double Bloch;
 std::vector<double> Energy;
@@ -145,6 +146,8 @@ double GetIsotopicMass() { return Isotopic;};
 double SetIsotopicMass(double value) { Isotopic = value; return Isotopic;};
 double GetStoichiometry() { return Stoichiometry;};
 double SetStoichiometry(double value) { Stoichiometry = value; return Stoichiometry;};
+double GetCalibrationFactor() { return CalibrationFactor;};
+double SetCalibrationFactor(double value) { CalibrationFactor = value; return CalibrationFactor;};
 double GetDensity(){ return Density;};
 double GetBloch(){ return Bloch;};
 double GetIonization(){return Bloch * Number * 0.001;};
@@ -205,12 +208,12 @@ class LayerVector : public LayerArray
 {
 private:
 ElementVector LayerCompound;
-bool CreateSample(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass,ArrayAtomicMass textAtomicMass, double DefaultLayerStep);
+bool CreateSample(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass, ArrayAtomicMass textAtomicMass, ArrayCalibrationFactor textCalibrationFactor, double DefaultLayerStep);
 bool ErrorFlag;
 wxString ErrorMessage;
 public:
 LayerVector(){};
-LayerVector(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass,ArrayAtomicMass textAtomicMass, double DefaultLayerStep);
+LayerVector(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass,ArrayAtomicMass textAtomicMass, ArrayCalibrationFactor textCalibrationFactor, double DefaultLayerStep);
 bool IsCorrect(){return ErrorFlag;};
 wxString GetErrorMessage(){return ErrorMessage;};
 int GetElementsCount(){return LayerCompound.GetCount();};
@@ -354,7 +357,7 @@ class ReactionProfiling
  public:
  ReactionProfiling(){SampleComplete = false; InputComplete = false; RequireRessonance = false; DefaultParameters = true; LastErrorCode = wxT("General Error: Empty Input Data!");};
  bool StartProcedure(wxStatusBar* progress);
- bool SampleSetup(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, DetectorParameters ThisDetector, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass,ArrayAtomicMass textAtomicMass);
+ bool SampleSetup(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, DetectorParameters ThisDetector, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass,ArrayAtomicMass textAtomicMass, ArrayCalibrationFactor textCalibrationFactor);
  bool SetOverrideParameters(unsigned int SamplePrecision, unsigned int GaussPrecision, unsigned int VavilovMoyalPrecision, unsigned int VavilovEdgeworthPrecision, unsigned int VavilovAiryPrecision, unsigned int LandauPrecision, unsigned int ThreadPrecision, bool EnableLog);
  bool SetInitialParameters(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueStrenghtWidth, wxTextCtrl* valueStrenghtPeak, wxTextCtrl *valueStrenghtEnergy, wxTextCtrl *valueStrenghtMinimum, wxTextCtrl* valueStrenghtMaximum, wxTextCtrl* valueRessonanceFunction, bool boolRessonanceLorentzian, bool boolRessonanceStrenght, int intRessonanceMode);
  wxString GetErrorCode(){return LastErrorCode;};

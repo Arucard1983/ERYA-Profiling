@@ -70,6 +70,7 @@ WX_DECLARE_OBJARRAY( wxTextCtrl*, ArrayAtomicNumber);
 WX_DECLARE_OBJARRAY( wxTextCtrl*, ArrayAbundance);
 WX_DECLARE_OBJARRAY( wxTextCtrl*, ArrayIsotopicMass);
 WX_DECLARE_OBJARRAY( wxTextCtrl*, ArrayAtomicMass);
+WX_DECLARE_OBJARRAY( wxTextCtrl*, ArrayCalibrationFactor);
 
 
 ///////////////////////////////////////////////////////////////////////////
@@ -112,12 +113,14 @@ class ERYAProfilingMain : public wxFrame
 		wxStaticText* labelAbundance;
 		wxStaticText* labelIsotopicMass;
 		wxStaticText* labelAtomicMass;
+		wxStaticText* labelCalibrationFactor;
 		ArrayElement choiceElementName;
 		ArrayGammaPeak choiceGammaPeak;
 		ArrayAtomicNumber textAtomicNumber;
 		ArrayAbundance textAbundance;
 		ArrayIsotopicMass textIsotopicMass;
 		ArrayAtomicMass textAtomicMass;
+		ArrayCalibrationFactor textCalibrationFactor;
 		wxPanel* tabLayers;
 		wxStaticText* labelLayersInfo;
 		wxStaticText* labelNumberLayers;

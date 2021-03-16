@@ -830,7 +830,7 @@ double Element::EvaluateSigma(double AtEnergy)
     {
     if (Energy.at(i) == AtEnergy)
      {
-       return Sigma.at(i);
+       return CalibrationFactor*Sigma.at(i);
      }
     }
    for (int j=0; j<Energy.size() - 1; j++)  // But in general situations, it is necessary to interpolate two points.
@@ -843,7 +843,7 @@ double Element::EvaluateSigma(double AtEnergy)
       epsilon2 = Sigma.at(j+1);
       double slope = (AtEnergy - E1)/(E2 - E1);
       double linear = epsilon1 + slope*(epsilon2 - epsilon1);
-      return linear;
+      return CalibrationFactor*linear;
      }
     }
     return 0;
@@ -1147,9 +1147,9 @@ double Layer::GetVVL(double E)
 }
 
 // Sample main constructor
-LayerVector::LayerVector(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass,ArrayAtomicMass textAtomicMass, double DefaultLayerStep)
+LayerVector::LayerVector(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass,ArrayAtomicMass textAtomicMass,ArrayCalibrationFactor textCalibrationFactor, double DefaultLayerStep)
 {
- if(this->CreateSample(AllElements,ThisZiegler,ThisSRIM,SourceTable,choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,DefaultLayerStep))
+ if(this->CreateSample(AllElements,ThisZiegler,ThisSRIM,SourceTable,choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,textCalibrationFactor,DefaultLayerStep))
  {
   ErrorFlag = true;
   ErrorMessage.Clear();
@@ -1161,7 +1161,7 @@ LayerVector::LayerVector(ElementDatabaseArray AllElements, ZieglerParameters Thi
 }
 
 // Sample Builder
-bool LayerVector::CreateSample(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass,ArrayAtomicMass textAtomicMass, double DefaultLayerStep)
+bool LayerVector::CreateSample(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass,ArrayAtomicMass textAtomicMass,ArrayCalibrationFactor textCalibrationFactor, double DefaultLayerStep)
 {
  // Read the table, row by row
  for(int z=0; z<SourceTable->GetNumberRows(); z++)
@@ -1183,14 +1183,16 @@ bool LayerVector::CreateSample(ElementDatabaseArray AllElements, ZieglerParamete
      wxString PatchAbundance = textAbundance.Item(k)->GetValue();
      wxString PatchIsotopic = textIsotopicMass.Item(k)->GetValue();
      wxString PatchAtomic = textAtomicMass.Item(k)->GetValue();
+     wxString PatchCalibration = textCalibrationFactor.Item(k)->GetValue();
      long ActualNumber;
-     double ActualAbundance, ActualIsotopic, ActualAtomic;
-     if(PatchNumber.ToLong(&ActualNumber) && PatchAbundance.ToDouble(&ActualAbundance) && PatchIsotopic.ToDouble(&ActualIsotopic) && PatchAtomic.ToDouble(&ActualAtomic))
+     double ActualAbundance, ActualIsotopic, ActualAtomic, ActualCalibration;
+     if(PatchNumber.ToLong(&ActualNumber) && PatchAbundance.ToDouble(&ActualAbundance) && PatchIsotopic.ToDouble(&ActualIsotopic) && PatchAtomic.ToDouble(&ActualAtomic) && PatchCalibration.ToDouble(&ActualCalibration))
      {
        LayerCompound.Last().SetAtomicNumber(ActualNumber);
        LayerCompound.Last().SetAbundance(ActualAbundance);
        LayerCompound.Last().SetIsotopicMass(ActualIsotopic);
        LayerCompound.Last().SetAtomicMass(ActualAtomic);
+       LayerCompound.Last().SetCalibrationFactor(ActualCalibration);
      }
      else
      {
@@ -1564,7 +1566,7 @@ SampleVector::SampleVector(std::vector<SampleVector> Original)
 }
 
 // Makes the initial processing, placing the minimum information to build the  numerical tables
-bool ReactionProfiling::SampleSetup(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, DetectorParameters ThisDetector, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass,ArrayAtomicMass textAtomicMass)
+bool ReactionProfiling::SampleSetup(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, DetectorParameters ThisDetector, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass,ArrayAtomicMass textAtomicMass,ArrayCalibrationFactor textCalibrationFactor)
 {
  // Check Custom Ziegler macros forehand
  if(ThisZiegler.GetZieglerVersion() == wxT("2"))
@@ -1587,7 +1589,7 @@ bool ReactionProfiling::SampleSetup(ElementDatabaseArray AllElements, ZieglerPar
  }
  // Create the table of all physical features of all elements at all layers
  LocalSample.Clear();
- LocalSample = LayerVector(AllElements,ThisZiegler,ThisSRIM,SourceTable,choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,DefaultSampleStep);
+ LocalSample = LayerVector(AllElements,ThisZiegler,ThisSRIM,SourceTable,choiceElementName,choiceGammaPeak,textAtomicNumber,textAbundance,textIsotopicMass,textAtomicMass,textCalibrationFactor,DefaultSampleStep);
  if(LocalSample.IsCorrect())
  {
   //A final check, dedicated to verify the consistency of the Detector.
