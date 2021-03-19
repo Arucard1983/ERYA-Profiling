@@ -23,7 +23,7 @@
 void ElementEnergySigmaData::ExportGridVector(wxGrid* EnergySigmaTable, std::vector<double>& EnergyData, std::vector<double>& SigmaData, double& GetEnergyMin, double& GetEnergyMax, double& GetSigmaMin, double& GetSigmaMax)
 {
  // Load the table to a pair of dynamic vectors
- if (EnergySigmaTable->GetNumberCols() == 2)
+ if (EnergySigmaTable->GetNumberCols() >= 2)
  {
    bool endrecord = false;
    for (int k=0; k<EnergySigmaTable->GetNumberRows(); k++)
@@ -209,14 +209,14 @@ bool ElementEnergySigmaData::ExportXlsxTableVector(TableMatrix EnergySigmaTable,
  // Load the table to a pair of dynamic vectors
  int NumberRows,NumberColumns;
  EnergySigmaTable.GetRealMatrixSize(NumberRows,NumberColumns);
- if (NumberColumns == 2)
+ if (NumberColumns >= 2)
  {
    for (int k=0; k<NumberRows; k++)
    {
-     int DataType;
-     wxString temp1 = EnergySigmaTable.GetTableMatrixValueAt(k,0,DataType);
-     wxString temp2 = EnergySigmaTable.GetTableMatrixValueAt(k,1,DataType);
-     if (temp1.Len() > 0 && temp2.Len() > 0)
+     int DataType1,DataType2;
+     wxString temp1 = EnergySigmaTable.GetTableMatrixValueAt(k,0,DataType1);
+     wxString temp2 = EnergySigmaTable.GetTableMatrixValueAt(k,1,DataType2);
+     if (temp1.Len() > 0 && temp2.Len() > 0 && DataType1 == 1 && DataType2 == 1)
      {
        double c1,c2;
        if(temp1.ToDouble(&c1) && temp2.ToDouble(&c2))
@@ -224,10 +224,6 @@ bool ElementEnergySigmaData::ExportXlsxTableVector(TableMatrix EnergySigmaTable,
          EnergyData.push_back(c1);
          SigmaData.push_back(c2);
        }
-     }
-     else
-     {
-      return false;
      }
    }
  if (EnergyData.size() > 0 && SigmaData.size() > 0)
