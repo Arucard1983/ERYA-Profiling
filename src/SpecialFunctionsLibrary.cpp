@@ -197,11 +197,11 @@ double VavilovMoyalFunction::VMbeta(double beta)
 double VavilovMoyalFunction::VMk(double k)
 {
  double kmin,kmax,kbar;
- if(k>=0.02 && k<0.12)
+ if(k>=0.02 && k<0.11)
  {
    kmin = 0.02; kmax = 0.10;
  }
- else if(k>=0.12 && k<0.22)
+ else if(k>=0.11 && k<0.22)
  {
    kmin = 0.12; kmax = 0.20;
  }
@@ -284,13 +284,13 @@ double VavilovMoyalFunction::VMa(unsigned int i, double k, double beta)
  ChebyshevPolynomial Tm,Tn;
  double asum = 0;
  unsigned int z;
- if(k>=0.02 && k<0.12)
+ if(k>=0.02 && k<0.11)
  {
    z = 0;
    if(i==0)
     return -3.03;
  }
- else if(k>=0.12 && k<0.22)
+ else if(k>=0.11 && k<0.22)
  {
    z = 1;
    if(i==0)
@@ -467,7 +467,7 @@ double VavilovAiryFunction::Airy(double t)
  }
  else if (t>5)
  {
-  return (std::exp((-2.0/3.0)*std::pow(t,3.0/2.0)))/(std::sqrt(16.0*std::atan(1.0))*std::pow(t,1.0/4.0));
+  return ((std::exp((-2.0/3.0)*std::pow(t,3.0/2.0)))/(std::sqrt(16.0*std::atan(1.0))*std::pow(t,1.0/4.0)))*(1-5/(48*std::pow(t,3.0/2.0)));
  }
  else
  {
