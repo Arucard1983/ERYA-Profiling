@@ -9,6 +9,7 @@
 #include "ERYAProfilingdialogSetup.h"
 #include "ERYAProfilingdialogERYAProfilingAdvanced.h"
 #include "ERYAProfilingwizardSRIMImport.h"
+#include "ERYAProfilingdialogERYAProfilingViewer.h"
 
 ERYAProfilingERYAProfilingMain::ERYAProfilingERYAProfilingMain( wxWindow* parent )
 :
@@ -1511,6 +1512,12 @@ void ERYAProfilingERYAProfilingMain::OnTableHelp( wxCommandEvent& event )
  this->GenerateLog();
  this->GenerateResult(1);
  this->GenerateResult();
+}
+
+void ERYAProfilingERYAProfilingMain::OnLogViewer( wxCommandEvent& event )
+{
+ ERYAProfilingdialogERYAProfilingViewer *viewer = new ERYAProfilingdialogERYAProfilingViewer(this,gridLogData);
+ viewer->ShowModal();
 }
 
 void ERYAProfilingERYAProfilingMain::OnLogSave( wxCommandEvent& event )

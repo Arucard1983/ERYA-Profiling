@@ -606,7 +606,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	sizerLog = new wxBoxSizer( wxVERTICAL );
 
 	wxFlexGridSizer* sizerLogMainTools;
-	sizerLogMainTools = new wxFlexGridSizer( 1, 3, 20, 100 );
+	sizerLogMainTools = new wxFlexGridSizer( 1, 4, 20, 100 );
 	sizerLogMainTools->AddGrowableCol( 0 );
 	sizerLogMainTools->SetFlexibleDirection( wxBOTH );
 	sizerLogMainTools->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
@@ -615,7 +615,10 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	labelLogOutputMain->Wrap( -1 );
 	sizerLogMainTools->Add( labelLogOutputMain, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	buttonLogDataSave = new wxButton( panelLog, wxID_ANY, wxT("Save Log Data"), wxDefaultPosition, wxDefaultSize, 0 );
+        buttonLogDistributionViewer = new wxButton( panelLog, wxID_ANY, wxT("Distribution Viewer"), wxDefaultPosition, wxDefaultSize, 0 );
+	sizerLogMainTools->Add( buttonLogDistributionViewer, 0, wxALL, 5 );
+
+        buttonLogDataSave = new wxButton( panelLog, wxID_ANY, wxT("Save Log Data"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerLogMainTools->Add( buttonLogDataSave, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	buttonLogHelp = new wxButton( panelLog, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -738,10 +741,11 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	buttonOutputDataImport->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnOutputData ), NULL, this );
 	buttonOutputImageSave->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnOutputImage ), NULL, this );
 	buttonOutputHelp->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnOutputHelp ), NULL, this );
-    buttonTableDataImport->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnImportData ), NULL, this );
+        buttonTableDataImport->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnImportData ), NULL, this );
 	buttonTableDataSave->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnTableSave ), NULL, this );
 	buttonTableHelp->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnTableHelp ), NULL, this );
-	buttonLogDataSave->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnLogSave ), NULL, this );
+        buttonLogDistributionViewer->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnLogViewer ), NULL, this );
+        buttonLogDataSave->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnLogSave ), NULL, this );
 	buttonLogHelp->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnLogHelp ), NULL, this );
 	buttonMainNew->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnMainNew ), NULL, this );
 	buttonMainAdvanced->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnMainAdvanced ), NULL, this );
@@ -798,9 +802,10 @@ ERYAProfilingMain::~ERYAProfilingMain()
 	buttonTableDataImport->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnImportData ), NULL, this );
 	buttonTableDataSave->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnTableSave ), NULL, this );
 	buttonTableHelp->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnTableHelp ), NULL, this );
-	buttonLogDataSave->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnLogSave ), NULL, this );
+        buttonLogDistributionViewer->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnLogViewer ), NULL, this );
+        buttonLogDataSave->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnLogSave ), NULL, this );
 	buttonLogHelp->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnLogHelp ), NULL, this );
-    buttonMainNew->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnMainNew ), NULL, this );
+        buttonMainNew->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnMainNew ), NULL, this );
 	buttonMainAdvanced->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnMainAdvanced ), NULL, this );
 	buttonMainRun->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnMainRun ), NULL, this );
 	buttonMainSave->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ERYAProfilingMain::OnMainSave ), NULL, this );
@@ -2744,5 +2749,100 @@ dialogRemark::~dialogRemark()
 	buttonSave->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogRemark::OnRemarkSave ), NULL, this );
 	buttonClear->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogRemark::OnRemarkClear ), NULL, this );
 	buttonQuit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogRemark::OnRemarkQuit ), NULL, this );
+
+}
+
+dialogERYAProfilingViewer::dialogERYAProfilingViewer( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxFlexGridSizer* sizerViewer;
+	sizerViewer = new wxFlexGridSizer( 4, 1, 0, 0 );
+	sizerViewer->AddGrowableCol( 0 );
+	sizerViewer->AddGrowableRow( 0 );
+	sizerViewer->SetFlexibleDirection( wxBOTH );
+	sizerViewer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
+	renderViewer = new mpWindow( this, wxID_ANY,  wxDefaultPosition, wxDefaultSize, 0 );
+	sizerViewer->Add( renderViewer, 0, wxALL|wxEXPAND, 5 );
+
+	wxGridSizer* sizerViewerData;
+	sizerViewerData = new wxGridSizer( 1, 6, 0, 0 );
+
+	labelViewerInitial = new wxStaticText( this, wxID_ANY, wxT("Initial Energy (keV)"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelViewerInitial->Wrap( -1 );
+	sizerViewerData->Add( labelViewerInitial, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
+
+	dataViewerInitial = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 200,-1 ), wxTE_READONLY );
+	sizerViewerData->Add( dataViewerInitial, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
+
+	labelViewerEnergy = new wxStaticText( this, wxID_ANY, wxT("Current Energy (keV)"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelViewerEnergy->Wrap( -1 );
+	sizerViewerData->Add( labelViewerEnergy, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
+
+	dataViewerEnergy = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 200,-1 ), wxTE_READONLY );
+	sizerViewerData->Add( dataViewerEnergy, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
+
+	labelViewerK = new wxStaticText( this, wxID_ANY, wxT("Vavilov k-factor"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelViewerK->Wrap( -1 );
+	sizerViewerData->Add( labelViewerK, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
+
+	dataViewerK = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 200,-1 ), wxTE_READONLY );
+	sizerViewerData->Add( dataViewerK, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
+
+
+	sizerViewer->Add( sizerViewerData, 1, wxEXPAND, 5 );
+
+	lineViewer = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	sizerViewer->Add( lineViewer, 0, wxEXPAND | wxALL, 5 );
+
+	wxGridSizer* sizerViewerTools;
+	sizerViewerTools = new wxGridSizer( 1, 6, 0, 0 );
+
+	buttonViewerPrevious = new wxButton( this, wxID_ANY, wxT("Previous Energy -"), wxDefaultPosition, wxDefaultSize, 0 );
+	sizerViewerTools->Add( buttonViewerPrevious, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	buttonViewerNext = new wxButton( this, wxID_ANY, wxT("Next Energy +"), wxDefaultPosition, wxDefaultSize, 0 );
+	sizerViewerTools->Add( buttonViewerNext, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	buttonViewerLayerMinus = new wxButton( this, wxID_ANY, wxT("Previous Layer <"), wxDefaultPosition, wxDefaultSize, 0 );
+	sizerViewerTools->Add( buttonViewerLayerMinus, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	buttonViewerLayerPlus = new wxButton( this, wxID_ANY, wxT("Next Layer >"), wxDefaultPosition, wxDefaultSize, 0 );
+	sizerViewerTools->Add( buttonViewerLayerPlus, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	buttonViewerScreenshot = new wxButton( this, wxID_ANY, wxT("Save Image As"), wxDefaultPosition, wxDefaultSize, 0 );
+	sizerViewerTools->Add( buttonViewerScreenshot, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	buttonViewerQuit = new wxButton( this, wxID_ANY, wxT("Quit"), wxDefaultPosition, wxDefaultSize, 0 );
+	sizerViewerTools->Add( buttonViewerQuit, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+
+	sizerViewer->Add( sizerViewerTools, 0, wxEXPAND, 5 );
+
+
+	this->SetSizer( sizerViewer );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	buttonViewerPrevious->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogERYAProfilingViewer::OnEnergyPrevious ), NULL, this );
+	buttonViewerNext->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogERYAProfilingViewer::OnEnergyNext ), NULL, this );
+	buttonViewerLayerMinus->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogERYAProfilingViewer::OnLayerMinus ), NULL, this );
+	buttonViewerLayerPlus->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogERYAProfilingViewer::OnLayerPlus ), NULL, this );
+	buttonViewerScreenshot->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogERYAProfilingViewer::OnTakeScreenshoot ), NULL, this );
+	buttonViewerQuit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogERYAProfilingViewer::OnViewerQuit ), NULL, this );
+}
+
+dialogERYAProfilingViewer::~dialogERYAProfilingViewer()
+{
+	// Disconnect Events
+	buttonViewerPrevious->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogERYAProfilingViewer::OnEnergyPrevious ), NULL, this );
+	buttonViewerNext->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogERYAProfilingViewer::OnEnergyNext ), NULL, this );
+	buttonViewerLayerMinus->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogERYAProfilingViewer::OnLayerMinus ), NULL, this );
+	buttonViewerLayerPlus->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogERYAProfilingViewer::OnLayerPlus ), NULL, this );
+	buttonViewerScreenshot->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogERYAProfilingViewer::OnTakeScreenshoot ), NULL, this );
+	buttonViewerQuit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( dialogERYAProfilingViewer::OnViewerQuit ), NULL, this );
 
 }

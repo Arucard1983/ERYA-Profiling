@@ -227,8 +227,8 @@ double RessonanceFunction::BrietWigner(double Energy)
 }
 
 //Evaluate the Briet-Wigner with a Resonance Strenght at a certain energy.
-// f(E) = (constant * strenght * width / 4 )/ (width^2 / 4 + (E-energy)^2)
-// constant are equal to 656600/(A*E) mili-barn
+// f(E) = (K * strenght * width / 4 )/ (width^2 / 4 + (E-energy)^2)
+// where K = 2607472.5 (A+1)/(A*E) mili-barn
 double RessonanceFunction::StrenghtEnergy(double Energy)
 {
  if(GBWmin <= Energy && Energy <= GBWmax)
@@ -237,7 +237,7 @@ double RessonanceFunction::StrenghtEnergy(double Energy)
    for(int i=0; i<BWEnergy.size(); i++)
    {
     if(BWmin.at(i) <= Energy && Energy <= BWmax.at(i))
-     BWSum = BWSum + (BWPeak.at(i) * BWWidth.at(i) * 656600 / (Energy * GBAtomicMass) ) / (BWWidth.at(i) * BWWidth.at(i) / 4 + std::pow(Energy - BWEnergy.at(i),2));
+     BWSum = BWSum + ((BWPeak.at(i) * BWWidth.at(i) * 2607472.5 * (GBAtomicMass + 1) ) / (4 * Energy * GBAtomicMass) ) / (BWWidth.at(i) * BWWidth.at(i) / 4 + std::pow(Energy - BWEnergy.at(i),2));
    }
   return BWSum;
  }

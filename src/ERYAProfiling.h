@@ -184,7 +184,7 @@ class ERYAProfilingMain : public wxFrame
 		wxButton* buttonOutputHelp;
 		wxStaticLine* lineOutputTools;
 		mpWindow* renderOutputData;
-        wxPanel* tabTable;
+                wxPanel* tabTable;
 		wxStaticText* labelTabOutputMain;
 		wxButton* buttonTableDataImport;
 		wxButton* buttonTableDataSave;
@@ -193,7 +193,8 @@ class ERYAProfilingMain : public wxFrame
 		wxGrid* gridTableData;
 		wxPanel* panelLog;
 		wxStaticText* labelLogOutputMain;
-		wxButton* buttonLogDataSave;
+		wxButton* buttonLogDistributionViewer;
+                wxButton* buttonLogDataSave;
 		wxButton* buttonLogHelp;
 		wxStaticLine* lineLogTools;
 		wxGrid* gridLogData;
@@ -247,9 +248,10 @@ class ERYAProfilingMain : public wxFrame
 		virtual void OnOutputData( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOutputImage( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOutputHelp( wxCommandEvent& event ) { event.Skip(); }
-        virtual void OnImportData( wxCommandEvent& event ) { event.Skip(); }
+                virtual void OnImportData( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnTableSave( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnTableHelp( wxCommandEvent& event ) { event.Skip(); }
+                virtual void OnLogViewer( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLogSave( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLogHelp( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMainNew( wxCommandEvent& event ) { event.Skip(); }
@@ -920,5 +922,46 @@ class dialogRemark : public wxDialog
 		~dialogRemark();
 
 };
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class dialogERYAProfilingViewer
+///////////////////////////////////////////////////////////////////////////////
+class dialogERYAProfilingViewer : public wxDialog
+{
+	private:
+
+	protected:
+		mpWindow* renderViewer;
+		wxStaticText* labelViewerInitial;
+		wxTextCtrl* dataViewerInitial;
+		wxStaticText* labelViewerEnergy;
+		wxTextCtrl* dataViewerEnergy;
+		wxStaticText* labelViewerK;
+		wxTextCtrl* dataViewerK;
+		wxStaticLine* lineViewer;
+		wxButton* buttonViewerPrevious;
+		wxButton* buttonViewerNext;
+		wxButton* buttonViewerLayerMinus;
+		wxButton* buttonViewerLayerPlus;
+		wxButton* buttonViewerScreenshot;
+		wxButton* buttonViewerQuit;
+
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnEnergyPrevious( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnEnergyNext( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnLayerMinus( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnLayerPlus( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnTakeScreenshoot( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnViewerQuit( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		dialogERYAProfilingViewer( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("ERYA Profiling Stragging Distribution Viewer"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1280,720 ), long style = wxDEFAULT_DIALOG_STYLE );
+		~dialogERYAProfilingViewer();
+
+};
+
+
 
 #endif //__ERYAPROFILING_H__

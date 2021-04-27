@@ -64,6 +64,7 @@ class ERYAProfilingERYAProfilingMain : public ERYAProfilingMain
         void OnImportData( wxCommandEvent& event );
 		void OnTableSave( wxCommandEvent& event );
 		void OnTableHelp( wxCommandEvent& event );
+		void OnLogViewer( wxCommandEvent& event );
 		void OnLogSave( wxCommandEvent& event );
 		void OnLogHelp( wxCommandEvent& event );
 		void OnMainNew( wxCommandEvent& event );
