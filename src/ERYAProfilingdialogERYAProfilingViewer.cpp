@@ -305,7 +305,7 @@ bool ERYAProfilingdialogERYAProfilingViewer::DisplaySlot(int adress)
      renderViewer->AddLayer(plot);
      renderViewer->Fit(E1+LM,E1+LX,0.0,0.23);
   }
-  else if(K>=0.24 && K<22.00 && K<2) //Vavilov-Airy Distribution
+  else if(K>=0.24 && K<22.00 && NT<2) //Vavilov-Airy Distribution
   {
   VavilovEdgeworthFunction l;
   l.SetEdgeworthStep(Xi,Beta,K,Delta,VA,false);
