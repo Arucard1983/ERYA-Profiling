@@ -172,6 +172,7 @@ double GetGlobalDensity();
 double GetGlobalCharge();
 bool RenormStoichiometry();
 double GetMassFraction(int ElementID);
+double GetCalibrationFactorAt(int ElementID){return this->Item(ElementID).GetCalibrationFactor();};
 };
 
 // The atomic class to handle the layers calculations
@@ -195,6 +196,7 @@ double GetAbundanceAt(int ElementID){return LayerCompound.Item(ElementID).GetAbu
 double GetAtomicMassAt(int ElementID){return LayerCompound.Item(ElementID).GetAtomicMass();};
 double GetMassFractionAt(int ElementID){return LayerCompound.GetMassFraction(ElementID);};
 double GetStoichiometryAt(int ElementID){return LayerCompound.Item(ElementID).GetStoichiometry();};
+double GetCalibrationFactorAt(int ElementID){return LayerCompound.GetCalibrationFactorAt(ElementID);};
 double EvaluateCrossSectionAt(int ElementID, double AtEnergy){return LayerCompound.EvaluateCrossSection(ElementID,AtEnergy);};
 double GetMolarMass(){return LayerCompound.GetMolarMass();};
 double EvaluateBragg(double AtEnergy){return LayerCompound.EvaluateBragg(AtEnergy);};
@@ -237,6 +239,7 @@ std::vector<double> YieldValues;
 double ElementCharge;
 double ElementEfficiency;
 double YieldStep;
+double Calibrationfactor;
 LayerVector LocalSample;
 RessonanceFunction ElementRessonance;
 PhysicsDistribution ElementDistribution;

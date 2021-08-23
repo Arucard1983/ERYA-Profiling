@@ -268,6 +268,8 @@ class ERYAProfilingMain : public wxFrame
 
 		~ERYAProfilingMain();
 
+       static wxString GetAppVersion(){static int MajorVersion = 3; static int MinorVersion = 0; return wxString::Format("%i",MajorVersion) + wxString::Format(".%i",MinorVersion);}
+
 };
 
 

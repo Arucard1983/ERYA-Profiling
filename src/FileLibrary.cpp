@@ -8,6 +8,7 @@
  **************************************************************/
 
 #include "FileLibrary.h"
+#include "ERYAProfilingERYAProfilingMain.h"
 
 // Load a predefined list of elements
 bool ERYAProfilingSampleFile::ERYAProfilingSampleLoad(wxArrayString& ListElements, wxArrayString& ListGammaPeaks, wxArrayString& ListNumber, wxArrayString& ListAbundance, wxArrayString& ListIsotopic, wxArrayString& ListAtomic, wxArrayString& ListCalibration, ElementDatabaseArray OpenDatabase)
@@ -145,7 +146,7 @@ bool ERYAProfilingSampleFile::ERYAProfilingSampleSave(ArrayElement choiceElement
   wxXmlNode* fileversion = new wxXmlNode(database, wxXML_ELEMENT_NODE, "File_Details");
    wxXmlNode* details = new wxXmlNode(fileversion, wxXML_ELEMENT_NODE, "Contents");
    wxXmlNode* programversion = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Version");
-     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("2.80")));
+     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, ERYAProfilingERYAProfilingMain::GetAppVersion()));
     wxXmlNode* programname = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Name");
      programname->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("ERYA-Profiling")));
  // Save the file
@@ -440,7 +441,7 @@ bool ERYAProfilingLayerFile::ERYAProfilingLayerSave(wxGrid* LayerTable, ElementD
   wxXmlNode* fileversion = new wxXmlNode(layer, wxXML_ELEMENT_NODE, "File_Details");
    wxXmlNode* details = new wxXmlNode(fileversion, wxXML_ELEMENT_NODE, "Contents");
    wxXmlNode* programversion = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Version");
-     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("2.80")));
+     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, ERYAProfilingERYAProfilingMain::GetAppVersion()));
     wxXmlNode* programname = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Name");
      programname->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("ERYA-Profiling")));
  // Save the file
@@ -796,7 +797,7 @@ bool ERYAProfilingRessonanceFile::ERYAProfilingRessonanceSave(wxTextCtrl* valueB
   wxXmlNode* fileversion = new wxXmlNode(ressonance, wxXML_ELEMENT_NODE, "File_Details");
    wxXmlNode* details = new wxXmlNode(fileversion, wxXML_ELEMENT_NODE, "Contents");
    wxXmlNode* programversion = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Version");
-     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("2.80")));
+     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, ERYAProfilingERYAProfilingMain::GetAppVersion()));
     wxXmlNode* programname = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Name");
      programname->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("ERYA-Profiling")));
  // Save the file
@@ -1274,7 +1275,7 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalSave(wxTextCtrl* valueBeamResol
   wxXmlNode* fileversion = new wxXmlNode(global, wxXML_ELEMENT_NODE, "File_Details");
    wxXmlNode* details = new wxXmlNode(fileversion, wxXML_ELEMENT_NODE, "Contents");
    wxXmlNode* programversion = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Version");
-     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("2.80")));
+     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, ERYAProfilingERYAProfilingMain::GetAppVersion()));
     wxXmlNode* programname = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Name");
      programname->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("ERYA-Profiling")));
  // Save the file
@@ -1696,7 +1697,7 @@ bool DatabaseFile::ERYAProfilingDatabaseFileSave()
    wxXmlNode* programdatetime = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Date_File_Creation");
      programdatetime->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, ActualTime));
    wxXmlNode* programversion = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Version");
-     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("2.80")));
+     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, ERYAProfilingERYAProfilingMain::GetAppVersion()));
     wxXmlNode* programname = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Name");
      programname->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("ERYA-Profiling")));
  // Save the file
@@ -1949,7 +1950,7 @@ bool DetectorFile::DetectorFileSave()
    wxXmlNode* programdatetime = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Date_File_Creation");
      programdatetime->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, ActualTime));
    wxXmlNode* programversion = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Version");
-     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("2.80")));
+     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, ERYAProfilingERYAProfilingMain::GetAppVersion()));
     wxXmlNode* programname = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Name");
      programname->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("ERYA-Profiling")));
  // Save the file
@@ -2680,7 +2681,7 @@ bool ZieglerFile::ZieglerFileSave()
    wxXmlNode* programdatetime = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Date_File_Creation");
      programdatetime->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, ActualTime));
    wxXmlNode* programversion = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Version");
-     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("2.80")));
+     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, ERYAProfilingERYAProfilingMain::GetAppVersion()));
     wxXmlNode* programname = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Name");
      programname->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("ERYA-Profiling")));
  // Save the file

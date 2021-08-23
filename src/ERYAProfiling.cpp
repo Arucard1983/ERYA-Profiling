@@ -18,7 +18,8 @@ WX_DEFINE_OBJARRAY( ArrayCalibrationFactor);
 
 ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+    this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	statusERYAProfiling = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
 	menuERYAProfilingMain = new wxMenuBar( 0 );

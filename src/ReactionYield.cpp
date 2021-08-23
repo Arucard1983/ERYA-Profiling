@@ -830,7 +830,7 @@ double Element::EvaluateSigma(double AtEnergy)
     {
     if (Energy.at(i) == AtEnergy)
      {
-       return CalibrationFactor*Sigma.at(i);
+       return Sigma.at(i);
      }
     }
    for (int j=0; j<Energy.size() - 1; j++)  // But in general situations, it is necessary to interpolate two points.
@@ -843,7 +843,7 @@ double Element::EvaluateSigma(double AtEnergy)
       epsilon2 = Sigma.at(j+1);
       double slope = (AtEnergy - E1)/(E2 - E1);
       double linear = epsilon1 + slope*(epsilon2 - epsilon1);
-      return CalibrationFactor*linear;
+      return linear;
      }
     }
     return 0;
@@ -1362,14 +1362,14 @@ double Yield::EvaluateSigma(int LayerNumber, double Energy)
  //When a custom resonance function are defined, the cross-section data are ignored
  if(ElementRessonance.IsNullRessonance())
  {
-   return LocalSample.Item(LayerNumber).EvaluateCrossSectionAt(PositionID,Energy);
+   return LocalSample.Item(LayerNumber).EvaluateCrossSectionAt(PositionID,Energy) * LocalSample.Item(LayerNumber).GetCalibrationFactorAt(PositionID);
  }
  else //Otherwise use the custom resonance function, when the value itself are greater than the default database value.
  {
    if(ElementRessonance.GetDomainMinimum() <= Energy && Energy <= ElementRessonance.GetDomainMaximum())
-    return ElementRessonance.GetValue(Energy);
+    return ElementRessonance.GetValue(Energy) * LocalSample.Item(LayerNumber).GetCalibrationFactorAt(PositionID);
    else
-    return LocalSample.Item(LayerNumber).EvaluateCrossSectionAt(PositionID,Energy);
+    return LocalSample.Item(LayerNumber).EvaluateCrossSectionAt(PositionID,Energy) * LocalSample.Item(LayerNumber).GetCalibrationFactorAt(PositionID);
  }
 }
 
