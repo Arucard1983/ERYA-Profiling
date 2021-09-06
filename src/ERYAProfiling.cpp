@@ -175,7 +175,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	labelAtomicMass->Wrap( -1 );
 	sizerElementEditor->Add( labelAtomicMass, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	labelCalibrationFactor = new wxStaticText( scrollElementTable, wxID_ANY, wxT("Cross Section\nCalibration Factor"), wxDefaultPosition, wxSize(140,-1), 0 );
+	labelCalibrationFactor = new wxStaticText( scrollElementTable, wxID_ANY, wxT("Calibration Factor"), wxDefaultPosition, wxSize(140,-1), 0 );
 	labelCalibrationFactor->Wrap( -1 );
 	sizerElementEditor->Add( labelCalibrationFactor, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
@@ -901,7 +901,7 @@ dialogDatabaseManager::dialogDatabaseManager( wxWindow* parent, wxWindowID id, c
 	tableElementViewer->EnableDragColSize( true );
 	tableElementViewer->SetColLabelSize( 30 );
 	tableElementViewer->SetColLabelValue( 0, wxT("Energy (keV)") );
-	tableElementViewer->SetColLabelValue( 1, wxT("Cross Section (mbarn.keV)") );
+	tableElementViewer->SetColLabelValue( 1, wxT("Cross Section (mbarn)") );
 	tableElementViewer->SetColLabelAlignment( wxALIGN_CENTRE, wxALIGN_CENTRE );
 
 	// Rows
@@ -1073,8 +1073,8 @@ dialogAddDatabase::dialogAddDatabase( wxWindow* parent, wxWindowID id, const wxS
 	tableDataEditor->SetColLabelSize( 30 );
 	tableDataEditor->SetColLabelValue( 0, wxT("Energy (keV)") );
 	tableDataEditor->SetColLabelValue( 1, wxT("Energy Error (keV)") );
-	tableDataEditor->SetColLabelValue( 2, wxT("Cross Section (mbarn.keV)") );
-	tableDataEditor->SetColLabelValue( 3, wxT("Cross Section Error(mbarn.keV)") );
+	tableDataEditor->SetColLabelValue( 2, wxT("Cross Section (mbarn)") );
+	tableDataEditor->SetColLabelValue( 3, wxT("Cross Section Error(mbarn)") );
 	tableDataEditor->SetColLabelAlignment( wxALIGN_CENTRE, wxALIGN_CENTRE );
 
 	// Rows
