@@ -2136,12 +2136,12 @@ void ERYAProfilingERYAProfilingMain::GenerateTable()
 bool ERYAProfilingERYAProfilingMain::StartUpProgram()
 {
  // Define some internal variables
- GaussPrecision = 60;
+ GaussPrecision = 10;
  SamplePrecision = 10;
- VavilovMoyalPrecision = 10;
- VavilovEdgeworthPrecision = 70;
- VavilovAiryPrecision = 100;
- LandauPrecision = 284;
+ VavilovMoyalPrecision = 1;
+ VavilovEdgeworthPrecision = 40;
+ VavilovAiryPrecision = 20;
+ LandauPrecision = 100;
  ThreadPrecision = 1;
  // Load the configuration file, or force the user to create a new configuration file
  if(!(this->LoadSetupFile(CurrentConfig,CurrentDetectorFile,CurrentDatabaseFile,CurrentZieglerFile)))
@@ -2498,7 +2498,7 @@ bool ERYAProfilingERYAProfilingMain::SaveSetupFile(wxString MainDirectory, wxStr
    wxXmlNode* programdatetime = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Date_File_Creation");
      programdatetime->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, ActualTime));
    wxXmlNode* programversion = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Version");
-     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("2.80")));
+     programversion->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, this->GetAppVersion()));
     wxXmlNode* programname = new wxXmlNode(details, wxXML_ELEMENT_NODE, "Program_Name");
      programname->AddChild(new wxXmlNode(wxXML_TEXT_NODE, wxEmptyString, wxT("ERYA-Profiling")));
   // Save the file

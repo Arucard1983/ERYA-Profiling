@@ -1857,7 +1857,7 @@ bool ReactionProfiling::SetInitialParameters(wxTextCtrl* valueBeamResolution, wx
  //Finally, get the Energy domain
  if(valueCharge->GetValue().ToDouble(&Charge) && valueEnergyStep->GetValue().ToDouble(&EnergyStep) && valueMinimumEnergy->GetValue().ToDouble(&EnergyMinimum) && valueMaximumEnergy->GetValue().ToDouble(&EnergyMaximum))
  {
-   if(Charge<=0 || EnergyStep<=0 || EnergyMinimum >= EnergyMaximum)
+   if(Charge<=0 || EnergyStep<=0 || EnergyMinimum > EnergyMaximum)
    {
      InputComplete = false;
      LastErrorCode = wxT("Error: Invalid Energy Range Domain.\nPlease, verify the inserted values, and try again.");

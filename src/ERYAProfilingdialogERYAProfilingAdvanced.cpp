@@ -48,11 +48,11 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedDefault( wxCommandEvent
 {
  // And set the controls
  spinSampleStep->SetValue(10);
- spinGaussPrecision->SetValue(60);
- spinLandau->SetValue(284);
- spinVavilovEdgeworth->SetValue(70);
- spinVavilovAiry->SetValue(100);
- spinVavilovMoyal->SetValue(10);
+ spinGaussPrecision->SetValue(10);
+ spinLandau->SetValue(100);
+ spinVavilovEdgeworth->SetValue(40);
+ spinVavilovAiry->SetValue(20);
+ spinVavilovMoyal->SetValue(1);
  spinNumberThreads->SetSelection(1);
  checkActiveLog->SetValue(false);
 }
