@@ -311,7 +311,7 @@ void ERYAProfilingERYAProfilingMain::OnCalculator( wxCommandEvent& event )
 
 void ERYAProfilingERYAProfilingMain::OnHelpAbout( wxCommandEvent& event )
 {
- wxMessageBox(wxT("ERYA-Profiling Version "+ this->GetAppVersion() + " \nBuilt with wxWidgets 3.0.5, with wxMathPlot 0.13 and Custom Simple Xlsx Library 0.1\nCompiling with GCC 6.3.0\n(c) 2018 LIBPHYS"), wxT("Welcome to ERYA Profiling"));
+ wxMessageBox(wxT("ERYA-Profiling Version "+ this->GetAppVersion() + ".\nBuilt with the following third-party libraries:\nwxWidgets 3.0.5\nwxMathPlot 0.20\nSimple Xlsx Library 0.1\n(c) 2021 LIBPHYS"), wxT("Welcome to ERYA Profiling"));
 }
 
 void ERYAProfilingERYAProfilingMain::OnNumberElementSpin( wxSpinEvent& event )

@@ -1,18 +1,15 @@
-ERYA-Profiling 2.70 ReadMe
+ERYA-Profiling 3.00 ReadMe
 ----------------------------------------
 
-Testing Release
-
----------------------------------------
 
 1. Minimum Requirements
 
 ERYA-Profiling requires a computer with an supported operating system or architecture.
-- Windows 7, 10 or greater (Windows XP may work), Mac OS X 10.11 or greater (Mac OS X 10.10 may work), Linux Debian 10 or Ubuntu 18.04 or greater.
+- Windows 7, 10 or greater (Windows XP may work), Mac OS X 10.11 or greater (Mac OS X 10.10 may work), Linux Debian 11 or Ubuntu 21.04 or greater.
 - 64-bit x86-64 is the default suported architecture for all operating systems listed before. Windows and Linux 32-bit versions are provided for legacy systems.
 - ARM binary versions are also provided for Linux systems.
 - The minimum usefull screen resolution is 1280*720, but it is highly recommended to use a FullHD display (1920*1080) for better view.
-- About 100 Mb of free hard disk space is highly recommended.
+- About 10 to 100 Mb of free hard disk space is highly recommended.
 
 2. Supported Features
 # Ziegler's Parameters database supports the SRIM tables for all elements, along the Ziegler's Parameters of this stopping-power model itself. An optional algebraic expression are also supported.
@@ -35,7 +32,7 @@ $ sudo apt update
 $ sudo apt dist-upgrade
 $ sudo dpkg -i *.deb
 $ sudo apt -f install
-- On Debian 9, due to higher security restrictions, it is necessary to open a root shell first:
+- On Debian 11, due to higher security restrictions, it is necessary to open a root shell first:
 $ su [Ask for your root password...]
 $ apt update
 $ apt dist-upgrade
@@ -43,7 +40,7 @@ $ dpkg -i *.deb
 $ dpkg -t stretch-backports -f install
 
 3.3. Open the ERYA-Profiling from your favorite Desktop Environment (Menu>Education>ERYA-Profiling), or simply type on Terminal:
-$ /opt/ERYA-Profiling/ERYA-Profiling
+$ LC_ALL=C /opt/ERYA-Profiling/ERYA-Profiling
 
 3.4. The ERYA-Profiling will create a profile directory as ~/.ERYA-Profiling, where the local configuration settings will be stored.
 
@@ -90,7 +87,7 @@ $ rm -rf ~/.ERYA-Profiling
 
 6. Implemented Features
 
-This interim release had the following features:
+This release implemented the following features:
 # Can read and save profile files on XML format, avoiding the manual typesetting of every sample previously stored.
 # The numerical physics libraries should work as expected, generating the output, than can be stored as an image file, or a spreadsheet file.
 # The ported tools for Database Management from the ERYA-Bulk program works as expected.
@@ -128,6 +125,7 @@ This interim release had the following features:
 
 Copyrights
 
-Group: 2018 LibPhys
+Group: 2021 LibPhys
 Programmer e-mail: vm.manteigas@campus.fct.unl.pt
 wxMathPlot/wxWidgets licence:  https://github.com/wxWidgets/wxWidgets/blob/master/docs/licence.txt
+License: LGPLv3

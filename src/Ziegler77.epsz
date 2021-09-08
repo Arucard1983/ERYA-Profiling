@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ERYA-Profiling_Ziegler>
+<ERYA-Bulk_Ziegler>
 <File_Details>
 <Contents>
-<Program_Name>ERYA-Profiling</Program_Name>
-<Program_Version>1.50</Program_Version>
-<Date_File_Creation>2017-11-15T00:36:16.00Z</Date_File_Creation>
+<Program_Name>ERYA-Bulk</Program_Name>
+<Program_Version>4.30</Program_Version>
+<Date_File_Creation>2019-07-03T16:14:04.00Z</Date_File_Creation>
+<Remark></Remark>
 </Contents>
 </File_Details>
 <Ziegler_Data>
 <Ziegler_Version zv="0"/>
+<Ziegler_Function>
+<macro></macro>
+</Ziegler_Function>
 <Ziegler_Parameters>
 <Element_Number number="1">
 <Element_Name>
@@ -53,12 +57,6 @@
 <Atomic_Mass>
 <value>1.0079</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>0.00008988</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>19.10000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="2">
 <Element_Name>
@@ -103,12 +101,6 @@
 <Atomic_Mass>
 <value>4.0026</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>0.00017850</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>21.10000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="3">
 <Element_Name>
@@ -153,12 +145,6 @@
 <Atomic_Mass>
 <value>6.941</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>0.53400000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>13.40000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="4">
 <Element_Name>
@@ -203,12 +189,6 @@
 <Atomic_Mass>
 <value>9.0122</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>1.85000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>16.00000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="5">
 <Element_Name>
@@ -253,12 +233,6 @@
 <Atomic_Mass>
 <value>10.811</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>2.34000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>15.20000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="6">
 <Element_Name>
@@ -303,12 +277,6 @@
 <Atomic_Mass>
 <value>12.0107</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>2.26700000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>13.00000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="7">
 <Element_Name>
@@ -353,12 +321,6 @@
 <Atomic_Mass>
 <value>14.0067</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>0.00125060</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>11.60000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="8">
 <Element_Name>
@@ -403,12 +365,6 @@
 <Atomic_Mass>
 <value>15.9994</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>0.00142900</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>11.70000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="9">
 <Element_Name>
@@ -453,12 +409,6 @@
 <Atomic_Mass>
 <value>18.9984</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>0.00169600</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>11.80000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="10">
 <Element_Name>
@@ -503,12 +453,6 @@
 <Atomic_Mass>
 <value>20.1797</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>0.00089990</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>13.80000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="11">
 <Element_Name>
@@ -553,12 +497,6 @@
 <Atomic_Mass>
 <value>22.9897</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>0.97100000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>12.60000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="12">
 <Element_Name>
@@ -603,12 +541,6 @@
 <Atomic_Mass>
 <value>24.305</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>1.73800000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>12.50000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="13">
 <Element_Name>
@@ -653,12 +585,6 @@
 <Atomic_Mass>
 <value>26.9815</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>2.69800000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>12.30000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="14">
 <Element_Name>
@@ -703,12 +629,6 @@
 <Atomic_Mass>
 <value>28.0855</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>2.32960000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>12.20000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="15">
 <Element_Name>
@@ -753,12 +673,6 @@
 <Atomic_Mass>
 <value>30.9738</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>1.82000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10.10000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="16">
 <Element_Name>
@@ -803,12 +717,6 @@
 <Atomic_Mass>
 <value>32.065</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>2.06700000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10.20000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="17">
 <Element_Name>
@@ -853,12 +761,6 @@
 <Atomic_Mass>
 <value>35.453</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>0.00321400</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>9.90000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="18">
 <Element_Name>
@@ -903,12 +805,6 @@
 <Atomic_Mass>
 <value>39.0983</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>0.00178370</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>9.50000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="19">
 <Element_Name>
@@ -953,12 +849,6 @@
 <Atomic_Mass>
 <value>39.948</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>0.86200000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10.00000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="20">
 <Element_Name>
@@ -1003,12 +893,6 @@
 <Atomic_Mass>
 <value>40.078</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>1.54000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10.10000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="21">
 <Element_Name>
@@ -1053,12 +937,6 @@
 <Atomic_Mass>
 <value>44.9559</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>2.98900000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10.20000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="22">
 <Element_Name>
@@ -1103,12 +981,6 @@
 <Atomic_Mass>
 <value>47.867</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>4.54000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10.30000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="23">
 <Element_Name>
@@ -1153,12 +1025,6 @@
 <Atomic_Mass>
 <value>50.9415</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>6.11000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10.40000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="24">
 <Element_Name>
@@ -1203,12 +1069,6 @@
 <Atomic_Mass>
 <value>51.9961</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>7.15000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10.50000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="25">
 <Element_Name>
@@ -1253,12 +1113,6 @@
 <Atomic_Mass>
 <value>54.938</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>7.44000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10.60000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="26">
 <Element_Name>
@@ -1303,12 +1157,6 @@
 <Atomic_Mass>
 <value>55.845</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>7.87400000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10.70000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="27">
 <Element_Name>
@@ -1353,12 +1201,6 @@
 <Atomic_Mass>
 <value>58.9332</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>8.86000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10.80000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="28">
 <Element_Name>
@@ -1403,12 +1245,6 @@
 <Atomic_Mass>
 <value>58.6934</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>8.91200000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10.90000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="29">
 <Element_Name>
@@ -1453,12 +1289,6 @@
 <Atomic_Mass>
 <value>63.546</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>8.96000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>11.00000000</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="30">
 <Element_Name>
@@ -1503,12 +1333,6 @@
 <Atomic_Mass>
 <value>65.39</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>7.13400000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="31">
 <Element_Name>
@@ -1553,12 +1377,6 @@
 <Atomic_Mass>
 <value>69.723</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>5.90700000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="32">
 <Element_Name>
@@ -1603,12 +1421,6 @@
 <Atomic_Mass>
 <value>72.64</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>5.32300000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="33">
 <Element_Name>
@@ -1653,12 +1465,6 @@
 <Atomic_Mass>
 <value>74.9216</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>5.77600000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="34">
 <Element_Name>
@@ -1703,12 +1509,6 @@
 <Atomic_Mass>
 <value>78.96</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>4.80900000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="35">
 <Element_Name>
@@ -1753,12 +1553,6 @@
 <Atomic_Mass>
 <value>79.904</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>3.12200000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="36">
 <Element_Name>
@@ -1803,12 +1597,6 @@
 <Atomic_Mass>
 <value>83.8</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>0.00373300</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="37">
 <Element_Name>
@@ -1853,12 +1641,6 @@
 <Atomic_Mass>
 <value>85.4678</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>1.53200000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="38">
 <Element_Name>
@@ -1903,12 +1685,6 @@
 <Atomic_Mass>
 <value>87.62</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>2.64000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="39">
 <Element_Name>
@@ -1953,12 +1729,6 @@
 <Atomic_Mass>
 <value>88.9059</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>4.46900000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="40">
 <Element_Name>
@@ -2003,12 +1773,6 @@
 <Atomic_Mass>
 <value>91.224</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>6.50600000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="41">
 <Element_Name>
@@ -2053,12 +1817,6 @@
 <Atomic_Mass>
 <value>92.9064</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>8.57000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="42">
 <Element_Name>
@@ -2103,12 +1861,6 @@
 <Atomic_Mass>
 <value>95.94</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>10.22000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="43">
 <Element_Name>
@@ -2153,12 +1905,6 @@
 <Atomic_Mass>
 <value>98</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>11.50000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="44">
 <Element_Name>
@@ -2203,12 +1949,6 @@
 <Atomic_Mass>
 <value>101.07</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>12.37000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="45">
 <Element_Name>
@@ -2253,12 +1993,6 @@
 <Atomic_Mass>
 <value>102.9055</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>12.41000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="46">
 <Element_Name>
@@ -2303,12 +2037,6 @@
 <Atomic_Mass>
 <value>106.42</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>12.02000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="47">
 <Element_Name>
@@ -2353,12 +2081,6 @@
 <Atomic_Mass>
 <value>107.8682</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>10.50100000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="48">
 <Element_Name>
@@ -2403,12 +2125,6 @@
 <Atomic_Mass>
 <value>112.411</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>8.69000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="49">
 <Element_Name>
@@ -2453,12 +2169,6 @@
 <Atomic_Mass>
 <value>114.818</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>7.31000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="50">
 <Element_Name>
@@ -2503,12 +2213,6 @@
 <Atomic_Mass>
 <value>118.71</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>7.28700000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="51">
 <Element_Name>
@@ -2553,12 +2257,6 @@
 <Atomic_Mass>
 <value>121.76</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>6.68500000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="52">
 <Element_Name>
@@ -2603,12 +2301,6 @@
 <Atomic_Mass>
 <value>127.6</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>6.23200000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="53">
 <Element_Name>
@@ -2653,12 +2345,6 @@
 <Atomic_Mass>
 <value>126.9045</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>4.93000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="54">
 <Element_Name>
@@ -2703,12 +2389,6 @@
 <Atomic_Mass>
 <value>131.293</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>0.00588700</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="55">
 <Element_Name>
@@ -2753,12 +2433,6 @@
 <Atomic_Mass>
 <value>132.9055</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>1.87300000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="56">
 <Element_Name>
@@ -2803,12 +2477,6 @@
 <Atomic_Mass>
 <value>137.327</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>3.59400000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="57">
 <Element_Name>
@@ -2853,12 +2521,6 @@
 <Atomic_Mass>
 <value>138.9055</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>6.14500000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="58">
 <Element_Name>
@@ -2903,12 +2565,6 @@
 <Atomic_Mass>
 <value>140.116</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>6.77000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="59">
 <Element_Name>
@@ -2953,12 +2609,6 @@
 <Atomic_Mass>
 <value>140.9077</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>6.77300000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="60">
 <Element_Name>
@@ -3003,12 +2653,6 @@
 <Atomic_Mass>
 <value>144.24</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>7.00700000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="61">
 <Element_Name>
@@ -3053,12 +2697,6 @@
 <Atomic_Mass>
 <value>145</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>7.26000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="62">
 <Element_Name>
@@ -3103,12 +2741,6 @@
 <Atomic_Mass>
 <value>150.36</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>7.52000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="63">
 <Element_Name>
@@ -3153,12 +2785,6 @@
 <Atomic_Mass>
 <value>151.964</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>5.24300000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="64">
 <Element_Name>
@@ -3203,12 +2829,6 @@
 <Atomic_Mass>
 <value>157.25</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>7.89500000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="65">
 <Element_Name>
@@ -3253,12 +2873,6 @@
 <Atomic_Mass>
 <value>158.9253</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>8.22900000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="66">
 <Element_Name>
@@ -3303,12 +2917,6 @@
 <Atomic_Mass>
 <value>162.5</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>8.55000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="67">
 <Element_Name>
@@ -3353,12 +2961,6 @@
 <Atomic_Mass>
 <value>164.9303</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>8.79500000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="68">
 <Element_Name>
@@ -3403,12 +3005,6 @@
 <Atomic_Mass>
 <value>167.259</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>9.06600000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="69">
 <Element_Name>
@@ -3453,12 +3049,6 @@
 <Atomic_Mass>
 <value>168.9342</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>9.32100000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="70">
 <Element_Name>
@@ -3503,12 +3093,6 @@
 <Atomic_Mass>
 <value>173.04</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>6.96500000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="71">
 <Element_Name>
@@ -3553,12 +3137,6 @@
 <Atomic_Mass>
 <value>174.967</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>9.84000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="72">
 <Element_Name>
@@ -3603,12 +3181,6 @@
 <Atomic_Mass>
 <value>178.49</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>13.31000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="73">
 <Element_Name>
@@ -3653,12 +3225,6 @@
 <Atomic_Mass>
 <value>180.9479</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>16.65400000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="74">
 <Element_Name>
@@ -3703,12 +3269,6 @@
 <Atomic_Mass>
 <value>183.84</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>19.25000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="75">
 <Element_Name>
@@ -3753,12 +3313,6 @@
 <Atomic_Mass>
 <value>186.207</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>21.02000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="76">
 <Element_Name>
@@ -3803,12 +3357,6 @@
 <Atomic_Mass>
 <value>190.23</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>22.61000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="77">
 <Element_Name>
@@ -3853,12 +3401,6 @@
 <Atomic_Mass>
 <value>192.217</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>22.56000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="78">
 <Element_Name>
@@ -3903,12 +3445,6 @@
 <Atomic_Mass>
 <value>195.078</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>21.46000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="79">
 <Element_Name>
@@ -3953,12 +3489,6 @@
 <Atomic_Mass>
 <value>196.9665</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>19.28200000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="80">
 <Element_Name>
@@ -4003,12 +3533,6 @@
 <Atomic_Mass>
 <value>200.59</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>13.53360000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="81">
 <Element_Name>
@@ -4053,12 +3577,6 @@
 <Atomic_Mass>
 <value>204.3833</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>11.85000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="82">
 <Element_Name>
@@ -4103,12 +3621,6 @@
 <Atomic_Mass>
 <value>207.2</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>11.34200000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="83">
 <Element_Name>
@@ -4153,12 +3665,6 @@
 <Atomic_Mass>
 <value>208.9804</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>9.80700000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="84">
 <Element_Name>
@@ -4203,12 +3709,6 @@
 <Atomic_Mass>
 <value>209</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>9.32000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="85">
 <Element_Name>
@@ -4253,12 +3753,6 @@
 <Atomic_Mass>
 <value>210</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>7.00000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="86">
 <Element_Name>
@@ -4303,12 +3797,6 @@
 <Atomic_Mass>
 <value>222</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>0.00973000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="87">
 <Element_Name>
@@ -4353,12 +3841,6 @@
 <Atomic_Mass>
 <value>223</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>1.87000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="88">
 <Element_Name>
@@ -4403,12 +3885,6 @@
 <Atomic_Mass>
 <value>226</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>5.50000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="89">
 <Element_Name>
@@ -4453,12 +3929,6 @@
 <Atomic_Mass>
 <value>227</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>10.07000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="90">
 <Element_Name>
@@ -4503,12 +3973,6 @@
 <Atomic_Mass>
 <value>232.0381</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>11.72000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="91">
 <Element_Name>
@@ -4553,12 +4017,6 @@
 <Atomic_Mass>
 <value>231.0359</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>15.37000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 <Element_Number number="92">
 <Element_Name>
@@ -4603,13 +4061,8 @@
 <Atomic_Mass>
 <value>238.0289</value>
 </Atomic_Mass>
-<Atomic_Density>
-<value>18.95000000</value>
-</Atomic_Density>
-<Bloch_Parameter>
-<value>10</value>
-</Bloch_Parameter>
 </Element_Number>
 </Ziegler_Parameters>
+<Ziegler_SRIM_Tables/>
 </Ziegler_Data>
-</ERYA-Profiling_Ziegler>
+</ERYA-Bulk_Ziegler>
