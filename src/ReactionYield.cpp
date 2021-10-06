@@ -1633,7 +1633,7 @@ bool ReactionProfiling::MainProcedure(wxStatusBar* progress)
  //Get the number of sample steps
  int SampleSteps = std::ceil(LocalSample.GetTotalThickness()/DefaultSampleStep);
  // Prepare YieldVector object
- LocalResults = YieldVector(LocalSample,LocalDetector,Charge,EnergyStep,DefaultConvolution*100.0);
+ LocalResults = YieldVector(LocalSample,LocalDetector,Charge,EnergyStep,DefaultConvolution*0.01);
  // Clear Sample log class
  LocalDepth.Clear();
  // Number of maximum steps
