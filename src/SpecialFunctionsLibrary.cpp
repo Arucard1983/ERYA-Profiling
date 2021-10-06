@@ -427,9 +427,15 @@ void VavilovAiryFunction::SetAiryStep(double xi, double beta, double k, double D
  double lowlambda = (-0.0322 * VAbeta * VAbeta - 0.0743)*VAk + (-0.2453 * VAbeta * VAbeta + 0.0701)/std::sqrt(VAk) + (-0.5561 * VAbeta * VAbeta - 3.1579);
  double highlambda = (-0.0135 * VAbeta * VAbeta - 0.0488)*VAk + (-1.6921 * VAbeta * VAbeta + 8.3656)/std::sqrt(VAk) + (-0.7327 * VAbeta * VAbeta - 3.5226);
  double lambdastep = (highlambda - lowlambda)/numberstep;
+ // For lower k values, the Edgeworth optimal interval may truncate the left side of distribution. To fix this, a new lambda value should be evauated from the first zero of Airy's function.
+ double t0 = -2.33811;
+ double eta = (xi * (1 - (2*VAbeta*VAbeta)/3))/(std::pow(2.0*VAk,2.0/3.0));
+ double a = (std::pow(2.0*VAk,1.0/3.0) * (1 - (VAbeta*VAbeta)/2)) / (std::pow((1 - (2.0*VAbeta*VAbeta)/3.0),2.0/3.0));
+ double deltafix = eta*(t0-a*a);
  // Define the Function Domain
  AiryStep = VAxi * lambdastep;
- AiryMinimum = VAxi * (lowlambda + 1 - euler + VAbeta*VAbeta + std::log(VAk)) + DEM;
+ //AiryMinimum = VAxi * (lowlambda + 1 - euler + VAbeta*VAbeta + std::log(VAk)) + DEM;
+ AiryMinimum = deltafix + DEM;
  AiryMaximum = VAxi * (highlambda + 1 - euler + VAbeta*VAbeta + std::log(VAk)) + DEM;
  // Cut negative minimum values
  if(AiryMinimum < 0 && TrimNegative)
