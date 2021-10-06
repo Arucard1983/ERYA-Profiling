@@ -427,7 +427,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 1 + VarianceMode;
     return true;
    }
-   else if(k>=0.02 && k<0.24) //Vavilov-Moyal Distribution
+   else if(k>=0.02 && k<0.29) //Vavilov-Moyal Distribution
    {
     StraggMoyal = VavilovMoyalFunction();
     StraggMoyal.SetMoyalStep(xi,beta,k,DEM,Moyal,false);
@@ -437,7 +437,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 2 + VarianceMode;
     return true;
    }
-   else if(k>=0.24 && k<22.00) //Vavilov-Airy Distribution
+   else if(k>=0.29 && k<22.00) //Vavilov-Airy Distribution
    {
     StraggAiry = VavilovAiryFunction();
     StraggAiry.SetAiryStep(xi,beta,k,DEM,Airy,false);
@@ -1334,22 +1334,28 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
  }
  // Evaluate the integral itself, including the renormalization integral.
  // Insert the stopping power inside the integral
- double DoubleSimpsonSum = 0;
- double RenormalizationSum = 0;
+ double DoubleSimpsonSum1 = 0;
+ double DoubleSimpsonSum2 = 0;
+ double RenormalizationSum1 = 0;
+ double RenormalizationSum2 = 0;
  for(unsigned int i=0; i<=Ssteps; i++)
  {
    for(unsigned int j=0; j<=Tsteps; j++)
    {
      double S = Smin + i * DS ;
      double T = Tmin + j * DT ;
-     double LocalStoppingPower = LocalSample.Item(LayerNumber).EvaluateBragg(Energy-S);
-     double LocalDistribution = ElementDistribution.GetValue(S-T,T);
-      DoubleSimpsonSum = DoubleSimpsonSum + SimpsonWeight[i][j] * LocalDistribution * this->EvaluateSigma(LayerNumber,Energy-S) / LocalStoppingPower;
-      RenormalizationSum = RenormalizationSum + SimpsonWeight[i][j] * LocalDistribution;
+     double LocalCrossSection1 = LocalSample.Item(LayerNumber).EvaluateBragg(Energy-S);
+     double LocalCrossSection2 = LocalSample.Item(LayerNumber).EvaluateBragg(Energy-T);
+     double LocalDistribution1 = ElementDistribution.GetValue(S-T,T);
+     double LocalDistribution2 = ElementDistribution.GetValue(S,T-S);
+     DoubleSimpsonSum1 = DoubleSimpsonSum1 + SimpsonWeight[i][j] * LocalDistribution1 * this->EvaluateSigma(LayerNumber,Energy-S) / LocalCrossSection1;
+     DoubleSimpsonSum2 = DoubleSimpsonSum2 + SimpsonWeight[i][j] * LocalDistribution2 * this->EvaluateSigma(LayerNumber,Energy-T) / LocalCrossSection2;
+     RenormalizationSum1 = RenormalizationSum1 + SimpsonWeight[i][j] * LocalDistribution1;
+     RenormalizationSum2 = RenormalizationSum2 + SimpsonWeight[i][j] * LocalDistribution2;
    }
  }
- double CrossSigmaSum = (DS * DT) * DoubleSimpsonSum / 9;
- double DistributionSum = (DS * DT) * RenormalizationSum / 9;
+ double CrossSigmaSum = (DS * DT) * (0.1*DoubleSimpsonSum1 + 0.9*DoubleSimpsonSum2) / 9;
+ double DistributionSum = (DS * DT) * (0.1*RenormalizationSum1 + 0.9*RenormalizationSum2 ) / 9;
  // If the renormalization itself are zero, return zero, since the first integral will also the zero.
  if(DistributionSum == 0.0)
    return 0;
