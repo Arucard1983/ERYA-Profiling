@@ -181,9 +181,9 @@ bool ERYAProfilingdialogERYAProfilingViewer::DisplaySlot(int adress)
   // Call the parent frame
  ERYAProfilingERYAProfilingMain *Parent = (ERYAProfilingERYAProfilingMain *) GetParent();
  // Copy the precision variables
- unsigned int CP,G,L,VE,VM,VA,NT;
+ unsigned int CP,G,L,VE,VM,VA,CM,NT;
  bool EL;
- Parent->GetPrecisionParameters(CP,G,VM,VE,VA,L,NT,EL);
+ Parent->GetPrecisionParameters(CP,G,VM,VE,VA,L,NT,CM,EL);
   // Retrieve the Laudau parameters
   double E0,E1,Delta,K,Xi,Beta;
   wxString E0D = ViewerData->GetCellValue(adress,0);

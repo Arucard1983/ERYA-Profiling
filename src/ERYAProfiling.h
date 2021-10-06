@@ -875,6 +875,8 @@ class dialogERYAProfilingAdvanced : public wxDialog
 		wxSpinCtrl* spinVavilovAiry;
 		wxStaticText* labelLandau;
 		wxSpinCtrl* spinLandau;
+		wxStaticText* labelConvolution;
+		wxSpinCtrl* spinConvolution;
         wxStaticText* labelNumberThreads;
 		wxChoice* spinNumberThreads;
 		wxStaticText* labelActiveLog;
@@ -894,7 +896,7 @@ class dialogERYAProfilingAdvanced : public wxDialog
 
 	public:
 
-		dialogERYAProfilingAdvanced( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("ERYA Profiling Advanced Precision Settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 700,550 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		dialogERYAProfilingAdvanced( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("ERYA Profiling Advanced Precision Settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 900,700 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~dialogERYAProfilingAdvanced();
 
 };

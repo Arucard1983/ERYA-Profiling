@@ -8,9 +8,9 @@ dialogERYAProfilingAdvanced( parent )
  // Call the parent frame
  ERYAProfilingERYAProfilingMain *Parent = (ERYAProfilingERYAProfilingMain *) GetParent();
  // Copy the current variables
- unsigned int CP,G,L,VE,VM,VA,NT;
+ unsigned int CP,G,L,VE,VM,VA,NT,CM;
  bool EL;
- Parent->GetPrecisionParameters(CP,G,VM,VE,VA,L,NT,EL);
+ Parent->GetPrecisionParameters(CP,G,VM,VE,VA,L,NT,CM,EL);
  // And set the controls
  spinSampleStep->SetValue(CP);
  spinGaussPrecision->SetValue(G);
@@ -19,6 +19,7 @@ dialogERYAProfilingAdvanced( parent )
  spinVavilovAiry->SetValue(VA);
  spinVavilovMoyal->SetValue(VM);
  spinNumberThreads->SetSelection(NT);
+ spinConvolution->SetValue(CM);
  checkActiveLog->SetValue(EL);
 }
 
@@ -27,7 +28,7 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedOK( wxCommandEvent& eve
  // Call the parent frame
  ERYAProfilingERYAProfilingMain *Parent = (ERYAProfilingERYAProfilingMain *) GetParent();
  // Set the current variables
- unsigned int CP,G,L,VE,VM,VA,NT;
+ unsigned int CP,G,L,VE,VM,VA,NT,CM;
  bool EL;
  // Get the controls
  CP = spinSampleStep->GetValue();
@@ -37,9 +38,10 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedOK( wxCommandEvent& eve
  VA = spinVavilovAiry->GetValue();
  VM = spinVavilovMoyal->GetValue();
  NT = spinNumberThreads->GetSelection();
+ CM = spinConvolution->GetValue();
  EL = checkActiveLog->GetValue();
  // And save the new values
- Parent->SetPrecisionParameters(CP,G,VM,VE,VA,L,NT,EL);
+ Parent->SetPrecisionParameters(CP,G,VM,VE,VA,L,NT,CM,EL);
  // Before close
  Close();
 }
@@ -54,6 +56,7 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedDefault( wxCommandEvent
  spinVavilovAiry->SetValue(40);
  spinVavilovMoyal->SetValue(10);
  spinNumberThreads->SetSelection(1);
+ spinConvolution->SetValue(100);
  checkActiveLog->SetValue(false);
 }
 
@@ -66,6 +69,6 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedHelp( wxCommandEvent& e
 {
  // Call the parent frame
  ERYAProfilingERYAProfilingMain *Parent = (ERYAProfilingERYAProfilingMain *) GetParent();
- Parent->SetPrecisionParameters(10,60,10,70,100,284,1,false);
+ Parent->SetPrecisionParameters(10,10,10,70,40,100,1,100,false);
  Close();
 }

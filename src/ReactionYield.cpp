@@ -1280,13 +1280,14 @@ int LayerVector::GetLayerAtThickness(double AtThickness)
 }
 
 // Main Yield constructor
-Yield::Yield(int ElementID, double Charge, double Efficiency, double Step, LayerVector CurrentSample)
+Yield::Yield(int ElementID, double Charge, double Efficiency, double Step, double Mixture, LayerVector CurrentSample)
 {
  ElementCharge = Charge;
  ElementEfficiency = Efficiency;
  LocalSample = CurrentSample;
  PositionID = ElementID;
  YieldStep = Step;
+ ConvolutionMixture = Mixture;
 }
 
 // Evaluate Z = int(f_T (E) f_S(S-E) sigma(S+DEM+EM),E,S)
@@ -1354,8 +1355,8 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
      RenormalizationSum2 = RenormalizationSum2 + SimpsonWeight[i][j] * LocalDistribution2;
    }
  }
- double CrossSigmaSum = (DS * DT) * (0.1*DoubleSimpsonSum1 + 0.9*DoubleSimpsonSum2) / 9;
- double DistributionSum = (DS * DT) * (0.1*RenormalizationSum1 + 0.9*RenormalizationSum2 ) / 9;
+ double CrossSigmaSum = (DS * DT) * ((1-ConvolutionMixture)*DoubleSimpsonSum1 + ConvolutionMixture*DoubleSimpsonSum2) / 9;
+ double DistributionSum = (DS * DT) * ((1-ConvolutionMixture)*RenormalizationSum1 + ConvolutionMixture*RenormalizationSum2 ) / 9;
  // If the renormalization itself are zero, return zero, since the first integral will also the zero.
  if(DistributionSum == 0.0)
    return 0;
@@ -1420,17 +1421,18 @@ double Yield::AddYieldLayer(RessonanceFunction CurrentRessonance, PhysicsDistrib
 }
 
 // Main Yield Vector constructor
-YieldVector::YieldVector(LayerVector CurrentSample, Detector CurrentDetector, double CurrentCharge, double CurrentStep)
+YieldVector::YieldVector(LayerVector CurrentSample, Detector CurrentDetector, double CurrentCharge, double CurrentStep, double CurrentMixture)
 {
  // Initialize values
- double DetectorCharge, YieldPrecison;
+ double DetectorCharge, YieldPrecison, ConvolutionMixture;
  DetectorCharge = CurrentCharge;
  YieldPrecison = CurrentStep;
+ ConvolutionMixture = CurrentMixture;
  for(int i=0; i<CurrentSample.GetElementsCount(); i++)
  {
    double DetectorEnergy = CurrentSample.GetGammaPeakAt(i);
    double DetectorEfficiency = CurrentDetector.GetEval(DetectorEnergy);
-   this->Add(Yield(i,DetectorCharge,DetectorEfficiency,YieldPrecison,CurrentSample));
+   this->Add(Yield(i,DetectorCharge,DetectorEfficiency,YieldPrecison,ConvolutionMixture,CurrentSample));
  }
 }
 
@@ -1631,7 +1633,7 @@ bool ReactionProfiling::MainProcedure(wxStatusBar* progress)
  //Get the number of sample steps
  int SampleSteps = std::ceil(LocalSample.GetTotalThickness()/DefaultSampleStep);
  // Prepare YieldVector object
- LocalResults = YieldVector(LocalSample,LocalDetector,Charge,EnergyStep);
+ LocalResults = YieldVector(LocalSample,LocalDetector,Charge,EnergyStep,DefaultConvolution*100.0);
  // Clear Sample log class
  LocalDepth.Clear();
  // Number of maximum steps
@@ -1747,7 +1749,7 @@ bool ReactionProfiling::StartProcedure(wxStatusBar* progress)
 }
 
 // Changes some parameters
-bool ReactionProfiling::SetOverrideParameters(unsigned int SamplePrecision, unsigned int GaussPrecision, unsigned int VavilovMoyalPrecision, unsigned int VavilovEdgeworthPrecision, unsigned int VavilovAiryPrecision, unsigned int LandauPrecision, unsigned int ThreadPrecision, bool EnableLog)
+bool ReactionProfiling::SetOverrideParameters(unsigned int SamplePrecision, unsigned int GaussPrecision, unsigned int VavilovMoyalPrecision, unsigned int VavilovEdgeworthPrecision, unsigned int VavilovAiryPrecision, unsigned int LandauPrecision, unsigned int ThreadPrecision, unsigned int ConvolutionPrecision, bool EnableLog)
 {
  DefaultSampleStep = SamplePrecision;
  DefaultGauss = GaussPrecision;
@@ -1756,6 +1758,7 @@ bool ReactionProfiling::SetOverrideParameters(unsigned int SamplePrecision, unsi
  DefaultVavilovMoyal = VavilovMoyalPrecision;
  DefaultVavilovAiry = VavilovAiryPrecision;
  DefaultThreads = ThreadPrecision;
+ DefaultConvolution = ConvolutionPrecision;
  RequireLog = EnableLog;
  DefaultParameters = false;
  return true;

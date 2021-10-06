@@ -240,6 +240,7 @@ double ElementCharge;
 double ElementEfficiency;
 double YieldStep;
 double Calibrationfactor;
+double ConvolutionMixture;
 LayerVector LocalSample;
 RessonanceFunction ElementRessonance;
 PhysicsDistribution ElementDistribution;
@@ -248,7 +249,7 @@ double SigmaDistributionConvolution(int LayerNumber, double Energy);
 double YieldFunction(int LayerNumber, double Energy);
 public:
 Yield(){};
-Yield(int ElementID, double Charge, double Efficiency, double Step, LayerVector CurrentSample);
+Yield(int ElementID, double Charge, double Efficiency, double Step, double Mixture, LayerVector CurrentSample);
 void Clear(){YieldValues.clear(); return;};
 void AddNewYield(){YieldValues.push_back(0.0); return;};
 double AddYieldLayer(RessonanceFunction CurrentRessonance, PhysicsDistribution CurrentDistribution, int AtLayer, double AtEnergy, double RangeEnergy);
@@ -264,7 +265,7 @@ wxString ErrorCode;
 public:
 YieldVector(){};
 YieldVector(std::vector<YieldVector> Original);
-YieldVector(LayerVector CurrentSample, Detector CurrentDetector, double CurrentCharge, double CurrentStep);
+YieldVector(LayerVector CurrentSample, Detector CurrentDetector, double CurrentCharge, double CurrentStep, double CurrentMixture);
 void ClearData(){YieldEnergy.clear(); return;}
 void SetEnergy(double InitialEnergy);
 std::vector<double> SetValue(RessonanceFunction CurrentRessonance, PhysicsDistribution CurrentDistribution, int AtLayer, double AtEnergy, double RangeEnergy);
@@ -356,12 +357,12 @@ class ReactionProfiling
  wxString LastErrorCode;
  double Charge, EnergyStep, EnergyMinimum, EnergyMaximum;
  bool SampleComplete, InputComplete, DefaultParameters, RequireRessonance, RequireLog;
- unsigned int DefaultSampleStep, DefaultGauss, DefaultVavilovMoyal, DefaultVavilovEdgeworth, DefaultVavilovAiry, DefaultLandau, DefaultThreads;
+ unsigned int DefaultSampleStep, DefaultGauss, DefaultVavilovMoyal, DefaultVavilovEdgeworth, DefaultVavilovAiry, DefaultLandau, DefaultThreads, DefaultConvolution;
  public:
  ReactionProfiling(){SampleComplete = false; InputComplete = false; RequireRessonance = false; DefaultParameters = true; LastErrorCode = wxT("General Error: Empty Input Data!");};
  bool StartProcedure(wxStatusBar* progress);
  bool SampleSetup(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, DetectorParameters ThisDetector, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass,ArrayAtomicMass textAtomicMass, ArrayCalibrationFactor textCalibrationFactor);
- bool SetOverrideParameters(unsigned int SamplePrecision, unsigned int GaussPrecision, unsigned int VavilovMoyalPrecision, unsigned int VavilovEdgeworthPrecision, unsigned int VavilovAiryPrecision, unsigned int LandauPrecision, unsigned int ThreadPrecision, bool EnableLog);
+ bool SetOverrideParameters(unsigned int SamplePrecision, unsigned int GaussPrecision, unsigned int VavilovMoyalPrecision, unsigned int VavilovEdgeworthPrecision, unsigned int VavilovAiryPrecision, unsigned int LandauPrecision, unsigned int ThreadPrecision, unsigned int ConvolutionPrecision, bool EnableLog);
  bool SetInitialParameters(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueStrenghtWidth, wxTextCtrl* valueStrenghtPeak, wxTextCtrl *valueStrenghtEnergy, wxTextCtrl *valueStrenghtMinimum, wxTextCtrl* valueStrenghtMaximum, wxTextCtrl* valueRessonanceFunction, bool boolRessonanceLorentzian, bool boolRessonanceStrenght, int intRessonanceMode);
  wxString GetErrorCode(){return LastErrorCode;};
  std::vector<double> GetEnergyRange(){return LocalResults.GetEnergy();};

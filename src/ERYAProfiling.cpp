@@ -2595,7 +2595,7 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	sizerERYAProfilingAdvanced->Add( lineERYAProfilingSettings, 0, wxEXPAND | wxALL, 5 );
 
 	wxFlexGridSizer* sizerERYAProfilingSettings;
-	sizerERYAProfilingSettings = new wxFlexGridSizer( 8, 2, 20, 20 );
+	sizerERYAProfilingSettings = new wxFlexGridSizer( 9, 2, 20, 20 );
 	sizerERYAProfilingSettings->AddGrowableRow( 0 );
 	sizerERYAProfilingSettings->SetFlexibleDirection( wxBOTH );
 	sizerERYAProfilingSettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
@@ -2643,7 +2643,14 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	spinLandau = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 100, 500, 284 );
 	sizerERYAProfilingSettings->Add( spinLandau, 0, wxALL, 5 );
 
-        labelNumberThreads = new wxStaticText( this, wxID_ANY, wxT("Asymptotic Vavilov Variance Model:"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelConvolution = new wxStaticText( this, wxID_ANY, wxT("Convolution Mixture, 0 f(B/S) to 100 f(S/B) (%):"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelConvolution->Wrap( -1 );
+	sizerERYAProfilingSettings->Add( labelConvolution, 0, wxALL, 5 );
+
+	spinConvolution = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100, 100 );
+	sizerERYAProfilingSettings->Add( spinConvolution, 0, wxALL, 5 );
+
+    labelNumberThreads = new wxStaticText( this, wxID_ANY, wxT("Asymptotic Vavilov Variance Model:"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelNumberThreads->Wrap( -1 );
 	sizerERYAProfilingSettings->Add( labelNumberThreads, 0, wxALL, 5 );
 
