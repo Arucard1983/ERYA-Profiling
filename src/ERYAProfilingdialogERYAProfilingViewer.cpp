@@ -271,7 +271,7 @@ bool ERYAProfilingdialogERYAProfilingViewer::DisplaySlot(int adress)
      renderViewer->AddLayer(plot);
      renderViewer->Fit(E1+LM,E1+LX,0.0,0.23);
   }
-  else if(K>=0.02 && K<0.24 && NT<2) //Vavilov-Moyal Distribution
+  else if(K>=0.02 && K<0.29 && NT<2) //Vavilov-Moyal Distribution
   {
   VavilovMoyalFunction l;
   l.SetMoyalStep(Xi,Beta,K,Delta,VM,false);
@@ -305,13 +305,13 @@ bool ERYAProfilingdialogERYAProfilingViewer::DisplaySlot(int adress)
      renderViewer->AddLayer(plot);
      renderViewer->Fit(E1+LM,E1+LX,0.0,0.23);
   }
-  else if(K>=0.24 && K<22.00 && NT<2) //Vavilov-Airy Distribution
+  else if(K>=0.29 && K<22.00 && NT<2) //Vavilov-Airy Distribution
   {
-  VavilovEdgeworthFunction l;
-  l.SetEdgeworthStep(Xi,Beta,K,Delta,VA,false);
-  double LS = l.GetEdgeworthStep();
-  double LM = l.GetEdgeworthMinimum();
-  double LX = l.GetEdgeworthMaximum();
+  VavilovAiryFunction l;
+  l.SetAiryStep(Xi,Beta,K,Delta,VA,false);
+  double LS = l.GetAiryStep();
+  double LM = l.GetAiryMinimum();
+  double LX = l.GetAiryMaximum();
   //Get the function plot
   std::vector<double> Y,X;
   int NumberPlots = std::ceil((LX-LM)/LS);
