@@ -1310,6 +1310,8 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
     Tsteps = Tsteps + 1;
  if(Ssteps%2==1)
     Ssteps = Ssteps + 1;
+ DT=(Tmax-Tmin)/Tsteps;
+ DS=(Smax-Smin)/Ssteps;
  // Create the weights matrix
  std::vector< std::vector<unsigned int> > SimpsonWeight(Ssteps+1, std::vector<unsigned int> (Tsteps+1,0));
  for(unsigned int i=0; i<=Ssteps; i++)
