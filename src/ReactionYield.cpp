@@ -1304,8 +1304,8 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
  double Tmax = DSmax + DTmax;
  double Smin = DSmin + DTmin;
  double Smax = DSmax + DTmax;
- unsigned int Tsteps = std::ceil((Tmax-Tmin)/(DT));
- unsigned int Ssteps = std::ceil((Smax-Smin)/(DS));
+ unsigned int Tsteps = std::ceil((DTmax-DTmin)/(DT));
+ unsigned int Ssteps = std::ceil((DSmax-DSmin)/(DS));
  if(Tsteps%2==1)
     Tsteps = Tsteps + 1;
  if(Ssteps%2==1)
