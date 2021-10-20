@@ -1296,10 +1296,14 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
  //Implements a double numerical integration using the Simpson method
  double DT = ElementDistribution.GetThermalStep();
  double DS = ElementDistribution.GetStraggStep();
- double Tmin = ElementDistribution.GetThermalMin();
- double Tmax = ElementDistribution.GetThermalMax();
- double Smin = ElementDistribution.GetStraggMin();
- double Smax = ElementDistribution.GetStraggMax();
+ double DTmin = ElementDistribution.GetThermalMin();
+ double DTmax = ElementDistribution.GetThermalMax();
+ double DSmin = ElementDistribution.GetStraggMin();
+ double DSmax = ElementDistribution.GetStraggMax();
+ double Tmin = DSmin + DTmin;
+ double Tmax = DSmax + DTmax;
+ double Smin = DSmin + DTmin;
+ double Smax = DSmax + DTmax;
  unsigned int Tsteps = std::ceil((Tmax-Tmin)/(DT));
  unsigned int Ssteps = std::ceil((Smax-Smin)/(DS));
  if(Tsteps%2==1)
