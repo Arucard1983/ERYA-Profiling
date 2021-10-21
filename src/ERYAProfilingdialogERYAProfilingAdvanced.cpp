@@ -56,7 +56,7 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedDefault( wxCommandEvent
  spinVavilovAiry->SetValue(40);
  spinVavilovMoyal->SetValue(10);
  spinNumberThreads->SetSelection(1);
- spinConvolution->SetValue(50);
+ spinConvolution->SetValue(0);
  checkActiveLog->SetValue(false);
 }
 
@@ -69,6 +69,6 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedHelp( wxCommandEvent& e
 {
  // Call the parent frame
  ERYAProfilingERYAProfilingMain *Parent = (ERYAProfilingERYAProfilingMain *) GetParent();
- Parent->SetPrecisionParameters(10,10,10,70,40,284,1,50,false);
+ Parent->SetPrecisionParameters(10,10,10,70,40,284,1,0,false);
  Close();
 }

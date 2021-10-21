@@ -397,7 +397,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
      else
      {
      StraggGauss = GaussFunction();
-     StraggGauss.SetGaussStep(DEM,VEM,Gauss,false);
+     StraggGauss.SetGaussStep(DEM,VEM,Gauss,true);
      StraggStep = StraggGauss.GetGaussStep();
      StraggMaximum = StraggGauss.GetGaussMaximum();
      StraggMinimum = StraggGauss.GetGaussMinimum();
@@ -420,7 +420,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
    else if(k>0 && k<0.02) //Landau Distribution
    {
     StraggLandau = LandauFunction();
-    StraggLandau.SetLandauStep(xi,beta,k,DEM,Landau,false);
+    StraggLandau.SetLandauStep(xi,beta,k,DEM,Landau,true);
     StraggStep = StraggLandau.GetLandauStep();
     StraggMaximum = StraggLandau.GetLandauMaximum();
     StraggMinimum = StraggLandau.GetLandauMinimum();
@@ -430,7 +430,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
    else if(k>=0.02 && k<0.29) //Vavilov-Moyal Distribution
    {
     StraggMoyal = VavilovMoyalFunction();
-    StraggMoyal.SetMoyalStep(xi,beta,k,DEM,Moyal,false);
+    StraggMoyal.SetMoyalStep(xi,beta,k,DEM,Moyal,true);
     StraggStep = StraggMoyal.GetMoyalStep();
     StraggMaximum = StraggMoyal.GetMoyalMaximum();
     StraggMinimum = StraggMoyal.GetMoyalMinimum();
@@ -440,7 +440,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
    else if(k>=0.29 && k<22.00) //Vavilov-Airy Distribution
    {
     StraggAiry = VavilovAiryFunction();
-    StraggAiry.SetAiryStep(xi,beta,k,DEM,Airy,false);
+    StraggAiry.SetAiryStep(xi,beta,k,DEM,Airy,true);
     StraggStep = StraggAiry.GetAiryStep();
     StraggMaximum = StraggAiry.GetAiryMaximum();
     StraggMinimum = StraggAiry.GetAiryMinimum();
@@ -450,7 +450,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
    else if(k>=22.00 && k<25.00) //Vavilov-Edgeworth Distribution
    {
     StraggEdgeworth = VavilovEdgeworthFunction();
-    StraggEdgeworth.SetEdgeworthStep(xi,beta,k,DEM,Edgeworth,false);
+    StraggEdgeworth.SetEdgeworthStep(xi,beta,k,DEM,Edgeworth,true);
     StraggStep = StraggEdgeworth.GetEdgeworthStep();
     StraggMaximum = StraggEdgeworth.GetEdgeworthMaximum();
     StraggMinimum = StraggEdgeworth.GetEdgeworthMinimum();
@@ -472,7 +472,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     else
     {
      StraggGauss = GaussFunction();
-     StraggGauss.SetGaussStep(DEM,VEM,Gauss,false);
+     StraggGauss.SetGaussStep(DEM,VEM,Gauss,true);
      StraggStep = StraggGauss.GetGaussStep();
      StraggMaximum = StraggGauss.GetGaussMaximum();
      StraggMinimum = StraggGauss.GetGaussMinimum();
@@ -1310,8 +1310,8 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
     Tsteps = Tsteps + 1;
  if(Ssteps%2==1)
     Ssteps = Ssteps + 1;
- DT=(Tmax-Tmin)/Tsteps;
- DS=(Smax-Smin)/Ssteps;
+ DT = (Tmax-Tmin)/Tsteps;
+ DS = (Smax-Smin)/Ssteps;
  // Create the weights matrix
  std::vector< std::vector<unsigned int> > SimpsonWeight(Ssteps+1, std::vector<unsigned int> (Tsteps+1,0));
  for(unsigned int i=0; i<=Ssteps; i++)
