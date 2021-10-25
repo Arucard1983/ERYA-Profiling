@@ -368,13 +368,10 @@ double VavilovMoyalFunction::VMMain(double k, double beta, double lambda)
  else if(k>=0.22 && k<0.29)
  {
    double lambda0 = this->VMa(0,k,beta); //Absolute minimum value cut-off
-   double LinearCorrectionSlope = -0.329657;
-   double LinearCorrectionConstant = 1.095600;
-   double LinearCorrection = LinearCorrectionSlope*k+LinearCorrectionConstant;
    // Function selection
    if(lambda0 <= lambda && lambda < this->VMa(8,k,beta))
    {
-     return this->VMTwoSigma(k,beta,lambda) * LinearCorrection;
+     return this->VMTwoSigma(k,beta,lambda);
    }
    else
    {
@@ -495,10 +492,7 @@ double VavilovAiryFunction::VA(double delta, double xi, double beta, double k)
  // For k<0.5 it require a linear correction factor
  if (k<0.5)
  {
-  double LinearCorrectionSlope = -0.823090;
-  double LinearCorrectionConstant = 1.411945;
-  double LinearCorrection = LinearCorrectionSlope*k+LinearCorrectionConstant;
-  return (f>0) ? LinearCorrection*f : 0.0;
+  return (f>0) ? f : 0.0;
  }
  else
  {
