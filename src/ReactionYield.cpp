@@ -1349,8 +1349,8 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
      double LocalCrossSection2 = LocalSample.Item(LayerNumber).EvaluateBragg(Energy-T);
      double LocalDistribution1 = ElementDistribution.GetValue(S-T,T);
      double LocalDistribution2 = ElementDistribution.GetValue(S,T-S);
-     DoubleSimpsonSum1 = DoubleSimpsonSum1 + SimpsonWeight[i][j] * LocalDistribution1 * this->EvaluateSigma(LayerNumber,Energy-S) / LocalCrossSection1;
-     DoubleSimpsonSum2 = DoubleSimpsonSum2 + SimpsonWeight[i][j] * LocalDistribution2 * this->EvaluateSigma(LayerNumber,Energy-T) / LocalCrossSection2;
+     DoubleSimpsonSum1 = DoubleSimpsonSum1 + SimpsonWeight[i][j] * LocalDistribution1 * this->EvaluateSigma(LayerNumber,Energy-S-T) / LocalCrossSection1;
+     DoubleSimpsonSum2 = DoubleSimpsonSum2 + SimpsonWeight[i][j] * LocalDistribution2 * this->EvaluateSigma(LayerNumber,Energy-S-T) / LocalCrossSection2;
      RenormalizationSum1 = RenormalizationSum1 + SimpsonWeight[i][j] * LocalDistribution1;
      RenormalizationSum2 = RenormalizationSum2 + SimpsonWeight[i][j] * LocalDistribution2;
    }

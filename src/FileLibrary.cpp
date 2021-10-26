@@ -937,7 +937,7 @@ bool ERYAProfilingGlobalFile::ERYAProfilingGlobalLoad(wxTextCtrl* &valueBeamReso
          EdgeworthData = PrecisionValues->GetAttribute(wxT("Vavilov_Edgeworth_Step"),wxT("70"));
          AiryData = PrecisionValues->GetAttribute(wxT("Vavilov_Airy_Step"),wxT("100"));
          LandauData = PrecisionValues->GetAttribute(wxT("Landau_Step"),wxT("284"));
-         ConvolutionData = PrecisionValues->GetAttribute(wxT("Landau_Step"),wxT("100"));
+         ConvolutionData = PrecisionValues->GetAttribute(wxT("Convolution_Step"),wxT("50"));
          VavilovData = PrecisionValues->GetAttribute(wxT("Vavilov_Limit"),wxT("1"));
          LogData = PrecisionValues->GetAttribute(wxT("Active_Log"),wxT("0"));
          SampleData.ToULong(&SampleValue);
