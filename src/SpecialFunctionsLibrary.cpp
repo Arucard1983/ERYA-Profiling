@@ -489,15 +489,7 @@ double VavilovAiryFunction::VA(double delta, double xi, double beta, double k)
  double a = (std::pow(2.0*k,1.0/3.0) * (1 - (beta*beta)/2)) / (std::pow((1 - (2.0*beta*beta)/3.0),2.0/3.0));
  double t = delta / eta + a*a;
  double f = this->Airy(t) * std::exp(a*t-(a*a*a)/3) / eta;
- // For k<0.5 it require a linear correction factor
- if (k<0.5)
- {
-  return (f>0) ? f : 0.0;
- }
- else
- {
  return (f>0) ? f : 0.0;
- }
 }
 
 
@@ -533,12 +525,12 @@ void GaussFunction::SetGaussStep(double Mean, double StandardDesviation, unsigne
 }
 
 // Dirac's delta function
-// It gives one when x=0 (actually three, due to the Simpson's method)
+// It gives one when x=0
 double DiracFunction::Dirac(double x)
 {
- if(std::abs(x) < 1e-3)
+ if(std::abs(x) < 1e-9)
  {
-   return 3;
+   return 1;
  }
  else
  {

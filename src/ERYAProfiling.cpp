@@ -2611,7 +2611,7 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	labelGaussPrecision->Wrap( -1 );
 	sizerERYAProfilingSettings->Add( labelGaussPrecision, 0, wxALL, 5 );
 
-	spinGaussPrecision = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 5, 100, 60 );
+	spinGaussPrecision = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 10, 1000, 60 );
 	sizerERYAProfilingSettings->Add( spinGaussPrecision, 0, wxALL, 5 );
 
 	labelVavilovMoyal = new wxStaticText( this, wxID_ANY, wxT("Number of Points per Lambda Step for Vavilov-Moyal Distribution:"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -2625,7 +2625,7 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	labelVavilovAiry->Wrap( -1 );
 	sizerERYAProfilingSettings->Add( labelVavilovAiry, 0, wxALL, 5 );
 
-	spinVavilovAiry = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 10, 150, 100 );
+	spinVavilovAiry = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 10, 1000, 100 );
 	sizerERYAProfilingSettings->Add( spinVavilovAiry, 0, wxALL, 5 );
 
 
@@ -2633,7 +2633,7 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	labelVavilovEdgeworth->Wrap( -1 );
 	sizerERYAProfilingSettings->Add( labelVavilovEdgeworth, 0, wxALL, 5 );
 
-	spinVavilovEdgeworth = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 10, 100, 70 );
+	spinVavilovEdgeworth = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 10, 1000, 70 );
 	sizerERYAProfilingSettings->Add( spinVavilovEdgeworth, 0, wxALL, 5 );
 
 	labelLandau = new wxStaticText( this, wxID_ANY, wxT("Number of Points for Main Range of Landau Distribution:"), wxDefaultPosition, wxDefaultSize, 0 );

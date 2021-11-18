@@ -353,7 +353,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
  // The thermal distribution is always Gaussian, but if the variance are zero, then collapse to a Dirac's delta.
  double ThermalVariance = std::sqrt(AverageBeamResolution*AverageBeamResolution + AverageDopplerEnergy * AverageDopplerEnergy);
  unsigned int VarianceMode;
- if(std::abs(ThermalVariance)<1e-3)
+ if(std::abs(ThermalVariance)<1e-9)
  {
   ThermalDirac = DiracFunction();
   ThermalStep = ThermalDirac.GetDiracStep();
@@ -397,7 +397,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
      else
      {
      StraggGauss = GaussFunction();
-     StraggGauss.SetGaussStep(DEM,VEM,Gauss,true);
+     StraggGauss.SetGaussStep(DEM,VEM,Gauss,false);
      StraggStep = StraggGauss.GetGaussStep();
      StraggMaximum = StraggGauss.GetGaussMaximum();
      StraggMinimum = StraggGauss.GetGaussMinimum();
@@ -1294,18 +1294,36 @@ Yield::Yield(int ElementID, double Charge, double Efficiency, double Step, doubl
 double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
 {
  //Implements a double numerical integration using the Simpson method
- double DT = ElementDistribution.GetThermalStep();
- double DS = ElementDistribution.GetStraggStep();
- double Tmin = ElementDistribution.GetThermalMin();
- double Tmax = ElementDistribution.GetThermalMax();
- double Smin = ElementDistribution.GetStraggMin();
- double Smax = ElementDistribution.GetStraggMax();
- unsigned int Tsteps = std::ceil((Tmax-Tmin)/(DT));
- unsigned int Ssteps = std::ceil((Smax-Smin)/(DS));
+ double DDT = ElementDistribution.GetThermalStep();
+ double DDS = ElementDistribution.GetStraggStep();
+ double DTmin = ElementDistribution.GetThermalMin();
+ double DTmax = ElementDistribution.GetThermalMax();
+ double DSmin = ElementDistribution.GetStraggMin();
+ double DSmax = ElementDistribution.GetStraggMax();
+ // Set the number of integration steps
+ unsigned int Tsteps = std::abs(DTmax-DTmin)<1e-9 ? 0 : std::floor(std::abs((DTmax-DTmin)/(DDT)));
+ unsigned int Ssteps = std::abs(DSmax-DSmin)<1e-9 ? 0 : std::floor(std::abs((DSmax-DSmin)/(DDS)));
  if(Tsteps%2==1)
     Tsteps = Tsteps + 1;
  if(Ssteps%2==1)
     Ssteps = Ssteps + 1;
+ // Fixes the convolution integration domain
+ double Tmin = DTmin + DSmin;
+ double Tmax = DTmax + DSmax;
+ double Smin = DTmin + DSmin;
+ double Smax = DTmax + DSmax;
+ double DT = std::abs(DTmax-DTmin)<1e-9 ? DDT : DDT*(Tmax - Tmin)/(DTmax-DTmin);
+ double DS = std::abs(DSmax-DSmin)<1e-9 ? DDS : DDS*(Smax - Smin)/(DSmax-DSmin);
+ if(Tsteps==0)
+ {
+  Tmin = 0;
+  Tmax = 0;
+ }
+ if(Ssteps==0)
+ {
+  Smin = 0;
+  Smax = 0;
+ }
  // Create the weights matrix
  std::vector< std::vector<unsigned int> > SimpsonWeight(Ssteps+1, std::vector<unsigned int> (Tsteps+1,0));
  for(unsigned int i=0; i<=Ssteps; i++)
@@ -1348,9 +1366,9 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
      double LocalCrossSection1 = LocalSample.Item(LayerNumber).EvaluateBragg(Energy-S);
      double LocalCrossSection2 = LocalSample.Item(LayerNumber).EvaluateBragg(Energy-T);
      double LocalDistribution1 = ElementDistribution.GetValue(S-T,T);
-     double LocalDistribution2 = ElementDistribution.GetValue(S,T-S);
-     DoubleSimpsonSum1 = DoubleSimpsonSum1 + SimpsonWeight[i][j] * LocalDistribution1 * this->EvaluateSigma(LayerNumber,Energy-S-T) / LocalCrossSection1;
-     DoubleSimpsonSum2 = DoubleSimpsonSum2 + SimpsonWeight[i][j] * LocalDistribution2 * this->EvaluateSigma(LayerNumber,Energy-S-T) / LocalCrossSection2;
+     double LocalDistribution2 = ElementDistribution.GetValue(T-S,S);
+     DoubleSimpsonSum1 = DoubleSimpsonSum1 + SimpsonWeight[i][j] * LocalDistribution1 * this->EvaluateSigma(LayerNumber,Energy-S) / LocalCrossSection1;
+     DoubleSimpsonSum2 = DoubleSimpsonSum2 + SimpsonWeight[i][j] * LocalDistribution2 * this->EvaluateSigma(LayerNumber,Energy-T) / LocalCrossSection2;
      RenormalizationSum1 = RenormalizationSum1 + SimpsonWeight[i][j] * LocalDistribution1;
      RenormalizationSum2 = RenormalizationSum2 + SimpsonWeight[i][j] * LocalDistribution2;
    }

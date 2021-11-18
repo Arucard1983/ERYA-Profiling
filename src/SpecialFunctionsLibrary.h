@@ -128,7 +128,7 @@ class DiracFunction
  double GetValue(double x){return this->Dirac(x);}
  double GetDiracStep(){return 1;};
  double GetDiracMinimum(){return 0;};
- double GetDiracMaximum(){return 1;};
+ double GetDiracMaximum(){return 0;};
 };
 
 #endif // SPECIALFUNCTIONSLIBRARY_H_INCLUDED
