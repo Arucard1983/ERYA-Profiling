@@ -2143,7 +2143,7 @@ bool ERYAProfilingERYAProfilingMain::StartUpProgram()
  VavilovAiryPrecision = 40;
  LandauPrecision = 284;
  ThreadPrecision = 1;
- ConvolutionPrecision = 90;
+ ConvolutionPrecision = 0;
  // Load the configuration file, or force the user to create a new configuration file
  if(!(this->LoadSetupFile(CurrentConfig,CurrentDetectorFile,CurrentDatabaseFile,CurrentZieglerFile)))
   {

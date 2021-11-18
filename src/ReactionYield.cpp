@@ -1318,6 +1318,7 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
  {
   Tmin = 0;
   Tmax = 0;
+  ConvolutionMixture = 1;
  }
  if(Ssteps==0)
  {
