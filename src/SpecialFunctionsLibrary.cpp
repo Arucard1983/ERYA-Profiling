@@ -205,9 +205,9 @@ double VavilovMoyalFunction::VMk(double k)
  {
    kmin = 0.114; kmax = 0.20;
  }
- else if(k>=0.22 && k<0.44)
+ else if(k>=0.22 && k<0.39)
  {
-   kmin = 0.22; kmax = 0.45;
+   kmin = 0.22; kmax = 0.30;
  }
  else
  {
@@ -296,7 +296,7 @@ double VavilovMoyalFunction::VMa(unsigned int i, double k, double beta)
    if(i==0)
     return -3.04;
  }
- else if(k>=0.22 && k<0.47)
+ else if(k>=0.22 && k<0.39)
  {
    z = 2;
    if(i==0)
@@ -365,7 +365,7 @@ double VavilovMoyalFunction::VMMain(double k, double beta, double lambda)
     return 0;
    }
  }
- else if(k>=0.22 && k<0.47)
+ else if(k>=0.22 && k<0.29)
  {
    double lambda0 = this->VMa(0,k,beta); //Absolute minimum value cut-off
    // Function selection
@@ -377,6 +377,12 @@ double VavilovMoyalFunction::VMMain(double k, double beta, double lambda)
    {
      return 0;
    }
+ }
+ else if(k>=0.29 && k<0.39) //Simpler Moyal Function
+ {
+   double args = (lambda + std::exp(-1.0*lambda))/2;
+   double f = std::exp(-1.0*args) / std::sqrt(8*std::atan(1.0));
+   return f;
  }
  else
  {
