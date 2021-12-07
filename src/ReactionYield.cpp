@@ -1770,7 +1770,7 @@ bool ReactionProfiling::StartProcedure(wxStatusBar* progress)
 // Changes some parameters
 bool ReactionProfiling::SetOverrideParameters(unsigned int SamplePrecision, unsigned int GaussPrecision, unsigned int VavilovMoyalPrecision, unsigned int VavilovEdgeworthPrecision, unsigned int VavilovAiryPrecision, unsigned int LandauPrecision, unsigned int ThreadPrecision, unsigned int ConvolutionPrecision, bool EnableLog)
 {
- DefaultSampleStep = SamplePrecision;
+ DefaultSampleStep = 0.1 * SamplePrecision; // An implicit conversion to set 1e-15 at/cm^2 SRIM units.
  DefaultGauss = GaussPrecision;
  DefaultLandau = LandauPrecision;
  DefaultVavilovEdgeworth = VavilovEdgeworthPrecision;

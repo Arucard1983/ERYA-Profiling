@@ -357,7 +357,8 @@ class ReactionProfiling
  wxString LastErrorCode;
  double Charge, EnergyStep, EnergyMinimum, EnergyMaximum;
  bool SampleComplete, InputComplete, DefaultParameters, RequireRessonance, RequireLog;
- unsigned int DefaultSampleStep, DefaultGauss, DefaultVavilovMoyal, DefaultVavilovEdgeworth, DefaultVavilovAiry, DefaultLandau, DefaultThreads, DefaultConvolution;
+ double DefaultSampleStep;
+ unsigned int DefaultGauss, DefaultVavilovMoyal, DefaultVavilovEdgeworth, DefaultVavilovAiry, DefaultLandau, DefaultThreads, DefaultConvolution;
  public:
  ReactionProfiling(){SampleComplete = false; InputComplete = false; RequireRessonance = false; DefaultParameters = true; LastErrorCode = wxT("General Error: Empty Input Data!");};
  bool StartProcedure(wxStatusBar* progress);

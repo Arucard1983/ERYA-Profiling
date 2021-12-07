@@ -12,7 +12,7 @@ dialogERYAProfilingAdvanced( parent )
  bool EL;
  Parent->GetPrecisionParameters(CP,G,VM,VE,VA,L,NT,CM,EL);
  // And set the controls
- spinSampleStep->SetValue(CP);
+ spinSampleStep->SetValue(0.1*CP); //Implicit conversion using 0.1e-15 at/cm^2 units.
  spinGaussPrecision->SetValue(G);
  spinLandau->SetValue(L);
  spinVavilovEdgeworth->SetValue(VE);
@@ -29,9 +29,10 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedOK( wxCommandEvent& eve
  ERYAProfilingERYAProfilingMain *Parent = (ERYAProfilingERYAProfilingMain *) GetParent();
  // Set the current variables
  unsigned int CP,G,L,VE,VM,VA,NT,CM;
+ double CPT;
  bool EL;
  // Get the controls
- CP = spinSampleStep->GetValue();
+ CPT = spinSampleStep->GetValue();
  G = spinGaussPrecision->GetValue();
  L = spinLandau->GetValue();
  VE = spinVavilovEdgeworth->GetValue();
@@ -40,6 +41,8 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedOK( wxCommandEvent& eve
  NT = spinNumberThreads->GetSelection();
  CM = spinConvolution->GetValue();
  EL = checkActiveLog->GetValue();
+ // Internal conversion
+ CP = static_cast<unsigned int>(std::floor(10*CPT)); // Internal conversion
  // And save the new values
  Parent->SetPrecisionParameters(CP,G,VM,VE,VA,L,NT,CM,EL);
  // Before close
@@ -69,6 +72,6 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedHelp( wxCommandEvent& e
 {
  // Call the parent frame
  ERYAProfilingERYAProfilingMain *Parent = (ERYAProfilingERYAProfilingMain *) GetParent();
- Parent->SetPrecisionParameters(10,10,10,70,40,284,1,0,false);
+ Parent->SetPrecisionParameters(100,10,10,70,40,284,1,0,false);
  Close();
 }

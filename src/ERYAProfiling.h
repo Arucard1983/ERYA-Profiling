@@ -864,7 +864,7 @@ class dialogERYAProfilingAdvanced : public wxDialog
 		wxStaticText* labelERYAProfilingAdvanced;
 		wxStaticLine* lineERYAProfilingSettings;
 		wxStaticText* labelSampleStep;
-		wxSpinCtrl* spinSampleStep;
+		wxSpinCtrlDouble* spinSampleStep;
 		wxStaticText* labelGaussPrecision;
 		wxSpinCtrl* spinGaussPrecision;
 		wxStaticText* labelVavilovMoyal;

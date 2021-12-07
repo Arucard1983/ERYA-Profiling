@@ -2604,7 +2604,7 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	labelSampleStep->Wrap( -1 );
 	sizerERYAProfilingSettings->Add( labelSampleStep, 0, wxALL, 5 );
 
-	spinSampleStep = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 1000, 10 );
+	spinSampleStep = new wxSpinCtrlDouble( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0.1, 1000, 10, 0.1 );
 	sizerERYAProfilingSettings->Add( spinSampleStep, 0, wxALL, 5 );
 
 	labelGaussPrecision = new wxStaticText( this, wxID_ANY, wxT("Number of Points for the Three-Sigma Range of Gauss Distribution:"), wxDefaultPosition, wxDefaultSize, 0 );
