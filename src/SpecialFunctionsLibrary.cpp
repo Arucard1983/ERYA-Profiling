@@ -83,8 +83,8 @@ void LandauFunction::SetLandauStep(double xi, double beta, double k, double DEM,
  LandauXi = xi;
  LandauBeta = beta;
  LandauK = k;
- // Cut negative minimum values
- if(LandauMinimum < 0 && TrimNegative)
+ // Cut energy loss greater than average
+ if((LandauMinimum < 0) && TrimNegative)
  {
   LandauMinimum = 0;
  }
@@ -164,8 +164,8 @@ void VavilovEdgeworthFunction::SetEdgeworthStep(double xi, double beta, double k
  EdgeworthStep = VExi * lambdastep;
  EdgeworthMinimum = VExi * (lowlambda + 1 - euler + VEbeta*VEbeta + std::log(VEk)) + DEM;
  EdgeworthMaximum = VExi * (highlambda + 1 - euler + VEbeta*VEbeta + std::log(VEk)) + DEM;
- // Cut negative minimum values
- if(EdgeworthMinimum < 0 && TrimNegative)
+ // Cut energy loss greater than average
+ if((EdgeworthMinimum < 0) && TrimNegative)
  {
   EdgeworthMinimum = 0;
  }
@@ -205,7 +205,7 @@ double VavilovMoyalFunction::VMk(double k)
  {
    kmin = 0.114; kmax = 0.20;
  }
- else if(k>=0.22 && k<0.39)
+ else if(k>=0.22 && k<0.30)
  {
    kmin = 0.22; kmax = 0.30;
  }
@@ -296,7 +296,7 @@ double VavilovMoyalFunction::VMa(unsigned int i, double k, double beta)
    if(i==0)
     return -3.04;
  }
- else if(k>=0.22 && k<0.39)
+ else if(k>=0.22 && k<0.30)
  {
    z = 2;
    if(i==0)
@@ -378,12 +378,6 @@ double VavilovMoyalFunction::VMMain(double k, double beta, double lambda)
      return 0;
    }
  }
- else if(k>=0.29 && k<0.39) //Simpler Moyal Function
- {
-   double args = (lambda + std::exp(-1.0*lambda))/2;
-   double f = std::exp(-1.0*args) / std::sqrt(8*std::atan(1.0));
-   return f;
- }
  else
  {
    return 0; //Out-of-Domain
@@ -397,6 +391,8 @@ void VavilovMoyalFunction::SetMoyalStep(double xi, double beta, double k, double
  double euler = (std::lgamma(0.999999) - std::lgamma(1.000001)) / (0.000002); // Euler's Constant
  double lambdalow = this->VMa(0,k,beta); //lambda_0
  double lambdahigh = this->VMa(8,k,beta); //lambda_0.995
+ if(k>=0.22)
+  lambdahigh = this->VMa(8,0.22,beta); // For the extended Moyal
  //Since the distribution domain cannot be bounded analytically, the number of steps are the division by unity.
  double lambdastep = 1.0/numberstep;
  VMCbeta = beta;
@@ -406,8 +402,8 @@ void VavilovMoyalFunction::SetMoyalStep(double xi, double beta, double k, double
  MoyalStep = xi*lambdastep;
  MoyalMinimum = xi*(lambdalow + 1 - euler + beta*beta + std::log(k)) + DEM;
  MoyalMaximum = xi*(lambdahigh + 1 - euler + beta*beta + std::log(k)) + DEM;
- // Cut negative minimum values
- if(MoyalMinimum < 0 && TrimNegative)
+ // Cut energy loss greater than average
+ if((MoyalMinimum < 0) && TrimNegative)
  {
   MoyalMinimum = 0;
  }
@@ -419,6 +415,40 @@ double VavilovMoyalFunction::GetValue(double AtEnergy)
  double euler = (std::lgamma(0.999999) - std::lgamma(1.000001)) / (0.000002); // Euler's Constant
  double MoyalLambda = (AtEnergy - VMDEM)/VMxi - 1 + euler - VMCbeta*VMCbeta - std::log(VMCk);
  return this->VMMain(VMCk,VMCbeta,MoyalLambda);
+}
+
+// Solve numerically the equation Ai'(tp)/Ai(tp)+a=0, which is equivalent to find the maximum value of log(Ai(tp))+tp*a=0, where tp are the optimal value for the maximum of Vavilov-Airy Distribution
+double VavilovAiryFunction::MaximumFunction(double a)
+{
+ // The method adopts the Golden-Search Algorithm which are adequate for f'(x)/f(x) kind of functions
+ double dx = 1e-3;
+ double x1,x2,xl,xu,d;
+ // Initial Values
+ xl = -2.338107; // First Airy Root
+ xu = a*a; // Gaussian condition: tp - a*a = 0
+ d = (std::sqrt(5)-1)*(xu-xl)/2;
+ x1 = xl + d;
+ x2 = xu - d;
+ // Cycle condition
+ while(std::abs(xu-xl)<dx)
+ {
+  if((std::log(this->Airy(x1))+a*x1) > (std::log(this->Airy(x2))+a*x2)) // Recalculate x1
+  {
+    xl = x2;
+    x2 = x1;
+    xu = xu;
+    x1 = xl + (std::sqrt(5)-1)*(xu-xl)/2;
+  }
+  else // Recalculate x2
+  {
+    xl = xl;
+    xu = x1;
+    x1 = x2;
+    x2 = xu - (std::sqrt(5)-1)*(xu-xl)/2;
+  }
+ }
+ // Found a solution
+ return (xu+xl)/2;
 }
 
 // Set the Airy Distribution domain, using the same procedure of Laudau variable on Edgeworth function
@@ -435,18 +465,23 @@ void VavilovAiryFunction::SetAiryStep(double xi, double beta, double k, double D
  double lambdastep = (highlambda - lowlambda)/numberstep;
  // For lower k values, the Edgeworth optimal interval may truncate the left side of distribution. To fix this, a new lambda value should be evauated from the first zero of Airy's function.
  double t0 = -2.33811;
- double eta = (xi * (1 - (2*VAbeta*VAbeta)/3))/(std::pow(2.0*VAk,2.0/3.0));
+ double eta = (xi * std::pow((1 - (2*VAbeta*VAbeta)/3),1.0/3.0))/(std::pow(2.0*VAk,2.0/3.0));
  double a = (std::pow(2.0*VAk,1.0/3.0) * (1 - (VAbeta*VAbeta)/2)) / (std::pow((1 - (2.0*VAbeta*VAbeta)/3.0),2.0/3.0));
  double deltafix = eta*(t0-a*a);
+ double tp = this->MaximumFunction(a);
+ double deltamax = eta*(tp-a*a);
  // Define the Function Domain
- AiryStep = VAxi * lambdastep;
+ //AiryStep = VAxi * lambdastep;
  //AiryMinimum = VAxi * (lowlambda + 1 - euler + VAbeta*VAbeta + std::log(VAk)) + DEM;
- AiryMinimum = deltafix + DEM;
- AiryMaximum = VAxi * (highlambda + 1 - euler + VAbeta*VAbeta + std::log(VAk)) + DEM;
- // Cut negative minimum values
- if(AiryMinimum < 0 && TrimNegative)
+ AiryMinimum = DEM + deltafix;
+ // AiryMaximum = VAxi * (highlambda + 1 - euler + VAbeta*VAbeta + std::log(VAk)) + DEM;
+ AiryMaximum = DEM - deltamax - deltafix;
+ AiryStep = (AiryMaximum - AiryMinimum) / numberstep;
+ // Cut energy loss greater than average
+ if((AiryMinimum < 0) && TrimNegative)
  {
   AiryMinimum = 0;
+  AiryStep = (AiryMaximum - AiryMinimum) / numberstep;
  }
  return;
 }
@@ -491,8 +526,8 @@ double VavilovAiryFunction::Airy(double t)
 double VavilovAiryFunction::VA(double delta, double xi, double beta, double k)
 {
  // Set the following model parameters
- double eta = (xi * (1 - (2*beta*beta)/3))/(std::pow(2.0*k,2.0/3.0));
- double a = (std::pow(2.0*k,1.0/3.0) * (1 - (beta*beta)/2)) / (std::pow((1 - (2.0*beta*beta)/3.0),2.0/3.0));
+ double eta = (xi * std::pow((1 - (2*VAbeta*VAbeta)/3),1.0/3.0))/(std::pow(2.0*VAk,2.0/3.0));
+ double a = (std::pow(2.0*VAk,1.0/3.0) * (1 - (VAbeta*VAbeta)/2)) / (std::pow((1 - (2.0*VAbeta*VAbeta)/3.0),2.0/3.0));
  double t = delta / eta + a*a;
  double f = this->Airy(t) * std::exp(a*t-(a*a*a)/3) / eta;
  return (f>0) ? f : 0.0;
@@ -503,7 +538,7 @@ double VavilovAiryFunction::VA(double delta, double xi, double beta, double k)
 double VavilovAiryFunction::GetValue(double AtEnergy)
 {
  VAdelta = AtEnergy - VADEM;
- return this->VA(VAdelta,VAxi,VAbeta,VAk);
+ return this->VA(VAdelta,VAxi,VAbeta,VAk)*VAxi;
 }
 
 

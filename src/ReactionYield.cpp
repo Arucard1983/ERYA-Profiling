@@ -207,7 +207,7 @@ bool RessonanceFunction::ParseRessonanceList(wxString RessonanceWidth, wxString 
 }
 
 //Evaluate the Briet-Wigner at a certain energy.
-// f(E) = (energy / E) * (peak * width^2 / 4 ) / (width^2 / 4 + (E-energy)^2)
+// f(E) = (peak * width^2 / 4 ) / (width^2 / 4 + (E-energy)^2)
 double RessonanceFunction::BrietWigner(double Energy)
 {
  if(GBWmin <= Energy && Energy <= GBWmax)
@@ -216,7 +216,7 @@ double RessonanceFunction::BrietWigner(double Energy)
    for(int i=0; i<BWEnergy.size(); i++)
    {
     if(BWmin.at(i) <= Energy && Energy <= BWmax.at(i))
-     BWSum = BWSum + (BWEnergy.at(i) / Energy) * (BWPeak.at(i) * BWWidth.at(i) * BWWidth.at(i) / 4 ) / (BWWidth.at(i) * BWWidth.at(i) / 4 + std::pow(Energy - BWEnergy.at(i),2));
+     BWSum = BWSum +  (BWPeak.at(i) * BWWidth.at(i) * BWWidth.at(i) / 4 ) / (BWWidth.at(i) * BWWidth.at(i) / 4 + std::pow(Energy - BWEnergy.at(i),2));
    }
   return BWSum;
  }
@@ -427,7 +427,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 1 + VarianceMode;
     return true;
    }
-   else if(k>=0.02 && k<0.39) //Vavilov-Moyal Distribution
+   else if(k>=0.02 && k<0.10) //Vavilov-Moyal Distribution
    {
     StraggMoyal = VavilovMoyalFunction();
     StraggMoyal.SetMoyalStep(xi,beta,k,DEM,Moyal,false);
@@ -437,7 +437,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 2 + VarianceMode;
     return true;
    }
-   else if(k>=0.39 && k<22.00) //Vavilov-Airy Distribution
+   else if(k>=0.10 && k<22.00) //Vavilov-Airy Distribution
    {
     StraggAiry = VavilovAiryFunction();
     StraggAiry.SetAiryStep(xi,beta,k,DEM,Airy,false);
@@ -447,7 +447,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 3 + VarianceMode;
     return true;
    }
-   else if(k>=22.00 && k<25.00) //Vavilov-Edgeworth Distribution
+   else if(k>=22.00 && k<22.00) //Vavilov-Edgeworth Distribution
    {
     StraggEdgeworth = VavilovEdgeworthFunction();
     StraggEdgeworth.SetEdgeworthStep(xi,beta,k,DEM,Edgeworth,false);
@@ -1303,10 +1303,6 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
  // Set the number of integration steps
  unsigned int Tsteps = std::abs(DTmax-DTmin)<1e-9 ? 0 : std::floor(std::abs((DTmax-DTmin)/(DDT)));
  unsigned int Ssteps = std::abs(DSmax-DSmin)<1e-9 ? 0 : std::floor(std::abs((DSmax-DSmin)/(DDS)));
- if(Tsteps%2==1)
-    Tsteps = Tsteps + 1;
- if(Ssteps%2==1)
-    Ssteps = Ssteps + 1;
  // Fixes the convolution integration domain
  double Tmin = DTmin + DSmin;
  double Tmax = DTmax + DSmax;
@@ -1325,33 +1321,6 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
   Smin = 0;
   Smax = 0;
  }
- // Create the weights matrix
- std::vector< std::vector<unsigned int> > SimpsonWeight(Ssteps+1, std::vector<unsigned int> (Tsteps+1,0));
- for(unsigned int i=0; i<=Ssteps; i++)
- {
-   unsigned int SWRFactor;
-   if(i==0 || i==Ssteps)
-        SWRFactor = 1;
-     else if (i>0 && i<Ssteps && i%2==1)
-        SWRFactor = 4;
-     else if (i>0 && i<Ssteps && i%2==0)
-        SWRFactor = 2;
-     else
-        SWRFactor = 0;
-   for(unsigned int j=0; j<=Tsteps; j++)
-   {
-     unsigned int SWCFactor;
-     if(j==0 || j==Tsteps)
-        SWCFactor = 1;
-     else if (j>0 && j<Tsteps && j%2==1)
-        SWCFactor = 4;
-     else if (j>0 && j<Tsteps && j%2==0)
-        SWCFactor = 2;
-     else
-        SWCFactor = 0;
-     SimpsonWeight[i][j] = SWRFactor * SWCFactor;
-   }
- }
  // Evaluate the integral itself, including the renormalization integral.
  // Insert the stopping power inside the integral
  double DoubleSimpsonSum1 = 0;
@@ -1364,14 +1333,14 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
    {
      double S = Smin + i * DS ;
      double T = Tmin + j * DT ;
-     double LocalCrossSection1 = LocalSample.Item(LayerNumber).EvaluateBragg(Energy-S);
-     double LocalCrossSection2 = LocalSample.Item(LayerNumber).EvaluateBragg(Energy-T);
+     double LocalCrossSection1 = LocalSample.Item(LayerNumber).EvaluateBragg(Energy);
+     double LocalCrossSection2 = LocalSample.Item(LayerNumber).EvaluateBragg(Energy);
      double LocalDistribution1 = ElementDistribution.GetValue(S-T,T);
      double LocalDistribution2 = ElementDistribution.GetValue(T-S,S);
-     DoubleSimpsonSum1 = DoubleSimpsonSum1 + SimpsonWeight[i][j] * LocalDistribution1 * this->EvaluateSigma(LayerNumber,Energy-S) / LocalCrossSection1;
-     DoubleSimpsonSum2 = DoubleSimpsonSum2 + SimpsonWeight[i][j] * LocalDistribution2 * this->EvaluateSigma(LayerNumber,Energy-T) / LocalCrossSection2;
-     RenormalizationSum1 = RenormalizationSum1 + SimpsonWeight[i][j] * LocalDistribution1;
-     RenormalizationSum2 = RenormalizationSum2 + SimpsonWeight[i][j] * LocalDistribution2;
+     DoubleSimpsonSum1 = DoubleSimpsonSum1 + LocalDistribution1 * this->EvaluateSigma(LayerNumber,Energy-S) / LocalCrossSection1;
+     DoubleSimpsonSum2 = DoubleSimpsonSum2 + LocalDistribution2 * this->EvaluateSigma(LayerNumber,Energy-T) / LocalCrossSection2;
+     RenormalizationSum1 = RenormalizationSum1 + LocalDistribution1;
+     RenormalizationSum2 = RenormalizationSum2 + LocalDistribution2;
    }
  }
  double CrossSigmaSum = (DS * DT) * ((1-ConvolutionMixture)*DoubleSimpsonSum1 + ConvolutionMixture*DoubleSimpsonSum2) / 9;
