@@ -2136,11 +2136,11 @@ void ERYAProfilingERYAProfilingMain::GenerateTable()
 bool ERYAProfilingERYAProfilingMain::StartUpProgram()
 {
  // Define some internal variables
- GaussPrecision = 10;
+ GaussPrecision = 60;
  SamplePrecision = 10;
  VavilovMoyalPrecision = 10;
  VavilovEdgeworthPrecision = 70;
- VavilovAiryPrecision = 40;
+ VavilovAiryPrecision = 100;
  LandauPrecision = 284;
  ThreadPrecision = 1;
  ConvolutionPrecision = 0;

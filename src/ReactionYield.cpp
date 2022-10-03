@@ -420,14 +420,14 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
    else if(k>0 && k<0.02) //Landau Distribution
    {
     StraggLandau = LandauFunction();
-    StraggLandau.SetLandauStep(xi,beta,k,DEM,Landau,false);
+    StraggLandau.SetLandauStep(xi,beta,k,DEM,Landau,true);
     StraggStep = StraggLandau.GetLandauStep();
     StraggMaximum = StraggLandau.GetLandauMaximum();
     StraggMinimum = StraggLandau.GetLandauMinimum();
     PDMode = 1 + VarianceMode;
     return true;
    }
-   else if(k>=0.02 && k<0.10) //Vavilov-Moyal Distribution
+   else if(k>=0.02 && k<0.30) //Vavilov-Moyal Distribution
    {
     StraggMoyal = VavilovMoyalFunction();
     StraggMoyal.SetMoyalStep(xi,beta,k,DEM,Moyal,false);
@@ -437,7 +437,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 2 + VarianceMode;
     return true;
    }
-   else if(k>=0.10 && k<22.00) //Vavilov-Airy Distribution
+   else if(k>=0.30 && k<22.00) //Vavilov-Airy Distribution
    {
     StraggAiry = VavilovAiryFunction();
     StraggAiry.SetAiryStep(xi,beta,k,DEM,Airy,false);
@@ -1333,8 +1333,8 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
    {
      double S = Smin + i * DS ;
      double T = Tmin + j * DT ;
-     double LocalCrossSection1 = LocalSample.Item(LayerNumber).EvaluateBragg(Energy);
-     double LocalCrossSection2 = LocalSample.Item(LayerNumber).EvaluateBragg(Energy);
+     double LocalCrossSection1 = LocalSample.Item(LayerNumber).EvaluateBragg(Energy-S);
+     double LocalCrossSection2 = LocalSample.Item(LayerNumber).EvaluateBragg(Energy-T);
      double LocalDistribution1 = ElementDistribution.GetValue(S-T,T);
      double LocalDistribution2 = ElementDistribution.GetValue(T-S,S);
      DoubleSimpsonSum1 = DoubleSimpsonSum1 + LocalDistribution1 * this->EvaluateSigma(LayerNumber,Energy-S) / LocalCrossSection1;
