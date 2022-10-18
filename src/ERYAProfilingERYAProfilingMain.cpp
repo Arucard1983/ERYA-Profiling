@@ -2140,7 +2140,7 @@ bool ERYAProfilingERYAProfilingMain::StartUpProgram()
  SamplePrecision = 10;
  VavilovMoyalPrecision = 10;
  VavilovEdgeworthPrecision = 70;
- VavilovAiryPrecision = 100;
+ VavilovAiryPrecision = 10;
  LandauPrecision = 284;
  ThreadPrecision = 1;
  ConvolutionPrecision = 0;

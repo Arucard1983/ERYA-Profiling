@@ -2621,11 +2621,11 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	spinVavilovMoyal = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 20, 10 );
 	sizerERYAProfilingSettings->Add( spinVavilovMoyal, 0, wxALL, 5 );
 
-	labelVavilovAiry = new wxStaticText( this, wxID_ANY, wxT("Number of Points for Main Range of Vavilov-Airy Distribution:"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelVavilovAiry = new wxStaticText( this, wxID_ANY, wxT("Number of Points per Lambda Step for Vavilov-Airy Distribution:"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelVavilovAiry->Wrap( -1 );
 	sizerERYAProfilingSettings->Add( labelVavilovAiry, 0, wxALL, 5 );
 
-	spinVavilovAiry = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 10, 1000, 100 );
+	spinVavilovAiry = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 100, 10 );
 	sizerERYAProfilingSettings->Add( spinVavilovAiry, 0, wxALL, 5 );
 
 
