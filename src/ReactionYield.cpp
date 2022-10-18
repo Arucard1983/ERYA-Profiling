@@ -427,7 +427,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 1 + VarianceMode;
     return true;
    }
-   else if(k>=0.02 && k<0.30) //Vavilov-Moyal Distribution
+   else if(k>=0.02 && k<0.29) //Vavilov-Moyal Distribution
    {
     StraggMoyal = VavilovMoyalFunction();
     StraggMoyal.SetMoyalStep(xi,beta,k,DEM,Moyal,false);
@@ -437,7 +437,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 2 + VarianceMode;
     return true;
    }
-   else if(k>=0.30 && k<22.00) //Vavilov-Airy Distribution
+   else if(k>=0.29 && k<22.00) //Vavilov-Airy Distribution
    {
     StraggAiry = VavilovAiryFunction();
     StraggAiry.SetAiryStep(xi,beta,k,DEM,Airy,false);
@@ -1321,34 +1321,6 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
   Smax = 0;
  }
  // Evaluate the integral itself, including the renormalization integral.
- // Insert the stopping power inside the integral
-// double DoubleSimpsonSum1 = 0;
-// double DoubleSimpsonSum2 = 0;
-// double RenormalizationSum1 = 0;
-// double RenormalizationSum2 = 0;
-// for(unsigned int i=0; i<=Ssteps; i++)
-// {
-//   for(unsigned int j=0; j<=Tsteps; j++)
-//   {
-//     double S = Smin + i * DS ;
-//     double T = Tmin + j * DT ;
-//     double LocalCrossSection1 = LocalSample.Item(LayerNumber).EvaluateBragg(Energy-S);
-//     double LocalCrossSection2 = LocalSample.Item(LayerNumber).EvaluateBragg(Energy-T);
-//     double LocalDistribution1 = ElementDistribution.GetValue(S-T,T);
-//     double LocalDistribution2 = ElementDistribution.GetValue(T-S,S);
-//     DoubleSimpsonSum1 = DoubleSimpsonSum1 + LocalDistribution1 * this->EvaluateSigma(LayerNumber,Energy-S) / LocalCrossSection1;
-//     DoubleSimpsonSum2 = DoubleSimpsonSum2 + LocalDistribution2 * this->EvaluateSigma(LayerNumber,Energy-T) / LocalCrossSection2;
-//     RenormalizationSum1 = RenormalizationSum1 + LocalDistribution1;
-//     RenormalizationSum2 = RenormalizationSum2 + LocalDistribution2;
-//   }
-// }
-// double CrossSigmaSum = (DS * DT) * ((1-ConvolutionMixture)*DoubleSimpsonSum1 + ConvolutionMixture*DoubleSimpsonSum2) / 9;
-// double DistributionSum = (DS * DT) * ((1-ConvolutionMixture)*RenormalizationSum1 + ConvolutionMixture*RenormalizationSum2 ) / 9;
-// // If the renormalization itself are zero, return zero, since the first integral will also the zero.
-// if(DistributionSum == 0.0)
-//   return 0;
-// else
-//   return CrossSigmaSum / DistributionSum;
  double DoubleSimpsonSum = 0;
  double RenormalizationSum = 0;
  for(unsigned int i=0; i<=Ssteps; i++)

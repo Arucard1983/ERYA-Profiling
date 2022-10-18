@@ -391,8 +391,6 @@ void VavilovMoyalFunction::SetMoyalStep(double xi, double beta, double k, double
  double euler = (std::lgamma(0.999999) - std::lgamma(1.000001)) / (0.000002); // Euler's Constant
  double lambdalow = this->VMa(0,k,beta); //lambda_0
  double lambdahigh = this->VMa(8,k,beta); //lambda_0.995
- if(k>=0.22)
-  lambdahigh = this->VMa(8,0.22,beta); // For the extended Moyal
  //Since the distribution domain cannot be bounded analytically, the number of steps are the division by unity.
  double lambdastep = 1.0/numberstep;
  VMCbeta = beta;
