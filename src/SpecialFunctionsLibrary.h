@@ -92,6 +92,7 @@ class VavilovAiryFunction
  double VAa(unsigned int n);
  double Airy(double t);
  double VA(double delta, double xi, double beta, double k);
+ double MaximumFunction(double a);
  public:
  VavilovAiryFunction(){};
  void SetAiryStep(double xi, double beta, double k, double DEM, unsigned int numberstep, bool TrimNegative);

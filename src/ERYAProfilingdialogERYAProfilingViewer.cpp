@@ -271,7 +271,7 @@ bool ERYAProfilingdialogERYAProfilingViewer::DisplaySlot(int adress)
      renderViewer->AddLayer(plot);
      renderViewer->Fit(E1+LM,E1+LX,0.0,0.23);
   }
-  else if(K>=0.02 && K<0.02 && NT<2) //Vavilov-Moyal Distribution
+  else if(K>=0.02 && K<0.29 && NT<2) //Vavilov-Moyal Distribution
   {
   VavilovMoyalFunction l;
   l.SetMoyalStep(Xi,Beta,K,Delta,VM,false);
@@ -305,7 +305,7 @@ bool ERYAProfilingdialogERYAProfilingViewer::DisplaySlot(int adress)
      renderViewer->AddLayer(plot);
      renderViewer->Fit(E1+LM,E1+LX,0.0,0.23);
   }
-  else if(K>=0.02 && K<22.00 && NT<2) //Vavilov-Airy Distribution
+  else if(K>=0.29 && K<22.00 && NT<2) //Vavilov-Airy Distribution
   {
   VavilovAiryFunction l;
   l.SetAiryStep(Xi,Beta,K,Delta,VA,false);
