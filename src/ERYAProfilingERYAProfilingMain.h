@@ -125,6 +125,10 @@ class ERYAProfilingERYAProfilingMain : public ERYAProfilingMain
 	    void CloseExternalOutput(bool Flag){DisplayExternalOutput = Flag; return;}
 	    void GenerateLayer(int Number);
         void GenerateLayer();
+        void GenerateCleanLayer();
+        void GenerateNewLayer(int Number);
+        void GenerateCleanTable(int Number);
+        void GenerateCleanTable();
         void GenerateTable(int Number);
         void GenerateTable();
         void GenerateLog(int Number);

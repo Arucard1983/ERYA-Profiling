@@ -30,8 +30,8 @@ void ERYAProfilingERYAProfilingMain::OnFileNew( wxCommandEvent& event )
  wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Do you really create a new file?\nAll inserted or unsaved data will be lost."), wxT("Start a New File?"), wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
  if (dial->ShowModal() == wxID_YES)
  {
- this->GenerateTable();
- this->GenerateLayer();
+ this->GenerateCleanTable();
+ this->GenerateCleanLayer();
  this->GenerateResult();
  this->GenerateLog();
  gridLayerEditor->ClearGrid();
@@ -75,7 +75,7 @@ void ERYAProfilingERYAProfilingMain::OnFileOpen( wxCommandEvent& event )
   bool IsLorentzian,IsStrenght;
   if(openfile.ERYAProfilingGlobalLoad(textBeamEnergy,textTemperature,textCharge,textEnergyStep,textMinimumEnergy,textMaximumEnergy,textRessonanceWidth,textRessonancePeak,textRessonanceEnergy,textRessonanceMinimum,textRessonanceMaximum,textCustomRessonance,textRessonanceWidth1,textRessonancePeak1,textRessonanceEnergy1,textRessonanceMinimum1,textRessonanceMaximum1,IsLorentzian,IsStrenght,ActualMode,Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,Calibration,LayerTableData,OpenDatabase,SamplePrecision,GaussPrecision,VavilovMoyalPrecision,VavilovEdgeworthPrecision,VavilovAiryPrecision,LandauPrecision,ConvolutionPrecision,ThreadPrecision,ActiveLog))
   {
-   this->GenerateTable(Elements.GetCount());
+   this->GenerateCleanTable(Elements.GetCount());
    for(int k=0; k<Elements.GetCount(); k++)
    {
     OpenDatabase.FindGetAllElementInfo(Elements.Item(k), GammaPeaks.Item(k), choiceElementName.Item(k), choiceGammaPeak.Item(k), textAtomicNumber.Item(k), textAbundance.Item(k), textAtomicMass.Item(k), textIsotopicMass.Item(k));
@@ -90,7 +90,7 @@ void ERYAProfilingERYAProfilingMain::OnFileOpen( wxCommandEvent& event )
     if(Calibration.Item(k).Len() > 0)
      textCalibrationFactor.Item(k)->SetValue(Calibration.Item(k));
    }
-   this->GenerateLayer();
+   this->GenerateCleanLayer();
    this->GenerateLayer(LayerTableData.GetCount()/(Elements.GetCount()+1));
      //Load the table contents
      for(int k=0; k<LayerTableData.GetCount(); k++)
@@ -211,7 +211,7 @@ void ERYAProfilingERYAProfilingMain::OnDatabaseElements( wxCommandEvent& event )
    OpenDatabase.FindGetAllElementInfo(choiceElementName.Item(k)->GetString(0),choiceGammaPeak.Item(k)->GetString(0), choiceElementName.Item(k), choiceGammaPeak.Item(k), textAtomicNumber.Item(k), textAbundance.Item(k), textAtomicMass.Item(k), textIsotopicMass.Item(k));
    textCalibrationFactor.Item(k)->SetValue(wxT("1"));
   }
-  this->GenerateLayer();
+  this->GenerateCleanLayer();
  }
 }
 
@@ -249,8 +249,8 @@ void ERYAProfilingERYAProfilingMain::OnSetupReset( wxCommandEvent& event )
   {
     if(this->StartUpProgram())
     {
-     this->GenerateTable();
-     this->GenerateLayer();
+     this->GenerateCleanTable();
+     this->GenerateCleanLayer();
      this->GenerateResult();
      this->GenerateLog();
      statusERYAProfiling->SetStatusText(wxT("ERYA-Profiling is ready...") ,0);
@@ -332,7 +332,7 @@ void ERYAProfilingERYAProfilingMain::OnNumberElementEnter( wxCommandEvent& event
 
 void ERYAProfilingERYAProfilingMain::OnElementClear( wxCommandEvent& event )
 {
- this->GenerateTable();
+ this->GenerateCleanTable();
  this->GenerateResult();
  this->GenerateLog();
 }
@@ -350,7 +350,7 @@ void ERYAProfilingERYAProfilingMain::OnElementLoad( wxCommandEvent& event )
   wxArrayString Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,Calibration;
   if(openfile.ERYAProfilingSampleLoad(Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,Calibration,OpenDatabase))
   {
-   this->GenerateTable(Elements.GetCount());
+   this->GenerateCleanTable(Elements.GetCount());
    for(int k=0; k<choiceElementName.GetCount(); k++)
    {
     OpenDatabase.FindGetAllElementInfo(Elements.Item(k), GammaPeaks.Item(k), choiceElementName.Item(k), choiceGammaPeak.Item(k), textAtomicNumber.Item(k), textAbundance.Item(k), textAtomicMass.Item(k), textIsotopicMass.Item(k));
@@ -365,7 +365,7 @@ void ERYAProfilingERYAProfilingMain::OnElementLoad( wxCommandEvent& event )
     if(Calibration.Item(k).Len() > 0)
      textCalibrationFactor.Item(k)->SetValue(Calibration.Item(k));
    }
-   this->GenerateLayer();
+   this->GenerateCleanLayer();
    this->GenerateResult();
    this->GenerateLog();
   }
@@ -381,7 +381,7 @@ void ERYAProfilingERYAProfilingMain::OnElementLoad( wxCommandEvent& event )
   wxArrayString Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,Calibration;
   if(openfile.ERYAProfilingSampleXlsxLoad(Elements,GammaPeaks,Numbers,Abundance,Isotopic,Atomic,Calibration,OpenDatabase))
   {
-   this->GenerateTable(Elements.GetCount());
+   this->GenerateCleanTable(Elements.GetCount());
    for(int k=0; k<choiceElementName.GetCount(); k++)
    {
     OpenDatabase.FindGetAllElementInfo(Elements.Item(k), GammaPeaks.Item(k), choiceElementName.Item(k), choiceGammaPeak.Item(k), textAtomicNumber.Item(k), textAbundance.Item(k), textAtomicMass.Item(k), textIsotopicMass.Item(k));
@@ -396,7 +396,7 @@ void ERYAProfilingERYAProfilingMain::OnElementLoad( wxCommandEvent& event )
     if(Atomic.Item(k).Len() > 0)
      textCalibrationFactor.Item(k)->SetValue(Calibration.Item(k));
    }
-   this->GenerateLayer();
+   this->GenerateCleanLayer();
    this->GenerateResult();
    this->GenerateLog();
   }
@@ -443,8 +443,8 @@ void ERYAProfilingERYAProfilingMain::OnElementSave( wxCommandEvent& event )
 
 void ERYAProfilingERYAProfilingMain::OnElementHelp( wxCommandEvent& event )
 {
+ this->GenerateCleanTable(1);
  this->GenerateTable(1);
- this->GenerateTable();
  this->GenerateResult();
  this->GenerateLog();
 }
@@ -534,12 +534,12 @@ void ERYAProfilingERYAProfilingMain::OnLayerLoad( wxCommandEvent& event )
     if(file.ERYAProfilingLayerLoad(ListElementNames,ListGammaPeaks,ListTableData,OpenDatabase))
     {
      //Create the table
-     this->GenerateTable(ListElementNames.GetCount());
+     this->GenerateCleanTable(ListElementNames.GetCount());
      for(int k=0; k<ListElementNames.GetCount(); k++)
      {
       OpenDatabase.FindGetAllElementInfo(ListElementNames.Item(k), ListGammaPeaks.Item(k), choiceElementName.Item(k), choiceGammaPeak.Item(k), textAtomicNumber.Item(k), textAbundance.Item(k), textAtomicMass.Item(k), textIsotopicMass.Item(k));
      }
-     this->GenerateLayer();
+     this->GenerateCleanLayer();
      this->GenerateLayer(ListTableData.GetCount()/(ListElementNames.GetCount()+1));
      this->GenerateResult();
      this->GenerateLog();
@@ -564,12 +564,12 @@ void ERYAProfilingERYAProfilingMain::OnLayerLoad( wxCommandEvent& event )
     if(file.ERYAProfilingLayerXlsxLoad(ListElementNames,ListGammaPeaks,ListTableData,OpenDatabase))
     {
      //Create the table
-     this->GenerateTable(ListElementNames.GetCount());
+     this->GenerateCleanTable(ListElementNames.GetCount());
      for(int k=0; k<ListElementNames.GetCount(); k++)
      {
       OpenDatabase.FindGetAllElementInfo(ListElementNames.Item(k), ListGammaPeaks.Item(k), choiceElementName.Item(k), choiceGammaPeak.Item(k), textAtomicNumber.Item(k), textAbundance.Item(k), textAtomicMass.Item(k), textIsotopicMass.Item(k));
      }
-     this->GenerateLayer();
+     this->GenerateCleanLayer();
      this->GenerateLayer(ListTableData.GetCount()/(ListElementNames.GetCount()+1));
      this->GenerateResult();
      this->GenerateLog();
@@ -661,7 +661,7 @@ void ERYAProfilingERYAProfilingMain::OnLayerHelp( wxCommandEvent& event )
 {
  gridLayerEditor->ClearGrid();
  this->GenerateLayer(1);
- this->GenerateLayer();
+ this->GenerateCleanLayer();
 }
 
 void ERYAProfilingERYAProfilingMain::OnDetectorClear( wxCommandEvent& event )
@@ -1124,8 +1124,8 @@ void ERYAProfilingERYAProfilingMain::OnMainNew( wxCommandEvent& event )
  wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Do you really want to clear all\ninputed values on all panels?\nAll inserted or unsaved data will be lost."), wxT("Clear all data on Panels?"), wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
  if (dial->ShowModal() == wxID_YES)
  {
- this->GenerateTable();
- this->GenerateLayer();
+ this->GenerateCleanTable();
+ this->GenerateCleanLayer();
  this->GenerateResult();
  this->GenerateLog();
  gridLayerEditor->ClearGrid();
@@ -1981,9 +1981,29 @@ void ERYAProfilingERYAProfilingMain::GenerateLayer(int Number)
      gridLayerEditor->DeleteRows(NewTableSize,CurrentTableSize-NewTableSize,true);
     }
    }
+   this->GenerateLayer();
 }
 
-void ERYAProfilingERYAProfilingMain::GenerateLayer()
+void ERYAProfilingERYAProfilingMain::GenerateNewLayer(int Number)
+{
+   int CurrentTableSize = gridLayerEditor->GetNumberCols();
+   int NewTableSize = Number;
+   if (CurrentTableSize != NewTableSize)
+   {
+    if (CurrentTableSize < NewTableSize)
+    {
+     gridLayerEditor->AppendCols(NewTableSize-CurrentTableSize,true);
+    }
+    else
+    {
+     gridLayerEditor->DeleteCols(NewTableSize,CurrentTableSize-NewTableSize,true);
+    }
+   }
+   this->GenerateLayer();
+}
+
+// Request to clear all Layer Editor contents
+void ERYAProfilingERYAProfilingMain::GenerateCleanLayer()
 {
  //Clear the current layer wxGrid, and generate a new table
  gridLayerEditor->ClearGrid();
@@ -2014,6 +2034,148 @@ void ERYAProfilingERYAProfilingMain::GenerateLayer()
  this->GenerateResult();
  this->GenerateLog();
 }
+
+// Request to change the Layer Editor labels without changing anything.
+void ERYAProfilingERYAProfilingMain::GenerateLayer()
+{
+ // Create a new label list
+ wxArrayString TableLabels;
+ TableLabels.Add(wxT("Layer Depth x*10^15 at/cm^2"));
+ // Fill the columns labels
+ for (int k=0; k<choiceElementName.GetCount(); k++)
+ {
+  int i = choiceElementName.Item(k)->GetSelection();
+  int j = choiceGammaPeak.Item(k)->GetSelection();
+  wxString temp = choiceElementName.Item(k)->GetString(i) + wxT(" (") + choiceGammaPeak.Item(k)->GetString(j) + wxT(" keV)");
+  TableLabels.Add(temp);
+ }
+ for (int z=0; z<gridLayerEditor->GetNumberCols(); z++)
+ {
+   gridLayerEditor->SetColLabelValue(z,TableLabels.Item(z));
+   gridLayerEditor->SetColSize( z, 350 );
+ }
+ // Generate other tables
+ this->GenerateResult();
+ this->GenerateLog();
+}
+
+void ERYAProfilingERYAProfilingMain::GenerateCleanTable()
+{
+ this->GenerateCleanTable(1);
+}
+
+void ERYAProfilingERYAProfilingMain::GenerateCleanTable(int Number )
+{
+ spinNumberElements->SetValue(Number);
+ // Get the desired number of elements
+ int NumberElements = Number;
+ // Get the current number of elements
+ int CurrentElements = choiceElementName.GetCount();
+ // Get the Number of Operations
+ int ChangeElements = NumberElements - CurrentElements;
+
+ // If the number of elements will increase
+ if (ChangeElements > 0)
+ {
+    // Get the pull-downs menus
+    choiceElementNameChoices.Clear();
+    choiceGammaPeakChoices.Clear();
+
+    for (int k=CurrentElements; k<NumberElements; k++)
+    {
+
+	choiceElementName.Add(new wxChoice( scrollElementTable, wxID_ANY, wxDefaultPosition, wxSize(140,-1), choiceElementNameChoices, 0 ));
+	choiceElementName.Last()->SetSelection( 0 );
+	sizerElementEditor->Add( choiceElementName.Last(), 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	choiceGammaPeak.Add(new wxChoice( scrollElementTable, wxID_ANY, wxDefaultPosition, wxSize(140,-1), choiceElementNameChoices, 0 ));
+	choiceGammaPeak.Last()->SetSelection( 0 );
+	sizerElementEditor->Add( choiceGammaPeak.Last(), 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	textAtomicNumber.Add(new wxTextCtrl( scrollElementTable, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(140,-1), 0 ));
+	sizerElementEditor->Add( textAtomicNumber.Last(), 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	textAbundance.Add(new wxTextCtrl( scrollElementTable, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(140,-1), 0 ));
+	sizerElementEditor->Add( textAbundance.Last(), 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	textIsotopicMass.Add(new wxTextCtrl( scrollElementTable, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(140,-1), 0 ));
+	sizerElementEditor->Add( textIsotopicMass.Last(), 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	textAtomicMass.Add(new wxTextCtrl( scrollElementTable, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(140,-1), 0 ));
+	sizerElementEditor->Add( textAtomicMass.Last(), 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	textCalibrationFactor.Add(new wxTextCtrl( scrollElementTable, wxID_ANY, wxT("1"), wxDefaultPosition, wxSize(140,-1), 0 ));
+	sizerElementEditor->Add( textCalibrationFactor.Last(), 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+     choiceElementName.Last()->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( ERYAProfilingERYAProfilingMain::OnElementNameChoice ), NULL, this );
+	 choiceGammaPeak.Last()->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( ERYAProfilingERYAProfilingMain::OnGammaPeakChoice ), NULL, this );
+
+	 OpenDatabase.ResetElementGammaMenu(choiceElementName.Last(),choiceGammaPeak.Last());
+     OpenDatabase.FindGetAllElementInfo(choiceElementName.Last()->GetString(0),choiceGammaPeak.Last()->GetString(0), choiceElementName.Last(), choiceGammaPeak.Last(), textAtomicNumber.Last(), textAbundance.Last(), textAtomicMass.Last(), textIsotopicMass.Last());
+
+    }
+
+    // Redraw the new elements on screen
+    scrollElementTable->SetAutoLayout(true);
+    scrollElementTable->SetSizer( sizerElementEditor );
+	scrollElementTable->Layout();
+	sizerElementEditor->Fit( scrollElementTable );
+	tabElements->SetSizer( sizerElements );
+	tabElements->Layout();
+	sizerElements->Fit( tabElements );
+
+   // Win32 API require external sizer refitting to correctly redraw the Elements tab, unlike the GTK which is irrelevant.
+    this->SetSizer( sizerERYAProfilingMain );
+	this->Layout();
+	this->Centre( wxBOTH );
+   // Generate a new table
+    this->GenerateCleanLayer();
+    this->GenerateResult();
+    this->GenerateLog();
+}
+
+// If the number of elements will increase
+if (ChangeElements < 0)
+{
+ int NumberRemovedElements = std::abs(ChangeElements * 7); //Obtain the number of retired objects
+ for (int i=0; i<NumberRemovedElements; i++)
+ {
+   int CurrentNumberElements = sizerElementEditor->GetItemCount();
+   sizerElementEditor->Hide(CurrentNumberElements-1); //Hide last object
+   sizerElementEditor->Remove(CurrentNumberElements-1); //Remove the last object
+ }
+ for(int k=0; k<std::abs(ChangeElements); k++) //Trim internal elements
+ {
+   choiceElementName.RemoveAt(choiceElementName.GetCount()-1);
+   choiceGammaPeak.RemoveAt(choiceGammaPeak.GetCount()-1);
+   textAtomicNumber.RemoveAt(textAtomicNumber.GetCount()-1);
+   textIsotopicMass.RemoveAt(textIsotopicMass.GetCount()-1);
+   textAbundance.RemoveAt(textAbundance.GetCount()-1);
+   textAtomicMass.RemoveAt(textAtomicMass.GetCount()-1);
+   textCalibrationFactor.RemoveAt(textCalibrationFactor.GetCount()-1);
+ }
+ // Redraw the new elements on screen
+    scrollElementTable->SetAutoLayout(true);
+    scrollElementTable->SetSizer( sizerElementEditor );
+	scrollElementTable->Layout();
+	sizerElementEditor->Fit( scrollElementTable );
+	tabElements->SetSizer( sizerElements );
+	tabElements->Layout();
+	sizerElements->Fit( tabElements );
+
+   // Win32 API require external sizer refitting to correctly redraw the Elements tab, unlike the GTK which is irrelevant.
+    this->SetSizer( sizerERYAProfilingMain );
+	this->Layout();
+	this->Centre( wxBOTH );
+   // Generate a new table
+    this->GenerateCleanLayer();
+    this->GenerateResult();
+    this->GenerateLog();
+
+}
+ // No changes on number of elements, implies to modifications at all
+}
+
 
 void ERYAProfilingERYAProfilingMain::GenerateTable(int Number )
 {
@@ -2080,7 +2242,7 @@ void ERYAProfilingERYAProfilingMain::GenerateTable(int Number )
 	this->Layout();
 	this->Centre( wxBOTH );
    // Generate a new table
-    this->GenerateLayer();
+    this->GenerateNewLayer(NumberElements);
     this->GenerateResult();
     this->GenerateLog();
 }
@@ -2120,7 +2282,7 @@ if (ChangeElements < 0)
 	this->Layout();
 	this->Centre( wxBOTH );
    // Generate a new table
-    this->GenerateLayer();
+    this->GenerateNewLayer(NumberElements);
     this->GenerateResult();
     this->GenerateLog();
 
@@ -2176,8 +2338,8 @@ bool ERYAProfilingERYAProfilingMain::StartUpProgram()
       delete CreatingFiles;
    }
   }
- this->GenerateTable();
- this->GenerateLayer();
+ this->GenerateCleanTable();
+ this->GenerateCleanLayer();
  this->GenerateResult();
  this->GenerateLog();
  if(CurrentDatabaseFile.Len()>0 && CurrentDetectorFile.Len()>0 && CurrentZieglerFile.Len()>0)
@@ -2195,7 +2357,7 @@ bool ERYAProfilingERYAProfilingMain::StartUpProgram()
       OpenDatabase.ResetElementGammaMenu(choiceElementName.Item(k),choiceGammaPeak.Item(k));
       OpenDatabase.FindGetAllElementInfo(choiceElementName.Item(k)->GetString(0),choiceGammaPeak.Item(k)->GetString(0), choiceElementName.Item(k), choiceGammaPeak.Item(k), textAtomicNumber.Item(k), textAbundance.Item(k), textAtomicMass.Item(k), textIsotopicMass.Item(k));
      }
-     this->GenerateLayer();
+     this->GenerateCleanLayer();
     }
     else
     {
