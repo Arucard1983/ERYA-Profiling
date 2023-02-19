@@ -15,11 +15,9 @@ dialogERYAProfilingAdvanced( parent )
  spinSampleStep->SetValue(0.1*CP); //Implicit conversion using 0.1e-15 at/cm^2 units.
  spinGaussPrecision->SetValue(G);
  spinLandau->SetValue(L);
- spinVavilovEdgeworth->SetValue(VE);
  spinVavilovAiry->SetValue(VA);
  spinVavilovMoyal->SetValue(VM);
  spinNumberThreads->SetSelection(NT);
- spinConvolution->SetValue(CM);
  checkActiveLog->SetValue(EL);
 }
 
@@ -35,11 +33,9 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedOK( wxCommandEvent& eve
  CPT = spinSampleStep->GetValue();
  G = spinGaussPrecision->GetValue();
  L = spinLandau->GetValue();
- VE = spinVavilovEdgeworth->GetValue();
  VA = spinVavilovAiry->GetValue();
  VM = spinVavilovMoyal->GetValue();
  NT = spinNumberThreads->GetSelection();
- CM = spinConvolution->GetValue();
  EL = checkActiveLog->GetValue();
  // Internal conversion
  CP = static_cast<unsigned int>(std::floor(10*CPT)); // Internal conversion
@@ -55,11 +51,9 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedDefault( wxCommandEvent
  spinSampleStep->SetValue(10);
  spinGaussPrecision->SetValue(60);
  spinLandau->SetValue(284);
- spinVavilovEdgeworth->SetValue(70);
  spinVavilovAiry->SetValue(10);
  spinVavilovMoyal->SetValue(10);
  spinNumberThreads->SetSelection(1);
- spinConvolution->SetValue(0);
  checkActiveLog->SetValue(false);
 }
 

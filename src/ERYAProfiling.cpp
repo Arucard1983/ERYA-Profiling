@@ -207,7 +207,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	scrollElementTable->Layout();
 	sizerElementEditor->Fit( scrollElementTable );
 	sizerElements->Add( scrollElementTable, 1, wxALL|wxEXPAND, 5 );
-    scrollElementTable->Centre(wxBOTH);
+        scrollElementTable->Centre(wxBOTH);
 
 	tabElements->SetSizer( sizerElements );
 	tabElements->Layout();
@@ -696,7 +696,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 
 	this->SetSizer( sizerERYAProfilingMain );
 	this->Layout();
-    tabERYAProfilingMain->SetSelection( 0 );
+        tabERYAProfilingMain->SetSelection( 0 );
 	this->Centre( wxBOTH );
 
 	this->SetIcon(eryaprofiling_xpm);
@@ -2595,7 +2595,7 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	sizerERYAProfilingAdvanced->Add( lineERYAProfilingSettings, 0, wxEXPAND | wxALL, 5 );
 
 	wxFlexGridSizer* sizerERYAProfilingSettings;
-	sizerERYAProfilingSettings = new wxFlexGridSizer( 9, 2, 20, 20 );
+	sizerERYAProfilingSettings = new wxFlexGridSizer( 7, 2, 20, 20 );
 	sizerERYAProfilingSettings->AddGrowableRow( 0 );
 	sizerERYAProfilingSettings->SetFlexibleDirection( wxBOTH );
 	sizerERYAProfilingSettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
@@ -2618,7 +2618,7 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	labelVavilovMoyal->Wrap( -1 );
 	sizerERYAProfilingSettings->Add( labelVavilovMoyal, 0, wxALL, 5 );
 
-	spinVavilovMoyal = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 20, 10 );
+	spinVavilovMoyal = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 100, 10 );
 	sizerERYAProfilingSettings->Add( spinVavilovMoyal, 0, wxALL, 5 );
 
 	labelVavilovAiry = new wxStaticText( this, wxID_ANY, wxT("Number of Points per Lambda Step for Vavilov-Airy Distribution:"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -2629,13 +2629,6 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	sizerERYAProfilingSettings->Add( spinVavilovAiry, 0, wxALL, 5 );
 
 
-	labelVavilovEdgeworth = new wxStaticText( this, wxID_ANY, wxT("Number of Points for Main Range of Vavilov-Edgeworth Distribution:"), wxDefaultPosition, wxDefaultSize, 0 );
-	labelVavilovEdgeworth->Wrap( -1 );
-	sizerERYAProfilingSettings->Add( labelVavilovEdgeworth, 0, wxALL, 5 );
-
-	spinVavilovEdgeworth = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 10, 1000, 70 );
-	sizerERYAProfilingSettings->Add( spinVavilovEdgeworth, 0, wxALL, 5 );
-
 	labelLandau = new wxStaticText( this, wxID_ANY, wxT("Number of Points for Main Range of Landau Distribution:"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelLandau->Wrap( -1 );
 	sizerERYAProfilingSettings->Add( labelLandau, 0, wxALL, 5 );
@@ -2643,18 +2636,12 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	spinLandau = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 100, 500, 284 );
 	sizerERYAProfilingSettings->Add( spinLandau, 0, wxALL, 5 );
 
-	labelConvolution = new wxStaticText( this, wxID_ANY, wxT("Convolution Mixture, 0 f(B/S) to 100 f(S/B) (%):"), wxDefaultPosition, wxDefaultSize, 0 );
-	labelConvolution->Wrap( -1 );
-	sizerERYAProfilingSettings->Add( labelConvolution, 0, wxALL, 5 );
 
-	spinConvolution = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100, 100 );
-	sizerERYAProfilingSettings->Add( spinConvolution, 0, wxALL, 5 );
-
-    labelNumberThreads = new wxStaticText( this, wxID_ANY, wxT("Asymptotic Vavilov Variance Model:"), wxDefaultPosition, wxDefaultSize, 0 );
+    labelNumberThreads = new wxStaticText( this, wxID_ANY, wxT("Straggling Model:"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelNumberThreads->Wrap( -1 );
 	sizerERYAProfilingSettings->Add( labelNumberThreads, 0, wxALL, 5 );
 
-	wxString spinNumberThreadsChoices[] = { wxT("Bohr Variance"), wxT("Vavilov Limit"), wxT("Gaussian Only") };
+	wxString spinNumberThreadsChoices[] = { wxT("Bohr Model"), wxT("Vavilov Model"), wxT("Gaussian Only") };
 	int spinNumberThreadsNChoices = sizeof( spinNumberThreadsChoices ) / sizeof( wxString );
 	spinNumberThreads = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, spinNumberThreadsNChoices, spinNumberThreadsChoices, 0 );
 	spinNumberThreads->SetSelection( 1 );
