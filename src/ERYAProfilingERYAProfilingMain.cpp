@@ -1970,6 +1970,7 @@ void ERYAProfilingERYAProfilingMain::GenerateLayer(int Number)
 {
    int CurrentTableSize = gridLayerEditor->GetNumberRows();
    int NewTableSize = Number;
+   spinNumberLayers->SetValue(Number);
    if (CurrentTableSize != NewTableSize)
    {
     if (CurrentTableSize < NewTableSize)
@@ -1987,7 +1988,7 @@ void ERYAProfilingERYAProfilingMain::GenerateLayer(int Number)
 void ERYAProfilingERYAProfilingMain::GenerateNewLayer(int Number)
 {
    int CurrentTableSize = gridLayerEditor->GetNumberCols();
-   int NewTableSize = Number;
+   int NewTableSize = Number + 1;
    if (CurrentTableSize != NewTableSize)
    {
     if (CurrentTableSize < NewTableSize)
