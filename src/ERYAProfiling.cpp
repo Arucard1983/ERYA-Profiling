@@ -321,7 +321,7 @@ ERYAProfilingMain::ERYAProfilingMain( wxWindow* parent, wxWindowID id, const wxS
 	wxGridSizer* sizerMainDetector;
 	sizerMainDetector = new wxGridSizer( 2, 6, 0, 0 );
 
-	labelBeamResolution = new wxStaticText( tabDetector, wxID_ANY, wxT("Beam Resolution (keV)"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelBeamResolution = new wxStaticText( tabDetector, wxID_ANY, wxT("Beam Resolution FWHM(keV)"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelBeamResolution->Wrap( -1 );
 	sizerMainDetector->Add( labelBeamResolution, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
@@ -2604,7 +2604,7 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	labelSampleStep->Wrap( -1 );
 	sizerERYAProfilingSettings->Add( labelSampleStep, 0, wxALL, 5 );
 
-	spinSampleStep = new wxSpinCtrlDouble( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0.1, 1000, 10, 0.1 );
+	spinSampleStep = new wxSpinCtrlDouble( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0.01, 1000, 10, 0.01 );
 	sizerERYAProfilingSettings->Add( spinSampleStep, 0, wxALL, 5 );
 
 	labelGaussPrecision = new wxStaticText( this, wxID_ANY, wxT("Number of Points for the Three-Sigma Range of Gauss Distribution:"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -2633,7 +2633,7 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	labelLandau->Wrap( -1 );
 	sizerERYAProfilingSettings->Add( labelLandau, 0, wxALL, 5 );
 
-	spinLandau = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 100, 500, 284 );
+	spinLandau = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 100, 5000, 284 );
 	sizerERYAProfilingSettings->Add( spinLandau, 0, wxALL, 5 );
 
 

@@ -205,7 +205,7 @@ double VavilovMoyalFunction::VMk(double k)
  {
    kmin = 0.12; kmax = 0.20;
  }
- else if(k>=0.22 && k<0.30)
+ else if(k>=0.22 && k<0.31)
  {
    kmin = 0.22; kmax = 0.30;
  }
@@ -296,7 +296,7 @@ double VavilovMoyalFunction::VMa(unsigned int i, double k, double beta)
    if(i==0)
     return -3.04;
  }
- else if(k>=0.22 && k<0.30)
+ else if(k>=0.22 && k<0.31)
  {
    z = 2;
    if(i==0)
@@ -365,7 +365,7 @@ double VavilovMoyalFunction::VMMain(double k, double beta, double lambda)
     return 0;
    }
  }
- else if(k>=0.22 && k<0.30)
+ else if(k>=0.22 && k<0.31)
  {
    double lambda0 = this->VMa(0,k,beta); //Absolute minimum value cut-off
    // Function selection
@@ -420,7 +420,7 @@ double VavilovMoyalFunction::GetValue(double AtEnergy)
 double VavilovAiryFunction::MaximumFunction(double a)
 {
  // The method adopts the Golden-Search Algorithm which are adequate for f'(x)/f(x) kind of functions
- double dx = 1e-3;
+ double dx = 5e-2;
  double x1,x2,xl,xu,d;
  // Initial Values
  xl = -2.338107; // First Airy Root
@@ -429,7 +429,7 @@ double VavilovAiryFunction::MaximumFunction(double a)
  x1 = xl + d;
  x2 = xu - d;
  // Cycle condition
- while(std::abs(xu-xl)<dx)
+ while(std::abs(xu-xl)>dx)
  {
   if((std::log(this->Airy(x1))+a*x1) > (std::log(this->Airy(x2))+a*x2)) // Recalculate x1
   {
@@ -459,9 +459,6 @@ void VavilovAiryFunction::SetAiryStep(double xi, double beta, double k, double D
  VAk = k;
  VAbeta = beta;
  VADEM = DEM;
- double lowlambda = (-0.0322 * VAbeta * VAbeta - 0.0743)*VAk + (-0.2453 * VAbeta * VAbeta + 0.0701)/std::sqrt(VAk) + (-0.5561 * VAbeta * VAbeta - 3.1579);
- double highlambda = (-0.0135 * VAbeta * VAbeta - 0.0488)*VAk + (-1.6921 * VAbeta * VAbeta + 8.3656)/std::sqrt(VAk) + (-0.7327 * VAbeta * VAbeta - 3.5226);
- double lambdastep = (highlambda - lowlambda)/numberstep;
  // For lower k values, the Edgeworth optimal interval may truncate the left side of distribution. To fix this, a new lambda value should be evauated from the first zero of Airy's function.
  double t0 = -2.33811;
  double eta = (xi * std::pow((1 - (2*VAbeta*VAbeta)/3),1.0/3.0))/(std::pow(2.0*VAk,2.0/3.0));

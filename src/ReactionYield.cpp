@@ -351,7 +351,7 @@ double PhysicsDistribution::GetThermalDoppler(double AtEnergy, double TargetMola
 bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, double DEM, double VEM, unsigned int Gauss, unsigned int Moyal, unsigned int Edgeworth, unsigned int Airy, unsigned int Landau, bool StrictGaussian)
 {
  // The thermal distribution is always Gaussian, but if the variance are zero, then collapse to a Dirac's delta.
- double ThermalVariance = std::sqrt(AverageBeamResolution*AverageBeamResolution + AverageDopplerEnergy * AverageDopplerEnergy);
+ double ThermalVariance = std::sqrt(AverageBeamResolution*AverageBeamResolution/5.546 + AverageDopplerEnergy * AverageDopplerEnergy);
  unsigned int VarianceMode;
  if(std::abs(ThermalVariance)<1e-9)
  {
@@ -437,7 +437,22 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 2 + VarianceMode;
     return true;
    }
-   else if(k>=0.29 && k<22.00) //Vavilov-Airy Distribution
+   else if(k>=0.29 && k<0.40) //Vavilov-Airy Distribution with linear correction
+   {
+    double kmin=0.29;
+    double kmax=0.40;
+    double lmin=0.39;
+    double lmax=0.40;
+    double kslope=(lmax-lmin)/(kmax-kmin);
+    StraggAiry = VavilovAiryFunction();
+    StraggAiry.SetAiryStep(xi,beta,lmin+(k-kmin)*kslope,DEM,Airy,false);
+    StraggStep = StraggAiry.GetAiryStep();
+    StraggMaximum = StraggAiry.GetAiryMaximum();
+    StraggMinimum = StraggAiry.GetAiryMinimum();
+    PDMode = 3 + VarianceMode;
+    return true;
+   }
+   else if(k>=0.40 && k<22.00) //Vavilov-Airy Distribution
    {
     StraggAiry = VavilovAiryFunction();
     StraggAiry.SetAiryStep(xi,beta,k,DEM,Airy,false);
@@ -1329,7 +1344,7 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
    {
      double S = Smin + i * DS ;
      double T = Tmin + j * DT ;
-     double LocalStoppingPower = LocalSample.Item(LayerNumber).EvaluateBragg(Energy-S);
+     double LocalStoppingPower = LocalSample.Item(LayerNumber).EvaluateBragg(Energy);
      double LocalDistribution = ElementDistribution.GetValue(S-T,T);
       DoubleSimpsonSum = DoubleSimpsonSum + LocalDistribution * this->EvaluateSigma(LayerNumber,Energy-S) / LocalStoppingPower;
       RenormalizationSum = RenormalizationSum + LocalDistribution;
@@ -1731,7 +1746,7 @@ bool ReactionProfiling::StartProcedure(wxStatusBar* progress)
 // Changes some parameters
 bool ReactionProfiling::SetOverrideParameters(unsigned int SamplePrecision, unsigned int GaussPrecision, unsigned int VavilovMoyalPrecision, unsigned int VavilovEdgeworthPrecision, unsigned int VavilovAiryPrecision, unsigned int LandauPrecision, unsigned int ThreadPrecision, unsigned int ConvolutionPrecision, bool EnableLog)
 {
- DefaultSampleStep = 0.1 * SamplePrecision; // An implicit conversion to set 1e-15 at/cm^2 SRIM units.
+ DefaultSampleStep = 0.01 * SamplePrecision; // An implicit conversion to set 1e-15 at/cm^2 SRIM units.
  DefaultGauss = GaussPrecision;
  DefaultLandau = LandauPrecision;
  DefaultVavilovEdgeworth = VavilovEdgeworthPrecision;
