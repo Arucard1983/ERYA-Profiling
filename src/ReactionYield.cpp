@@ -351,7 +351,7 @@ double PhysicsDistribution::GetThermalDoppler(double AtEnergy, double TargetMola
 bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, double DEM, double VEM, unsigned int Gauss, unsigned int Moyal, unsigned int Edgeworth, unsigned int Airy, unsigned int Landau, bool StrictGaussian)
 {
  // The thermal distribution is always Gaussian, but if the variance are zero, then collapse to a Dirac's delta.
- double ThermalVariance = std::sqrt(AverageBeamResolution*AverageBeamResolution/5.546 + AverageDopplerEnergy * AverageDopplerEnergy);
+ double ThermalVariance = std::sqrt(AverageBeamResolution*AverageBeamResolution/5.546 + AverageDopplerEnergy * AverageDopplerEnergy/5.546);
  unsigned int VarianceMode;
  if(std::abs(ThermalVariance)<1e-9)
  {
