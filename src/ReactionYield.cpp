@@ -1676,7 +1676,7 @@ bool ReactionProfiling::MainProcedure(wxStatusBar* progress)
    else
        AlwaysGaussian = false;
    // Extract the distribution values
-   if(LocalDistribution.SetDistribution(Xi,Beta,K,DEML,LV,DefaultGauss,DefaultVavilovMoyal,DefaultVavilovEdgeworth,DefaultVavilovAiry,DefaultLandau,AlwaysGaussian))
+   if(LocalDistribution.SetDistribution(Xi,Beta,(K+KL)/2,DEML,LV,DefaultGauss,DefaultVavilovMoyal,DefaultVavilovEdgeworth,DefaultVavilovAiry,DefaultLandau,AlwaysGaussian))
    {
      // Compute the Yields, adding the partial yield of each element, layer by layer
    std::vector<double> YieldsAtLayer = LocalResults.SetValue(LocalRessonance,LocalDistribution,CurrentLayer,EM,DEML);
