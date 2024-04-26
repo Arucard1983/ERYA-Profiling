@@ -437,12 +437,12 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 2 + VarianceMode;
     return true;
    }
-   else if(k>=0.29 && k<0.40) //Vavilov-Airy Distribution with linear correction
+   else if(k>=0.29 && k<0.39) //Vavilov-Airy Distribution with linear correction
    {
-    double kmin=0.29;
-    double kmax=0.40;
-    double lmin=0.39;
-    double lmax=0.40;
+    double kmin=0.22;
+    double kmax=0.39;
+    double lmin=0.38;
+    double lmax=0.39;
     double kslope=(lmax-lmin)/(kmax-kmin);
     StraggAiry = VavilovAiryFunction();
     StraggAiry.SetAiryStep(xi,beta,lmin+(k-kmin)*kslope,DEM,Airy,false);
@@ -452,7 +452,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 3 + VarianceMode;
     return true;
    }
-   else if(k>=0.40 && k<22.00) //Vavilov-Airy Distribution
+   else if(k>=0.39 && k<22.00) //Vavilov-Airy Distribution
    {
     StraggAiry = VavilovAiryFunction();
     StraggAiry.SetAiryStep(xi,beta,k,DEM,Airy,false);

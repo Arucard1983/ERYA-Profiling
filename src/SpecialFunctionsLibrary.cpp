@@ -466,10 +466,11 @@ void VavilovAiryFunction::SetAiryStep(double xi, double beta, double k, double D
  double deltafix = eta*(t0-a*a);
  double tp = this->MaximumFunction(a);
  double deltamax = eta*(tp-a*a);
+ double lambdastep = 1.0/numberstep;
  // Define the Function Domain
  AiryMinimum = DEM + deltafix;
  AiryMaximum = DEM - deltamax - deltafix;
- AiryStep = 1.0 / numberstep;
+ AiryStep = VAxi * lambdastep;
  // Cut negative minimum values
  if((AiryMinimum - DEM) < 0 && TrimNegative)
  {
