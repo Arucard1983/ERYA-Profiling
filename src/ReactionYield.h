@@ -200,7 +200,7 @@ double GetCalibrationFactorAt(int ElementID){return LayerCompound.GetCalibration
 double EvaluateCrossSectionAt(int ElementID, double AtEnergy){return LayerCompound.EvaluateCrossSection(ElementID,AtEnergy);};
 double GetMolarMass(){return LayerCompound.GetMolarMass();};
 double EvaluateBragg(double AtEnergy){return LayerCompound.EvaluateBragg(AtEnergy);};
-double GetGVL(double E);
+double GetGVL(double E, double E0);
 double GetVVL(double E);
 double GetDEML(double E){return LayerCompound.EvaluateBragg(E) * ThicknessStep * 0.001;};
 };

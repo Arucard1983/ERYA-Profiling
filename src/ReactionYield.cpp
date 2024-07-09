@@ -1137,19 +1137,22 @@ double Layer::Emax(double E)
 }
 
 //Get the Bohr variance of the current layer
-double Layer::GetGVL(double E)
+double Layer::GetGVL(double E, double E0)
 {
- double BohrFactor = (8 * this->GetXi(E)) / (3);
- double Beta = this->MakeBeta(E);
- double me = 511; //electron mass in keV
- double SumIonization = 0;
- for(int i=0; i<LayerCompound.GetCount(); i++)
- {
-    double x = LayerCompound.Item(i).GetStoichiometry() * LayerCompound.Item(i).GetIonization() * std::log(2 * me * Beta * Beta / LayerCompound.Item(i).GetIonization());
-    if(x>0)
-     SumIonization = SumIonization + x;
- }
- return std::sqrt(BohrFactor * SumIonization);
+// double BohrFactor = (8 * this->GetXi(E)) / (3);
+// double Beta = this->MakeBeta(E);
+// double me = 511; //electron mass in keV
+// double SumIonization = 0;
+// for(int i=0; i<LayerCompound.GetCount(); i++)
+// {
+//    double x = LayerCompound.Item(i).GetStoichiometry() * LayerCompound.Item(i).GetIonization() * std::log(2 * me * Beta * Beta / LayerCompound.Item(i).GetIonization());
+//    if(x>0)
+//     SumIonization = SumIonization + x;
+// }
+// return std::sqrt(BohrFactor * SumIonization);
+ double Charge = LayerCompound.GetGlobalCharge();
+ double ThicknessTotal = LayerCompound.EvaluateBragg(E) * (E0 - E);
+ return std::sqrt(260 * Charge * ThicknessTotal);
 }
 
 //Get the Vavilov variance of the current layer
@@ -1641,6 +1644,7 @@ bool ReactionProfiling::MainProcedure(wxStatusBar* progress)
   double InitialEnergy = EnergyMinimum + 1.0 * i * EnergyStep;
   double InitiaThermalDoppler = LocalDistribution.GetThermalDoppler(InitialEnergy,LocalSample.GetAverageMolarMass());
   double EM = InitialEnergy;
+  double EI = InitialEnergy;
   double GV = 0;
   double VV = 0;
   double DEM = 0;
@@ -1658,7 +1662,7 @@ bool ReactionProfiling::MainProcedure(wxStatusBar* progress)
     break;
    //Notice that the distribution calculation are taken by the previous parameters, which means at the first layer it takes the initial value.
    double DEML = LocalSample.Item(CurrentLayer).GetDEML(EM);
-   double GVL  = LocalSample.Item(CurrentLayer).GetGVL(EM);
+   double GVL  = LocalSample.Item(CurrentLayer).GetGVL(EM,EI);
    double VVL  = LocalSample.Item(CurrentLayer).GetVVL(EM);
    double KL   = LocalSample.Item(CurrentLayer).GetK(EM);
    double Beta = LocalSample.Item(CurrentLayer).GetBeta(EM);
@@ -1671,7 +1675,7 @@ bool ReactionProfiling::MainProcedure(wxStatusBar* progress)
     LV = GV;
    // Check the forced Gaussian option
    bool AlwaysGaussian = false;
-   if (DefaultThreads > 1)
+   if (DefaultThreads != 1)
        AlwaysGaussian = true;
    else
        AlwaysGaussian = false;
