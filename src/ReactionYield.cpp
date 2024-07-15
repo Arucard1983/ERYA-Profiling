@@ -1151,8 +1151,7 @@ double Layer::GetGVL(double E, double E0)
 // }
 // return std::sqrt(BohrFactor * SumIonization);
  double Charge = LayerCompound.GetGlobalCharge();
- double ThicknessTotal = LayerCompound.EvaluateBragg(E) * (E0 - E);
- return std::sqrt(260 * Charge * ThicknessTotal);
+ return std::sqrt(260 * Charge * ThicknessStep);
 }
 
 //Get the Vavilov variance of the current layer
@@ -1669,7 +1668,7 @@ bool ReactionProfiling::MainProcedure(wxStatusBar* progress)
    double XiL = LocalSample.Item(CurrentLayer).GetXi(EM);
    // Handle the choose between Bohr or Vavilov Variance Limit
    double LV = 0.0;
-   if (DefaultThreads > 0)
+   if (DefaultThreads != 1)
     LV = VV;
    else
     LV = GV;
