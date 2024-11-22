@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ERYA-Bulk_Detector>
+<ERYA-Profiling_Detector>
 <File_Details>
 <Contents>
-<Program_Name>ERYA-Bulk</Program_Name>
-<Program_Version>4.30</Program_Version>
-<Date_File_Creation>2019-07-03T16:14:31.00Z</Date_File_Creation>
+<Program_Name>ERYA-Profiling</Program_Name>
+<Program_Version>3.1</Program_Version>
+<Date_File_Creation>2024-04-08T16:13:13.00Z</Date_File_Creation>
 <Remark></Remark>
 </Contents>
 </File_Details>
@@ -46,4 +46,4 @@
 <register n="31" Energy="3451.1190000000001" Efficiency="1.8623000000000001E-3"/>
 </Energy_Efficiency>
 </Detector_Data>
-</ERYA-Bulk_Detector>
+</ERYA-Profiling_Detector>

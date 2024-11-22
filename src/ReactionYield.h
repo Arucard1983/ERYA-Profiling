@@ -65,6 +65,7 @@ LandauFunction StraggLandau;
 VavilovEdgeworthFunction StraggEdgeworth;
 VavilovAiryFunction StraggAiry;
 VavilovMoyalFunction StraggMoyal;
+VavilovInterFunction StraggInter;
 DiracFunction StraggDirac,ThermalDirac;
 unsigned int PDMode;
 bool IsDefined;
@@ -200,7 +201,7 @@ double GetCalibrationFactorAt(int ElementID){return LayerCompound.GetCalibration
 double EvaluateCrossSectionAt(int ElementID, double AtEnergy){return LayerCompound.EvaluateCrossSection(ElementID,AtEnergy);};
 double GetMolarMass(){return LayerCompound.GetMolarMass();};
 double EvaluateBragg(double AtEnergy){return LayerCompound.EvaluateBragg(AtEnergy);};
-double GetGVL(double E, double E0);
+double GetGVL(double E);
 double GetVVL(double E);
 double GetDEML(double E){return LayerCompound.EvaluateBragg(E) * ThicknessStep * 0.001;};
 };

@@ -3,8 +3,8 @@
 <File_Details>
 <Contents>
 <Program_Name>ERYA-Profiling</Program_Name>
-<Program_Version>2.70</Program_Version>
-<Date_File_Creation>2019-07-18T15:55:54.00Z</Date_File_Creation>
+<Program_Version>3.1</Program_Version>
+<Date_File_Creation>2024-04-08T16:13:13.00Z</Date_File_Creation>
 <Remark>Combined 1999 version of Ziegler's Parameters and 2013 SRIM tables.
 The Density and Mean Ionization Potential are added from third part sources.</Remark>
 </Contents>

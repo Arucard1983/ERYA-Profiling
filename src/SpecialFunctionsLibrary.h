@@ -80,6 +80,7 @@ double GetMoyalStep(){return MoyalStep;};
 double GetMoyalMinimum(){return MoyalMinimum;};
 double GetMoyalMaximum(){return MoyalMaximum;};
 double GetValue(double k, double beta, double lambda){return this->VMMain(k,beta,lambda);};
+double GetValue(double delta, double xi, double beta, double k);
 double GetValue(double AtEnergy);
 };
 
@@ -100,6 +101,25 @@ class VavilovAiryFunction
  double GetAiryMinimum(){return AiryMinimum;};
  double GetAiryMaximum(){return AiryMaximum;};
  double GetValue(double delta, double xi, double beta, double k){return this->VA(delta,xi,beta,k);};
+ double GetValue(double AtEnergy);
+};
+
+// Vavilov Function by Moyal/Airy interpolation
+class VavilovInterFunction
+{
+ private:
+ double InterStep,InterMinimum,InterMaximum;
+ double VIxi, VIk, VIbeta, VIdelta, VIDEM;
+ double VI(double delta, double xi, double beta, double k);
+ VavilovMoyalFunction InterMoyal;
+ VavilovAiryFunction InterAiry;
+ public:
+ VavilovInterFunction(){};
+ void SetInterStep(double xi, double beta, double k, double DEM, unsigned int numberstep, bool TrimNegative);
+ double GetInterStep(){return InterStep;};
+ double GetInterMinimum(){return InterMinimum;};
+ double GetInterMaximum(){return InterMaximum;};
+ double GetValue(double delta, double xi, double beta, double k){return this->VI(delta,xi,beta,k);};
  double GetValue(double AtEnergy);
 };
 

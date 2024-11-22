@@ -408,11 +408,40 @@ void VavilovMoyalFunction::SetMoyalStep(double xi, double beta, double k, double
  return;
 }
 
+double VavilovMoyalFunction::GetValue(double delta, double xi, double beta, double k)
+{
+ double euler = (std::lgamma(0.999999) - std::lgamma(1.000001)) / (0.000002); // Euler's Constant
+ double MoyalLambda = delta/xi - 1 + euler - beta*beta - std::log(k);
+ if(k>=0.050 && k<0.065)
+ {
+  return  (-66.5*k+4.325) * this->VMMain(0.050,beta,MoyalLambda) + (66.5*k-3.325) * this->VMMain(0.065,beta,MoyalLambda);
+ }
+ else if(k>=0.095 && k<0.120)
+ {
+  return  (-38.45*k+4.6528) * this->VMMain(0.095,beta,MoyalLambda) + (38.45*k-3.6528) * this->VMMain(0.120,beta,MoyalLambda);
+ }
+ else
+ {
+  return this->VMMain(k,beta,MoyalLambda);
+ }
+}
+
 double VavilovMoyalFunction::GetValue(double AtEnergy)
 {
  double euler = (std::lgamma(0.999999) - std::lgamma(1.000001)) / (0.000002); // Euler's Constant
  double MoyalLambda = (AtEnergy - VMDEM)/VMxi - 1 + euler - VMCbeta*VMCbeta - std::log(VMCk);
- return this->VMMain(VMCk,VMCbeta,MoyalLambda);
+ if(VMCk>=0.050 && VMCk<0.065)
+ {
+  return  (-66.5*VMCk+4.325) * this->VMMain(0.050,VMCbeta,MoyalLambda) + (66.5*VMCk-3.325) * this->VMMain(0.065,VMCbeta,MoyalLambda);
+ }
+ else if(VMCk>=0.095 && VMCk<0.120)
+ {
+  return  (-38.45*VMCk+4.6528) * this->VMMain(0.095,VMCbeta,MoyalLambda) + (38.45*VMCk-3.6528) * this->VMMain(0.120,VMCbeta,MoyalLambda);
+ }
+ else
+ {
+  return this->VMMain(VMCk,VMCbeta,MoyalLambda);
+ }
 }
 
 
@@ -534,6 +563,47 @@ double VavilovAiryFunction::GetValue(double AtEnergy)
  return this->VA(VAdelta,VAxi,VAbeta,VAk)*VAxi;
 }
 
+// Set the Moyal/Airy Interpolation Distribution domain, using the same procedure of Laudau variable on Edgeworth function
+void VavilovInterFunction::SetInterStep(double xi, double beta, double k, double DEM, unsigned int numberstep, bool TrimNegative)
+{
+ // Call the two distributions constructors
+ InterMoyal.SetMoyalStep(xi,beta,0.29,DEM,numberstep,TrimNegative);
+ InterAiry.SetAiryStep(xi,beta,0.39,DEM,numberstep,TrimNegative);
+ // Set the Laudau parameters
+ VIxi = xi;
+ VIk = k;
+ VIbeta = beta;
+ VIDEM = DEM;
+ // Set the distribution domain, for which the Airy domain at the choosen one
+ //InterMaximum = InterMoyal.GetMoyalMaximum()*(-10.0*k+3.9) + InterAiry.GetAiryMaximum()*(10.0*k-2.9);
+ //InterMinimum = InterMoyal.GetMoyalMinimum()*(-10.0*k+3.9) + InterAiry.GetAiryMinimum()*(10.0*k-2.9);
+ InterMaximum = InterAiry.GetAiryMaximum();
+ InterMinimum = InterMoyal.GetMoyalMinimum();
+ InterStep = InterMoyal.GetMoyalStep()*(-10.0*k+3.9) + InterAiry.GetAiryStep()*(10.0*k-2.9);
+ // Cut negative minimum values
+ if((InterMinimum - DEM) < 0 && TrimNegative)
+ {
+  InterMinimum = DEM;
+ }
+ return;
+}
+
+// Evaluate the Airy/Moyal approximation value of Vavilov distribution
+double VavilovInterFunction::VI(double delta, double xi, double beta, double k)
+{
+ double KMoyal = InterMoyal.GetValue(delta,xi,beta,0.29);
+ double KAiry = InterAiry.GetValue(delta,xi,beta,0.39);
+ double f = (-10.0*k+3.9)*KMoyal + (10.0*k-2.9)*KAiry;
+ return (f>0) ? f : 0.0;
+}
+
+// Return the distribution value in terms of energy
+double VavilovInterFunction::GetValue(double AtEnergy)
+{
+ VIdelta = AtEnergy - VIDEM;
+ return this->VI(VIdelta,VIxi,VIbeta,VIk)*VIxi;
+}
+
 
 double GaussFunction::FG(double Mean, double StandardDesviation, double x)
 {
@@ -564,8 +634,7 @@ double DiracFunction::Dirac(double x)
 {
  if(std::abs(x) < 1e-9)
  {
-   return 1;
- }
+   return 1; }
  else
  {
    return 0;

@@ -427,7 +427,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 1 + VarianceMode;
     return true;
    }
-   else if(k>=0.02 && k<0.29) //Vavilov-Moyal Distribution
+   else if(k>=0.02 && k<0.21) //Vavilov-Moyal Distribution
    {
     StraggMoyal = VavilovMoyalFunction();
     StraggMoyal.SetMoyalStep(xi,beta,k,DEM,Moyal,false);
@@ -437,29 +437,39 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 2 + VarianceMode;
     return true;
    }
-   else if(k>=0.29 && k<0.39) //Vavilov-Airy Distribution with linear correction
+   else if(k>=0.21 && k<0.21) //Vavilov-Airy Distribution with Vavilov-Moyal interpolation
    {
-    double kmin=0.22;
-    double kmax=0.39;
-    double lmin=0.38;
-    double lmax=0.39;
+    StraggInter = VavilovInterFunction();
+    StraggInter.SetInterStep(xi,beta,k,DEM,Airy,false);
+    StraggStep = StraggInter.GetInterStep();
+    StraggMaximum = StraggInter.GetInterMaximum();
+    StraggMinimum = StraggInter.GetInterMinimum();
+    PDMode = 3 + VarianceMode;
+    return true;
+   }
+   else if(k>=0.21 && k<0.34) //Vavilov-Airy Distribution with linear correction
+   {
+    double kmin=0.21;
+    double kmax=0.34;
+    double lmin=0.34;
+    double lmax=0.34;
     double kslope=(lmax-lmin)/(kmax-kmin);
     StraggAiry = VavilovAiryFunction();
     StraggAiry.SetAiryStep(xi,beta,lmin+(k-kmin)*kslope,DEM,Airy,false);
     StraggStep = StraggAiry.GetAiryStep();
     StraggMaximum = StraggAiry.GetAiryMaximum();
     StraggMinimum = StraggAiry.GetAiryMinimum();
-    PDMode = 3 + VarianceMode;
+    PDMode = 4 + VarianceMode;
     return true;
    }
-   else if(k>=0.39 && k<22.00) //Vavilov-Airy Distribution
+   else if(k>=0.34 && k<22.00) //Vavilov-Airy Distribution
    {
     StraggAiry = VavilovAiryFunction();
     StraggAiry.SetAiryStep(xi,beta,k,DEM,Airy,false);
     StraggStep = StraggAiry.GetAiryStep();
     StraggMaximum = StraggAiry.GetAiryMaximum();
     StraggMinimum = StraggAiry.GetAiryMinimum();
-    PDMode = 3 + VarianceMode;
+    PDMode = 4 + VarianceMode;
     return true;
    }
    else if(k>=22.00 && k<22.00) //Vavilov-Edgeworth Distribution
@@ -469,7 +479,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     StraggStep = StraggEdgeworth.GetEdgeworthStep();
     StraggMaximum = StraggEdgeworth.GetEdgeworthMaximum();
     StraggMinimum = StraggEdgeworth.GetEdgeworthMinimum();
-    PDMode = 4 + VarianceMode;
+    PDMode = 5 + VarianceMode;
     return true;
    }
    else
@@ -510,9 +520,9 @@ double PhysicsDistribution::GetValue(double StraggEnergy, double ThermalEnergy)
   if(PDMode ==2)
    return ThermalDirac.GetValue(ThermalEnergy) * StraggMoyal.GetValue(StraggEnergy);
   if(PDMode ==3)
-   return ThermalDirac.GetValue(ThermalEnergy) * StraggAiry.GetValue(StraggEnergy);
+   return ThermalDirac.GetValue(ThermalEnergy) * StraggInter.GetValue(StraggEnergy);
   if(PDMode ==4)
-   return ThermalDirac.GetValue(ThermalEnergy) * StraggEdgeworth.GetValue(StraggEnergy);
+   return ThermalDirac.GetValue(ThermalEnergy) * StraggAiry.GetValue(StraggEnergy);
   if(PDMode ==5)
    return ThermalDirac.GetValue(ThermalEnergy) * StraggGauss.GetValue(StraggEnergy);
   if(PDMode ==6)
@@ -522,9 +532,9 @@ double PhysicsDistribution::GetValue(double StraggEnergy, double ThermalEnergy)
   if(PDMode ==8)
    return ThermalFunction.GetValue(ThermalEnergy) * StraggMoyal.GetValue(StraggEnergy);
   if(PDMode ==9)
-   return ThermalFunction.GetValue(ThermalEnergy) * StraggAiry.GetValue(StraggEnergy);
+   return ThermalFunction.GetValue(ThermalEnergy) * StraggInter.GetValue(StraggEnergy);
   if(PDMode ==10)
-   return ThermalFunction.GetValue(ThermalEnergy) * StraggEdgeworth.GetValue(StraggEnergy);
+   return ThermalFunction.GetValue(ThermalEnergy) * StraggAiry.GetValue(StraggEnergy);
   if(PDMode ==11)
    return ThermalFunction.GetValue(ThermalEnergy) * StraggGauss.GetValue(StraggEnergy);
   else
@@ -1137,7 +1147,7 @@ double Layer::Emax(double E)
 }
 
 //Get the Bohr variance of the current layer
-double Layer::GetGVL(double E, double E0)
+double Layer::GetGVL(double E)
 {
 // double BohrFactor = (8 * this->GetXi(E)) / (3);
 // double Beta = this->MakeBeta(E);
@@ -1151,7 +1161,7 @@ double Layer::GetGVL(double E, double E0)
 // }
 // return std::sqrt(BohrFactor * SumIonization);
  double Charge = LayerCompound.GetGlobalCharge();
- return std::sqrt(260 * Charge * ThicknessStep);
+ return 2.355*std::sqrt(260 * Charge * ThicknessStep);
 }
 
 //Get the Vavilov variance of the current layer
@@ -1661,20 +1671,22 @@ bool ReactionProfiling::MainProcedure(wxStatusBar* progress)
     break;
    //Notice that the distribution calculation are taken by the previous parameters, which means at the first layer it takes the initial value.
    double DEML = LocalSample.Item(CurrentLayer).GetDEML(EM);
-   double GVL  = LocalSample.Item(CurrentLayer).GetGVL(EM,EI);
+   double GVL  = LocalSample.Item(CurrentLayer).GetGVL(EM);
    double VVL  = LocalSample.Item(CurrentLayer).GetVVL(EM);
    double KL   = LocalSample.Item(CurrentLayer).GetK(EM);
    double Beta = LocalSample.Item(CurrentLayer).GetBeta(EM);
    double XiL = LocalSample.Item(CurrentLayer).GetXi(EM);
    // Handle the choose between Bohr or Vavilov Variance Limit
    double LV = 0.0;
-   if (DefaultThreads != 1)
+   if (DefaultThreads > 0) //Bohr Variance condition
     LV = VV;
    else
     LV = GV;
-   // Check the forced Gaussian option
-   bool AlwaysGaussian = false;
-   if (DefaultThreads != 1)
+   // Apply the Gaussian condition
+   bool AlwaysGaussian = true;
+   if (DefaultThreads == 0)
+       AlwaysGaussian = true;
+   else if (DefaultThreads == 2)
        AlwaysGaussian = true;
    else
        AlwaysGaussian = false;
