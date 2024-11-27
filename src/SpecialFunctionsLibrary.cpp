@@ -412,36 +412,36 @@ double VavilovMoyalFunction::GetValue(double delta, double xi, double beta, doub
 {
  double euler = (std::lgamma(0.999999) - std::lgamma(1.000001)) / (0.000002); // Euler's Constant
  double MoyalLambda = delta/xi - 1 + euler - beta*beta - std::log(k);
- if(k>=0.050 && k<0.065)
- {
-  return  (-66.5*k+4.325) * this->VMMain(0.050,beta,MoyalLambda) + (66.5*k-3.325) * this->VMMain(0.065,beta,MoyalLambda);
- }
- else if(k>=0.095 && k<0.120)
- {
-  return  (-38.45*k+4.6528) * this->VMMain(0.095,beta,MoyalLambda) + (38.45*k-3.6528) * this->VMMain(0.120,beta,MoyalLambda);
- }
- else
- {
+ //if(k>=0.050 && k<0.065)
+ //{
+ // return  (-66.5*k+4.325) * this->VMMain(0.050,beta,MoyalLambda) + (66.5*k-3.325) * this->VMMain(0.065,beta,MoyalLambda);
+ //}
+ //else if(k>=0.095 && k<0.120)
+ //{
+ // return  (-38.45*k+4.6528) * this->VMMain(0.095,beta,MoyalLambda) + (38.45*k-3.6528) * this->VMMain(0.120,beta,MoyalLambda);
+ //}
+ //else
+ //{
   return this->VMMain(k,beta,MoyalLambda);
- }
+ //}
 }
 
 double VavilovMoyalFunction::GetValue(double AtEnergy)
 {
  double euler = (std::lgamma(0.999999) - std::lgamma(1.000001)) / (0.000002); // Euler's Constant
  double MoyalLambda = (AtEnergy - VMDEM)/VMxi - 1 + euler - VMCbeta*VMCbeta - std::log(VMCk);
- if(VMCk>=0.050 && VMCk<0.065)
- {
-  return  (-66.5*VMCk+4.325) * this->VMMain(0.050,VMCbeta,MoyalLambda) + (66.5*VMCk-3.325) * this->VMMain(0.065,VMCbeta,MoyalLambda);
- }
- else if(VMCk>=0.095 && VMCk<0.120)
- {
-  return  (-38.45*VMCk+4.6528) * this->VMMain(0.095,VMCbeta,MoyalLambda) + (38.45*VMCk-3.6528) * this->VMMain(0.120,VMCbeta,MoyalLambda);
- }
- else
- {
+ //if(VMCk>=0.050 && VMCk<0.065)
+ //{
+ // return  (-66.5*VMCk+4.325) * this->VMMain(0.050,VMCbeta,MoyalLambda) + (66.5*VMCk-3.325) * this->VMMain(0.065,VMCbeta,MoyalLambda);
+ //}
+ //else if(VMCk>=0.095 && VMCk<0.120)
+ //{
+ // return  (-38.45*VMCk+4.6528) * this->VMMain(0.095,VMCbeta,MoyalLambda) + (38.45*VMCk-3.6528) * this->VMMain(0.120,VMCbeta,MoyalLambda);
+ //}
+ //else
+ //{
   return this->VMMain(VMCk,VMCbeta,MoyalLambda);
- }
+ //}
 }
 
 

@@ -427,7 +427,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 1 + VarianceMode;
     return true;
    }
-   else if(k>=0.02 && k<0.21) //Vavilov-Moyal Distribution
+   else if(k>=0.02 && k<0.29) //Vavilov-Moyal Distribution
    {
     StraggMoyal = VavilovMoyalFunction();
     StraggMoyal.SetMoyalStep(xi,beta,k,DEM,Moyal,false);
@@ -437,7 +437,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 2 + VarianceMode;
     return true;
    }
-   else if(k>=0.21 && k<0.21) //Vavilov-Airy Distribution with Vavilov-Moyal interpolation
+   else if(k>=0.29 && k<0.29) //Vavilov-Airy Distribution with Vavilov-Moyal interpolation
    {
     StraggInter = VavilovInterFunction();
     StraggInter.SetInterStep(xi,beta,k,DEM,Airy,false);
@@ -447,12 +447,12 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 3 + VarianceMode;
     return true;
    }
-   else if(k>=0.21 && k<0.34) //Vavilov-Airy Distribution with linear correction
+   else if(k>=0.29 && k<0.39) //Vavilov-Airy Distribution with linear correction
    {
-    double kmin=0.21;
-    double kmax=0.34;
-    double lmin=0.34;
-    double lmax=0.34;
+    double kmin=0.29;
+    double kmax=0.39;
+    double lmin=0.39;
+    double lmax=0.39;
     double kslope=(lmax-lmin)/(kmax-kmin);
     StraggAiry = VavilovAiryFunction();
     StraggAiry.SetAiryStep(xi,beta,lmin+(k-kmin)*kslope,DEM,Airy,false);
@@ -462,7 +462,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 4 + VarianceMode;
     return true;
    }
-   else if(k>=0.34 && k<22.00) //Vavilov-Airy Distribution
+   else if(k>=0.39 && k<22.00) //Vavilov-Airy Distribution
    {
     StraggAiry = VavilovAiryFunction();
     StraggAiry.SetAiryStep(xi,beta,k,DEM,Airy,false);
@@ -1337,6 +1337,7 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
  double Smax = DTmax + DSmax;
  double DT = std::abs(DTmax-DTmin)<1e-9 ? DDT : DDT*(Tmax - Tmin)/(DTmax-DTmin);
  double DS = std::abs(DSmax-DSmin)<1e-9 ? DDS : DDS*(Smax - Smin)/(DSmax-DSmin);
+ // Fix for null number of steps
  if(Tsteps==0)
  {
   Tmin = 0;
@@ -1346,6 +1347,38 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
  {
   Smin = 0;
   Smax = 0;
+ }
+ // Ensure an even number of steps needed for Simpson's Method
+ if(Tsteps%2==1 && Tsteps>0)
+    Tsteps = Tsteps + 1;
+ if(Ssteps%2==1 && Ssteps > 0)
+    Ssteps = Ssteps + 1;
+ // Create the weights matrix required by Simpson's Method
+ std::vector< std::vector<unsigned int> > SimpsonWeight(Ssteps+1, std::vector<unsigned int> (Tsteps+1,0));
+ for(unsigned int i=0; i<=Ssteps; i++)
+ {
+   unsigned int SWRFactor;
+   if(i==0 || i==Ssteps)
+        SWRFactor = 1;
+     else if (i>0 && i<Ssteps && i%2==1)
+        SWRFactor = 4;
+     else if (i>0 && i<Ssteps && i%2==0)
+        SWRFactor = 2;
+     else
+        SWRFactor = 0;
+   for(unsigned int j=0; j<=Tsteps; j++)
+   {
+     unsigned int SWCFactor;
+     if(j==0 || j==Tsteps)
+        SWCFactor = 1;
+     else if (j>0 && j<Tsteps && j%2==1)
+        SWCFactor = 4;
+     else if (j>0 && j<Tsteps && j%2==0)
+        SWCFactor = 2;
+     else
+        SWCFactor = 0;
+     SimpsonWeight[i][j] = SWRFactor * SWCFactor;
+   }
  }
  // Evaluate the integral itself, including the renormalization integral.
  double DoubleSimpsonSum = 0;
@@ -1358,8 +1391,8 @@ double Yield::SigmaDistributionConvolution(int LayerNumber, double Energy)
      double T = Tmin + j * DT ;
      double LocalStoppingPower = LocalSample.Item(LayerNumber).EvaluateBragg(Energy);
      double LocalDistribution = ElementDistribution.GetValue(S-T,T);
-      DoubleSimpsonSum = DoubleSimpsonSum + LocalDistribution * this->EvaluateSigma(LayerNumber,Energy-S) / LocalStoppingPower;
-      RenormalizationSum = RenormalizationSum + LocalDistribution;
+     DoubleSimpsonSum = DoubleSimpsonSum + LocalDistribution * SimpsonWeight[i][j] * this->EvaluateSigma(LayerNumber,Energy-S) / LocalStoppingPower;
+     RenormalizationSum = RenormalizationSum + SimpsonWeight[i][j] * LocalDistribution;
    }
  }
  double CrossSigmaSum = (DS * DT) * DoubleSimpsonSum;
