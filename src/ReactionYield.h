@@ -22,6 +22,7 @@ WX_DECLARE_OBJARRAY( Element, ElementArray);
 WX_DECLARE_OBJARRAY( Layer, LayerArray);
 WX_DECLARE_OBJARRAY( Yield, YieldArray);
 WX_DECLARE_OBJARRAY( Sample, SampleArray);
+wxDECLARE_EVENT(wxEVT_SIMULATION_PROGRESS, wxThreadEvent);
 
 // Handle the Custom or built-in Briet-Wigner ressonance distribution
 class RessonanceFunction
@@ -200,7 +201,7 @@ double GetCalibrationFactorAt(int ElementID){return LayerCompound.GetCalibration
 double EvaluateCrossSectionAt(int ElementID, double AtEnergy){return LayerCompound.EvaluateCrossSection(ElementID,AtEnergy);};
 double GetMolarMass(){return LayerCompound.GetMolarMass();};
 double EvaluateBragg(double AtEnergy){return LayerCompound.EvaluateBragg(AtEnergy);};
-double GetGVL(double E, double E0);
+double GetGVL(double E);
 double GetVVL(double E);
 double GetDEML(double E){return LayerCompound.EvaluateBragg(E) * ThicknessStep * 0.001;};
 };
@@ -341,10 +342,15 @@ int GetNumberAllSample(){return this->SumAllSamples();}
 };
 
 // Base class that handles the interface between the GUI event, and the whole numeric setup
-class ReactionProfiling
+class ReactionProfiling : public wxEvtHandler 
 {
  private:
- long TotalNumberSteps, PartialNumberSteps, CompleteThreads;
+ wxProgressDialog* progressdial;
+ std::atomic<int> PartialNumberSteps;
+ std::atomic<int> completed_tasks;
+ std::atomic<bool> stop_simulation;
+ int TotalNumberSteps;
+ int NumberSteps;
  bool MainProcedure(wxStatusBar* progress);
  std::vector<YieldVector> TotalYield;
  std::vector<SampleVector> TotalSample;
@@ -355,37 +361,68 @@ class ReactionProfiling
  SampleVector LocalDepth;
  Detector LocalDetector;
  wxString LastErrorCode;
+ std::vector<YieldVector> ListAllYields;
+ std::vector<SampleVector> ListAllSamples;
  double Charge, EnergyStep, EnergyMinimum, EnergyMaximum;
  bool SampleComplete, InputComplete, DefaultParameters, RequireRessonance, RequireLog;
  double DefaultSampleStep;
  unsigned int DefaultGauss, DefaultVavilovMoyal, DefaultVavilovEdgeworth, DefaultVavilovAiry, DefaultLandau, DefaultThreads, DefaultConvolution;
+   // Private struct for thread work unit
+  struct ThreadWorker {
+      YieldVector ThreadResults;
+      SampleVector ThreadDepth;
+      PhysicsDistribution ThreadDistribution;
+      wxString ThreadErrorCode;
+      double InitialEnergy = 0.0;
+      double EM = InitialEnergy;
+      double EI = InitialEnergy;
+      double GV = 0;
+      double VV = 0;
+      double DEM = 0;
+      double Xi = 0;
+      double K = 0;
+        ThreadWorker(PhysicsDistribution x, YieldVector y, SampleVector z) {ThreadDistribution = x; ThreadResults = y; ThreadDepth = z;}
+    };
+  // Synchronization variables for thread pool
+    std::vector<std::thread> workers;
+    std::queue<std::function<void()>> tasks;
+    std::mutex queue_mutex, data_mutex;
+    std::condition_variable cv;
+    bool stop_pool = false;
+  // Thread private functions
+  bool ReactionThread(int itask, int jtask);
+  bool ReactionWorker(ThreadWorker& tw, int MaximumSteps);
+  void StartThreadPool();
+  void FinishThreadPool();
+  void OnProgressUpdate(wxThreadEvent& event);
  public:
- ReactionProfiling(){SampleComplete = false; InputComplete = false; RequireRessonance = false; DefaultParameters = true; LastErrorCode = wxT("General Error: Empty Input Data!");};
+ ReactionProfiling(){SampleComplete = false; InputComplete = false; RequireRessonance = false; DefaultParameters = true; LastErrorCode = wxT("General Error: Empty Input Data!"); progressdial = nullptr; this->Bind(wxEVT_SIMULATION_PROGRESS, &ReactionProfiling::OnProgressUpdate, this);};
+ ~ReactionProfiling(){this->FinishThreadPool();};
  bool StartProcedure(wxStatusBar* progress);
  bool SampleSetup(ElementDatabaseArray AllElements, ZieglerParameters ThisZiegler, DetectorParameters ThisDetector, ElementSRIMArray ThisSRIM, wxGrid* SourceTable, ArrayElement choiceElementName, ArrayGammaPeak choiceGammaPeak, ArrayAtomicNumber textAtomicNumber, ArrayAbundance textAbundance, ArrayIsotopicMass textIsotopicMass,ArrayAtomicMass textAtomicMass, ArrayCalibrationFactor textCalibrationFactor);
  bool SetOverrideParameters(unsigned int SamplePrecision, unsigned int GaussPrecision, unsigned int VavilovMoyalPrecision, unsigned int VavilovEdgeworthPrecision, unsigned int VavilovAiryPrecision, unsigned int LandauPrecision, unsigned int ThreadPrecision, unsigned int ConvolutionPrecision, bool EnableLog);
  bool SetInitialParameters(wxTextCtrl* valueBeamResolution, wxTextCtrl* valueTemperature, wxTextCtrl* valueCharge, wxTextCtrl* valueEnergyStep, wxTextCtrl* valueMinimumEnergy, wxTextCtrl* valueMaximumEnergy, wxTextCtrl* valueRessonanceWidth, wxTextCtrl* valueRessonancePeak, wxTextCtrl *valueRessonanceEnergy, wxTextCtrl *valueRessonanceMinimum, wxTextCtrl* valueRessonanceMaximum, wxTextCtrl* valueStrenghtWidth, wxTextCtrl* valueStrenghtPeak, wxTextCtrl *valueStrenghtEnergy, wxTextCtrl *valueStrenghtMinimum, wxTextCtrl* valueStrenghtMaximum, wxTextCtrl* valueRessonanceFunction, bool boolRessonanceLorentzian, bool boolRessonanceStrenght, int intRessonanceMode);
  wxString GetErrorCode(){return LastErrorCode;};
- std::vector<double> GetEnergyRange(){return LocalResults.GetEnergy();};
- std::vector<double> GetElementYield(int ElementID){return LocalResults.GetYieldAt(ElementID);};
+ std::vector<double> GetEnergyRange();
+ std::vector<double> GetElementYield(int ElementID);
  int GetNumberElements(){return LocalResults.GetCount();};
- int GetNumberSamples(){return LocalDepth.GetCount();};
- int GetNumberAllSamples(){return LocalDepth.GetNumberAllSample();};
- std::vector<double> GetSampleDepth(int Position){return LocalDepth.GetSampleDepth(Position);};
- std::vector<double> GetSampleLayer(int Position){return LocalDepth.GetSampleLayer(Position);};
- std::vector<double> GetSampleDE(int Position){return LocalDepth.GetSampleDE(Position);};
- std::vector<double> GetSampleEM(int Position){return LocalDepth.GetSampleEM(Position);};
- std::vector<double> GetSampleKL(int Position){return LocalDepth.GetSampleKL(Position);};
- std::vector<double> GetSampleKT(int Position){return LocalDepth.GetSampleKT(Position);};
- std::vector<double> GetSampleXi(int Position){return LocalDepth.GetSampleXi(Position);};
- std::vector<double> GetSampleXT(int Position){return LocalDepth.GetSampleXT(Position);};
- std::vector<double> GetSampleBeta(int Position){return LocalDepth.GetSampleBeta(Position);};
- std::vector<double> GetSampleBL(int Position){return LocalDepth.GetSampleBL(Position);};
- std::vector<double> GetSampleBV(int Position){return LocalDepth.GetSampleBV(Position);};
- std::vector<double> GetSamplePY(int Position){return LocalDepth.GetSamplePY(Position);};
- int GetNumberSampleElementsAt(int Position){return LocalDepth.GetNumberSampleElementsAt(Position);};
- int GetNumberYieldElementsAt(int Position){return LocalDepth.GetNumberYieldElementsAt(Position);};
- double GetInitialEnergyAt(int Position){return LocalDepth.GetInitialEnergyAt(Position);};
+ int GetNumberSamples(){return ListAllSamples.size();};
+ int GetNumberAllSamples();
+ std::vector<double> GetSampleDepth(int Position);
+ std::vector<double> GetSampleLayer(int Position);
+ std::vector<double> GetSampleDE(int Position);
+ std::vector<double> GetSampleEM(int Position);
+ std::vector<double> GetSampleKL(int Position);
+ std::vector<double> GetSampleKT(int Position);
+ std::vector<double> GetSampleXi(int Position);
+ std::vector<double> GetSampleXT(int Position);
+ std::vector<double> GetSampleBeta(int Position);
+ std::vector<double> GetSampleBL(int Position);
+ std::vector<double> GetSampleBV(int Position);
+ std::vector<double> GetSamplePY(int Position);
+ int GetNumberSampleElementsAt(int Position);
+ int GetNumberYieldElementsAt(int Position);
+ double GetInitialEnergyAt(int Position);
 };
 
 #endif // REACTIONYIELD_H_INCLUDED

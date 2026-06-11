@@ -17,7 +17,8 @@ dialogERYAProfilingAdvanced( parent )
  spinLandau->SetValue(L);
  spinVavilovAiry->SetValue(VA);
  spinVavilovMoyal->SetValue(VM);
- spinNumberThreads->SetSelection(NT);
+ spinNumberThreads->SetValue(NT);
+ choiceMode->SetSelection(CM);
  checkActiveLog->SetValue(EL);
 }
 
@@ -26,7 +27,7 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedOK( wxCommandEvent& eve
  // Call the parent frame
  ERYAProfilingERYAProfilingMain *Parent = (ERYAProfilingERYAProfilingMain *) GetParent();
  // Set the current variables
- unsigned int CP,G,L,VE,VM,VA,NT,CM;
+ unsigned int CP,G,L,VE,VM,VA,NT,VT,CM;
  double CPT;
  bool EL;
  // Get the controls
@@ -35,7 +36,8 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedOK( wxCommandEvent& eve
  L = spinLandau->GetValue();
  VA = spinVavilovAiry->GetValue();
  VM = spinVavilovMoyal->GetValue();
- NT = spinNumberThreads->GetSelection();
+ NT = spinNumberThreads->GetValue();
+ CM = choiceMode->GetSelection();
  EL = checkActiveLog->GetValue();
  // Internal conversion
  CP = static_cast<unsigned int>(std::floor(100*CPT)); // Internal conversion
@@ -53,8 +55,11 @@ void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedDefault( wxCommandEvent
  spinLandau->SetValue(284);
  spinVavilovAiry->SetValue(10);
  spinVavilovMoyal->SetValue(10);
- spinNumberThreads->SetSelection(1);
+ spinNumberThreads->SetValue(1);
+ choiceMode->SetSelection(1);
  checkActiveLog->SetValue(false);
+ int x = wxThread::GetCPUCount();
+ spinNumberThreads->SetValue(x);
 }
 
 void ERYAProfilingdialogERYAProfilingAdvanced::OnAdvancedCancel( wxCommandEvent& event )

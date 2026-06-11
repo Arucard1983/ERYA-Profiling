@@ -2595,7 +2595,7 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	sizerERYAProfilingAdvanced->Add( lineERYAProfilingSettings, 0, wxEXPAND | wxALL, 5 );
 
 	wxFlexGridSizer* sizerERYAProfilingSettings;
-	sizerERYAProfilingSettings = new wxFlexGridSizer( 7, 2, 20, 20 );
+	sizerERYAProfilingSettings = new wxFlexGridSizer( 8, 2, 20, 20 );
 	sizerERYAProfilingSettings->AddGrowableRow( 0 );
 	sizerERYAProfilingSettings->SetFlexibleDirection( wxBOTH );
 	sizerERYAProfilingSettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
@@ -2636,16 +2636,23 @@ dialogERYAProfilingAdvanced::dialogERYAProfilingAdvanced( wxWindow* parent, wxWi
 	spinLandau = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 100, 5000, 284 );
 	sizerERYAProfilingSettings->Add( spinLandau, 0, wxALL, 5 );
 
-
-    labelNumberThreads = new wxStaticText( this, wxID_ANY, wxT("Straggling Model:"), wxDefaultPosition, wxDefaultSize, 0 );
+        labelNumberThreads = new wxStaticText( this, wxID_ANY, wxT("Maximum Number of Concurrent Working Threads:"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelNumberThreads->Wrap( -1 );
 	sizerERYAProfilingSettings->Add( labelNumberThreads, 0, wxALL, 5 );
 
-	wxString spinNumberThreadsChoices[] = { wxT("Bohr Model"), wxT("Vavilov Model"), wxT("Gaussian Only") };
-	int spinNumberThreadsNChoices = sizeof( spinNumberThreadsChoices ) / sizeof( wxString );
-	spinNumberThreads = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, spinNumberThreadsNChoices, spinNumberThreadsChoices, 0 );
-	spinNumberThreads->SetSelection( 1 );
-	sizerERYAProfilingSettings->Add( spinNumberThreads, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+	spinNumberThreads = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 256, 1 );
+	sizerERYAProfilingSettings->Add( spinNumberThreads, 0, wxALL, 5 );
+
+
+        labelMode = new wxStaticText( this, wxID_ANY, wxT("Straggling Model:"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelMode->Wrap( -1 );
+	sizerERYAProfilingSettings->Add( labelMode, 0, wxALL, 5 );
+
+	wxString choiceModeChoices[] = { wxT("Bohr Model"), wxT("Vavilov Model"), wxT("Gaussian Only") };
+	int choiceModeNChoices = sizeof( choiceModeChoices ) / sizeof( wxString );
+	choiceMode = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, choiceModeNChoices, choiceModeChoices, 0 );
+	choiceMode->SetSelection( 1 );
+	sizerERYAProfilingSettings->Add( choiceMode, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
 	labelActiveLog = new wxStaticText( this, wxID_ANY, wxT("Enable partial Yield log table?"), wxDefaultPosition, wxDefaultSize, 0 );

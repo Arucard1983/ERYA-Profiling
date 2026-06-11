@@ -13,6 +13,7 @@ WX_DEFINE_OBJARRAY( ElementArray);
 WX_DEFINE_OBJARRAY( LayerArray);
 WX_DEFINE_OBJARRAY( YieldArray);
 WX_DEFINE_OBJARRAY( SampleArray);
+wxDEFINE_EVENT(wxEVT_SIMULATION_PROGRESS, wxThreadEvent);
 
 
 //Ressonance Function main constructor,when a custom macro are defined.
@@ -427,7 +428,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 1 + VarianceMode;
     return true;
    }
-   else if(k>=0.02 && k<0.29) //Vavilov-Moyal Distribution
+   else if(k>=0.02 && k<0.21) //Vavilov-Moyal Distribution
    {
     StraggMoyal = VavilovMoyalFunction();
     StraggMoyal.SetMoyalStep(xi,beta,k,DEM,Moyal,false);
@@ -437,12 +438,12 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 2 + VarianceMode;
     return true;
    }
-   else if(k>=0.29 && k<0.39) //Vavilov-Airy Distribution with linear correction
+   else if(k>=0.21 && k<0.34) //Vavilov-Airy Distribution with linear correction
    {
-    double kmin=0.22;
-    double kmax=0.39;
-    double lmin=0.38;
-    double lmax=0.39;
+    double kmin=0.21;
+    double kmax=0.34;
+    double lmin=0.34;
+    double lmax=0.34;
     double kslope=(lmax-lmin)/(kmax-kmin);
     StraggAiry = VavilovAiryFunction();
     StraggAiry.SetAiryStep(xi,beta,lmin+(k-kmin)*kslope,DEM,Airy,false);
@@ -452,7 +453,7 @@ bool PhysicsDistribution::SetDistribution(double xi, double beta, double k, doub
     PDMode = 3 + VarianceMode;
     return true;
    }
-   else if(k>=0.39 && k<22.00) //Vavilov-Airy Distribution
+   else if(k>=0.34 && k<22.00) //Vavilov-Airy Distribution
    {
     StraggAiry = VavilovAiryFunction();
     StraggAiry.SetAiryStep(xi,beta,k,DEM,Airy,false);
@@ -1137,7 +1138,7 @@ double Layer::Emax(double E)
 }
 
 //Get the Bohr variance of the current layer
-double Layer::GetGVL(double E, double E0)
+double Layer::GetGVL(double E)
 {
 // double BohrFactor = (8 * this->GetXi(E)) / (3);
 // double Beta = this->MakeBeta(E);
@@ -1151,7 +1152,7 @@ double Layer::GetGVL(double E, double E0)
 // }
 // return std::sqrt(BohrFactor * SumIonization);
  double Charge = LayerCompound.GetGlobalCharge();
- return std::sqrt(260 * Charge * ThicknessStep);
+ return 2.355*std::sqrt(260 * Charge * ThicknessStep);
 }
 
 //Get the Vavilov variance of the current layer
@@ -1620,109 +1621,6 @@ bool ReactionProfiling::SampleSetup(ElementDatabaseArray AllElements, ZieglerPar
 }
 
 
-// Main cycle of processing
-bool ReactionProfiling::MainProcedure(wxStatusBar* progress)
-{
- // Steps Counter
- PartialNumberSteps = 0;
- //Get the number of energy steps
- int NumberSteps = std::ceil((EnergyMaximum-EnergyMinimum)/EnergyStep);
- //Get the number of sample steps
- int SampleSteps = std::ceil(LocalSample.GetTotalThickness()/DefaultSampleStep);
- // Prepare YieldVector object
- LocalResults = YieldVector(LocalSample,LocalDetector,Charge,EnergyStep,DefaultConvolution*0.01);
- // Clear Sample log class
- LocalDepth.Clear();
- // Number of maximum steps
- TotalNumberSteps = (SampleSteps+1)*(NumberSteps+1);
- // Create an additional modal progress bar:
- wxProgressDialog *dial = new wxProgressDialog(wxT("Numerical Simulation Progress"), wxT("Starting, please wait..."),TotalNumberSteps,NULL,wxPD_CAN_ABORT|wxPD_APP_MODAL|wxPD_AUTO_HIDE);
- // And start the main cycle
- for (int i=0; i<=NumberSteps; i++)
- {
-  double InitialEnergy = EnergyMinimum + 1.0 * i * EnergyStep;
-  double InitiaThermalDoppler = LocalDistribution.GetThermalDoppler(InitialEnergy,LocalSample.GetAverageMolarMass());
-  double EM = InitialEnergy;
-  double EI = InitialEnergy;
-  double GV = 0;
-  double VV = 0;
-  double DEM = 0;
-  double Xi = 0;
-  double K = 0;
-  LocalResults.SetEnergy(InitialEnergy); //Allocate a new Y(E) register
-  LocalDepth.NewRegister(InitialEnergy); //Allocate a new D(E) register
-  for (int j=0; j<=SampleSteps; j++)
-  {
-   // Get the current layer
-   int CurrentLayer;
-   if(LocalSample.IsSampleBoundedAtThickness(1.0*j*DefaultSampleStep))
-    CurrentLayer = LocalSample.GetLayerAtThickness(1.0*j*DefaultSampleStep);
-   else
-    break;
-   //Notice that the distribution calculation are taken by the previous parameters, which means at the first layer it takes the initial value.
-   double DEML = LocalSample.Item(CurrentLayer).GetDEML(EM);
-   double GVL  = LocalSample.Item(CurrentLayer).GetGVL(EM,EI);
-   double VVL  = LocalSample.Item(CurrentLayer).GetVVL(EM);
-   double KL   = LocalSample.Item(CurrentLayer).GetK(EM);
-   double Beta = LocalSample.Item(CurrentLayer).GetBeta(EM);
-   double XiL = LocalSample.Item(CurrentLayer).GetXi(EM);
-   // Handle the choose between Bohr or Vavilov Variance Limit
-   double LV = 0.0;
-   if (DefaultThreads != 1)
-    LV = VV;
-   else
-    LV = GV;
-   // Check the forced Gaussian option
-   bool AlwaysGaussian = false;
-   if (DefaultThreads != 1)
-       AlwaysGaussian = true;
-   else
-       AlwaysGaussian = false;
-   // Extract the distribution values
-   if(LocalDistribution.SetDistribution(Xi,Beta,K*0.99+KL*0.01,DEML,LV,DefaultGauss,DefaultVavilovMoyal,DefaultVavilovEdgeworth,DefaultVavilovAiry,DefaultLandau,AlwaysGaussian))
-   {
-     // Compute the Yields, adding the partial yield of each element, layer by layer
-   std::vector<double> YieldsAtLayer = LocalResults.SetValue(LocalRessonance,LocalDistribution,CurrentLayer,EM,DEML);
-   // If enabled by the user: Store partial results to the debug register
-   if(RequireLog)
-    LocalDepth.SetValue(1.0*j*DefaultSampleStep,1.0*CurrentLayer+1,DEML,EM,KL,K,XiL,Xi,Beta,GVL,GV,YieldsAtLayer);
-   // Update step...
-   PartialNumberSteps = PartialNumberSteps + 1;
-   // Update the progress bar...
-   progress->SetStatusText(wxT("Calculation Progress...") + wxString::Format("%.3f",(100.0*PartialNumberSteps)/(TotalNumberSteps)) + wxT("%") ,0);
-   dial->Update(PartialNumberSteps,wxT("Calculation Progress...") + wxString::Format("%.3f",(100.0*PartialNumberSteps)/(TotalNumberSteps)) + wxT("%"));
-   // If hit the "Cancel" button, the procedure are aborted.
-   if(dial->WasCancelled())
-    {
-     dial->Destroy();
-     LastErrorCode = wxT("Stop! The simulation was aborted by the user!");
-     return false;
-    }
-   }
-   else
-   {
-    LastErrorCode = LocalDistribution.GetErrorMessage();
-    return false;
-   }
-   // Update values
-   DEM = DEM + DEML;
-   EM = EM - DEML;
-   K = K + KL;
-   GV = std::sqrt(GV*GV + GVL*GVL);
-   VV = std::sqrt(VV*VV + VVL*VVL);
-   Xi = Xi + XiL;
-   // Negative energy values will break the inner cycle, since it means that the beam was absorbed on some layer.
-   if(EM < 1e-3)
-   {
-    PartialNumberSteps = PartialNumberSteps + SampleSteps - j;
-    break;
-   }
-  }
- }
- // The procedure was finished
- dial->Destroy();
- return true;
-}
 
 
 // Public function control of main cycle
@@ -1744,6 +1642,282 @@ bool ReactionProfiling::StartProcedure(wxStatusBar* progress)
   LastErrorCode = wxT("General Error: Incomplete Data Input!");
   return false;
  }
+}
+
+// Main cycle of processing
+bool ReactionProfiling::MainProcedure(wxStatusBar* progress)
+{
+ // Steps Counter
+ PartialNumberSteps = 0;
+ completed_tasks = 0;
+ stop_simulation = false; // Cancel dialog flag
+ //Get the number of energy steps
+ NumberSteps = std::ceil((EnergyMaximum-EnergyMinimum)/EnergyStep);
+ //Get the number of sample steps
+ int SampleSteps = std::ceil(LocalSample.GetTotalThickness()/DefaultSampleStep);
+ // Prepare YieldVector object
+ LocalResults = YieldVector(LocalSample,LocalDetector,Charge,EnergyStep,DefaultSampleStep);
+ ListAllYields.clear();
+ ListAllSamples.clear();
+  // Number of maximum steps
+ TotalNumberSteps = (SampleSteps+1)*(NumberSteps+1);
+ // Create an additional modal progress bar:
+ progressdial = new wxProgressDialog(wxT("Numerical Simulation Progress"), wxT("Starting, please wait..."),TotalNumberSteps,NULL,wxPD_CAN_ABORT|wxPD_APP_MODAL|wxPD_AUTO_HIDE);
+ { //Begin of thread-safe
+  // Start the thread pool
+ this->StartThreadPool();
+ // And allocate a thread for each initial energy
+ for (int i=0; i<=NumberSteps; i++)
+ {
+   {
+       std::lock_guard<std::mutex> lock(queue_mutex);
+                tasks.emplace([this, i, SampleSteps]() {
+                    if (!this->stop_simulation) {
+                        this->ReactionThread(i, SampleSteps);
+                    }
+                    completed_tasks++; // Increment only WHEN the work is fully done
+                });
+    }
+    cv.notify_one();
+ }
+ // Safely block main thread until ALL tasks have executed completely
+    while (completed_tasks < (NumberSteps + 1)) {
+        wxYieldIfNeeded(); 
+        if (stop_simulation) {
+                // Empty the unitialized tasks
+                std::lock_guard<std::mutex> lock(queue_mutex);
+                while(!tasks.empty()) {
+                    tasks.pop();
+                    completed_tasks++; // Close correctly the cycle
+                }
+            }
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
+    }
+ // Clear the remaining threads
+ this->FinishThreadPool();
+ } //End of thread-safe
+
+     // Destroy the dialog once everthing completed
+    if (progressdial) {
+        progressdial->Destroy();
+        progressdial = nullptr;
+    }
+
+ // If Canceled, delete everything and return false
+    if (stop_simulation) {
+        ListAllYields.clear();
+        ListAllSamples.clear();
+        if (progressdial)
+        {
+        progressdial->Destroy();
+        progressdial = nullptr;
+        }
+        LastErrorCode = wxT("Error: Simulation was cancelled by the user.");
+        return false; // Canceled operation
+    }
+ // Sort the atomic operations by their energy
+  int m = ListAllYields.size();
+   for (int p=0; p<m-1; p++)
+   {
+     for(int q=0; q<m-p-1; q++)
+     {
+      if (ListAllYields.at(q).GetEnergy().at(0) > ListAllYields.at(q+1).GetEnergy().at(0))
+      {
+        std::swap(ListAllYields.at(q),ListAllYields.at(q+1));
+      }
+     }
+   }
+int n = ListAllSamples.size();
+   for (int s=0; s<n-1; s++)
+   {
+     for(int t=0; t<n-s-1; t++)
+     {
+      if (ListAllSamples.at(t).GetInitialEnergyAt(0) > ListAllSamples.at(t+1).GetInitialEnergyAt(0))
+      {
+        std::swap(ListAllSamples.at(t),ListAllSamples.at(t+1));
+      }
+     }
+   }
+ // And complete the task
+ return true;
+}
+
+
+// Start thread pool
+
+void ReactionProfiling::StartThreadPool()
+{
+  // FIX: Reset tracking states for re-usability
+    stop_pool = false;
+    workers.clear();
+  for (unsigned int i = 0; i < DefaultThreads; ++i) //As suggested by Google Gemini to handle threads
+    {
+            workers.emplace_back([this]() {
+                while (true) {
+                    std::function<void()> task; //Define a polymorphic function
+                    {
+                        std::unique_lock<std::mutex> lock(this->queue_mutex);
+                        this->cv.wait(lock, [this]() {
+                            return this->stop_pool || !this->tasks.empty();
+                        });
+
+                        if (this->stop_pool && this->tasks.empty()) {
+                            return;
+                        }
+
+                        task = std::move(this->tasks.front());
+                        this->tasks.pop();
+                    }
+                    task(); // Execute the task
+                }
+            });
+        }
+}
+
+// Finish all remaining threads
+
+void ReactionProfiling::FinishThreadPool()
+{
+        {
+            std::lock_guard<std::mutex> lock(queue_mutex);
+            stop_pool = true;
+        }
+        cv.notify_all();
+        for (std::thread &worker : workers) {
+            if (worker.joinable()) {
+                worker.join();
+            }
+        }
+}
+
+// Thread worker task, which is a single initial energy
+bool ReactionProfiling::ReactionThread(int itask, int jtask)
+{
+ //Initialization of protected and local variables
+  ThreadWorker tw(LocalDistribution,LocalResults,LocalDepth);
+  tw.InitialEnergy = EnergyMinimum + 1.0 * itask * EnergyStep;
+  tw.EM = tw.InitialEnergy;
+  tw.EI = tw.InitialEnergy;
+  tw.GV = 0;
+  tw.VV = 0;
+  tw.DEM = 0;
+  tw.Xi = 0;
+  tw.K = 0;
+  double InitiaThermalDoppler = tw.ThreadDistribution.GetThermalDoppler(tw.InitialEnergy,LocalSample.GetAverageMolarMass());
+  {
+    std::lock_guard<std::mutex> lock(data_mutex);
+    tw.ThreadResults.SetEnergy(tw.InitialEnergy); //Allocate a new Y(E) register
+    tw.ThreadDepth.NewRegister(tw.InitialEnergy); //Allocate a new D(E) register
+  }
+  if(this->ReactionWorker(tw,jtask))
+  {
+    std::lock_guard<std::mutex> lock(data_mutex);
+    ListAllYields.push_back(tw.ThreadResults);
+    ListAllSamples.push_back(tw.ThreadDepth);
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+bool ReactionProfiling::ReactionWorker(ThreadWorker& tw, int MaximumSteps)
+{
+ if (stop_simulation) {
+            return false; // Abort cycle
+     }
+ 
+ for(int j=0; j<=MaximumSteps; j++)
+ {
+    // Get the current layer
+   int CurrentLayer;
+   if(LocalSample.IsSampleBoundedAtThickness(1.0*j*DefaultSampleStep))
+    CurrentLayer = LocalSample.GetLayerAtThickness(1.0*j*DefaultSampleStep);
+   else
+    break;
+   //Notice that the distribution calculation are taken by the previous parameters, which means at the first layer it takes the initial value.
+   double DEML = LocalSample.Item(CurrentLayer).GetDEML(tw.EM);
+   double GVL  = LocalSample.Item(CurrentLayer).GetGVL(tw.EM);
+   double VVL  = LocalSample.Item(CurrentLayer).GetVVL(tw.EM);
+   double KL   = LocalSample.Item(CurrentLayer).GetK(tw.EM);
+   double Beta = LocalSample.Item(CurrentLayer).GetBeta(tw.EM);
+   double XiL = LocalSample.Item(CurrentLayer).GetXi(tw.EM);
+   // Handle the choose between Bohr or Vavilov Variance Limit
+   double LV = (DefaultConvolution > 0) ? tw.VV : tw.GV;
+   // Apply the Gaussian condition
+   bool AlwaysGaussian = (DefaultConvolution%2 == 0) ? true : false;  
+   // Extract the distribution values
+   if(tw.ThreadDistribution.SetDistribution(tw.Xi,Beta,tw.K*0.99+KL*0.01,DEML,LV,DefaultGauss,DefaultVavilovMoyal,DefaultVavilovEdgeworth,DefaultVavilovAiry,DefaultLandau,AlwaysGaussian))
+   {
+   // Compute the Yields, adding the partial yield of each element, layer by layer
+    std::vector<double> YieldsAtLayer = tw.ThreadResults.SetValue(LocalRessonance,tw.ThreadDistribution,CurrentLayer,tw.EM,DEML);
+    // If enabled by the user: Store partial results to the debug register
+   if(RequireLog)
+    tw.ThreadDepth.SetValue(1.0*j*DefaultSampleStep,1.0*CurrentLayer+1,DEML,tw.EM,KL,tw.K,XiL,tw.Xi,Beta,GVL,tw.GV,YieldsAtLayer);  
+   // Calculate overall progress (from your variables)
+   int current_total_step = PartialNumberSteps++;
+
+// Create and queue the event to the main thread
+    wxThreadEvent* event = new wxThreadEvent(wxEVT_SIMULATION_PROGRESS);
+    event->SetInt(current_total_step);
+     wxQueueEvent(this, event); 
+   // Update values
+   tw.DEM = tw.DEM + DEML;
+   tw.EM = tw.EM - DEML;
+   tw.K = tw.K + KL;
+   tw.GV = std::sqrt(tw.GV*tw.GV + GVL*GVL);
+   tw.VV = std::sqrt(tw.VV*tw.VV + VVL*VVL);
+   tw.Xi = tw.Xi + XiL;
+   }
+   else
+   { // Error message should be done with a mutex lock!
+    std::lock_guard<std::mutex> lock(data_mutex);
+    tw.ThreadErrorCode = wxT("Numerical error during computation!");
+    stop_simulation = true;
+    return false;
+   }
+   // Negative energy values will break the inner cycle, since it means that the beam was absorbed on some layer.
+   if(tw.EM < 1e-3)
+   {
+    PartialNumberSteps = PartialNumberSteps + MaximumSteps - j; //Fix the unused sample steps
+    break;
+   }
+ }
+ return true;
+}
+
+void ReactionProfiling::OnProgressUpdate(wxThreadEvent& event)
+ {
+    int CurrentStep = event.GetInt();
+    
+    // Safety check in case the dialog was closed
+    if (progressdial) {
+        progressdial->Update(CurrentStep,wxT("Calculation Progress... ") + wxString::Format(wxT("%.3f"), (100.0 * CurrentStep) / (TotalNumberSteps)) + wxT("%"));
+       if(progressdial->WasCancelled())
+        stop_simulation = true;
+    }
+}
+
+
+std::vector<double> ReactionProfiling::GetEnergyRange()
+{
+ std::vector<double> data;
+ for(int i=0; i<ListAllYields.size(); i++)
+ {
+   data.push_back(ListAllYields.at(i).GetEnergy().at(0));
+ }
+ return data;
+}
+
+std::vector<double> ReactionProfiling::GetElementYield(int ElementID)
+{
+ std::vector<double> data;
+ for(int i=0; i<ListAllYields.size(); i++)
+ {
+   data.push_back(ListAllYields.at(i).GetYieldAt(ElementID).at(0));
+ }
+ return data;
 }
 
 // Changes some parameters
@@ -1881,4 +2055,90 @@ bool ReactionProfiling::SetInitialParameters(wxTextCtrl* valueBeamResolution, wx
  InputComplete = true;
  LastErrorCode.Clear();
  return true;
+}
+
+
+int ReactionProfiling::GetNumberAllSamples()
+{
+int x=0;
+for(int i=0; i<ListAllSamples.size();i++)
+{
+ x = x + ListAllSamples.at(i).GetNumberAllSample();
+}
+return x;
+}
+
+std::vector<double> ReactionProfiling::GetSampleDepth(int Position)
+{
+ return ListAllSamples.at(Position).GetSampleDepth(0);
+}
+
+std::vector<double> ReactionProfiling::GetSampleLayer(int Position)
+{
+return ListAllSamples.at(Position).GetSampleLayer(0);
+}
+ 
+std::vector<double> ReactionProfiling::GetSampleDE(int Position)
+{
+return ListAllSamples.at(Position).GetSampleDE(0);
+}
+
+std::vector<double> ReactionProfiling::GetSampleEM(int Position)
+{
+return ListAllSamples.at(Position).GetSampleEM(0);
+}
+
+std::vector<double> ReactionProfiling::GetSampleKL(int Position)
+{
+return ListAllSamples.at(Position).GetSampleKL(0);
+}
+
+std::vector<double> ReactionProfiling::GetSampleKT(int Position)
+{
+return ListAllSamples.at(Position).GetSampleKT(0);
+}
+
+std::vector<double> ReactionProfiling::GetSampleXi(int Position)
+{
+return ListAllSamples.at(Position).GetSampleXi(0);
+}
+
+std::vector<double> ReactionProfiling::GetSampleXT(int Position)
+{
+return ListAllSamples.at(Position).GetSampleXT(0);
+}
+
+std::vector<double> ReactionProfiling::GetSampleBeta(int Position)
+{
+return ListAllSamples.at(Position).GetSampleBeta(0);
+}
+
+ std::vector<double> ReactionProfiling::GetSampleBL(int Position)
+{
+return ListAllSamples.at(Position).GetSampleBL(0);
+}
+
+std::vector<double> ReactionProfiling::GetSampleBV(int Position)
+{
+return ListAllSamples.at(Position).GetSampleBV(0);
+}
+
+std::vector<double> ReactionProfiling::GetSamplePY(int Position)
+{
+return ListAllSamples.at(Position).GetSamplePY(0);
+}
+
+int ReactionProfiling::GetNumberSampleElementsAt(int Position)
+{
+return ListAllSamples.at(Position).GetNumberSampleElementsAt(0);
+}
+
+ int ReactionProfiling::GetNumberYieldElementsAt(int Position)
+{
+ return ListAllSamples.at(Position).GetNumberYieldElementsAt(0);
+}
+
+double ReactionProfiling::GetInitialEnergyAt(int Position)
+{
+return ListAllSamples.at(Position).GetInitialEnergyAt(0);
 }

@@ -57,12 +57,21 @@
 #include <wx/busyinfo.h>
 #include <wx/progdlg.h>
 #include <wx/numdlg.h>
+#include <wx/thread.h>
 #include "mathplot.h"
 #include "eryaprofiling.xpm"
 #include "eryaprofilingwizard.xpm"
 #include <cmath>
 #include <limits>
 #include <random>
+#include <thread>
+#include <mutex>
+#include <queue>
+#include <condition_variable>
+#include <functional>
+#include <iomanip>
+#include <algorithm>
+#include <atomic>
 WX_DEFINE_ARRAY_PTR( wxWizardPageSimple*, WizardPages );
 WX_DECLARE_OBJARRAY( wxChoice*, ArrayElement);
 WX_DECLARE_OBJARRAY( wxChoice*, ArrayGammaPeak);
@@ -268,7 +277,7 @@ class ERYAProfilingMain : public wxFrame
 
 		~ERYAProfilingMain();
 
-       static wxString GetAppVersion(){static int MajorVersion = 3; static int MinorVersion = 1; return wxString::Format("%i",MajorVersion) + wxString::Format(".%i",MinorVersion);}
+       static wxString GetAppVersion(){static int MajorVersion = 3; static int MinorVersion = 2; return wxString::Format("%i",MajorVersion) + wxString::Format(".%i",MinorVersion);}
 
 };
 
@@ -873,8 +882,10 @@ class dialogERYAProfilingAdvanced : public wxDialog
 		wxSpinCtrl* spinVavilovAiry;
 		wxStaticText* labelLandau;
 		wxSpinCtrl* spinLandau;
-        wxStaticText* labelNumberThreads;
-		wxChoice* spinNumberThreads;
+                wxStaticText* labelNumberThreads;
+		wxSpinCtrl* spinNumberThreads;
+                wxStaticText* labelMode;
+		wxChoice* choiceMode;
 		wxStaticText* labelActiveLog;
 		wxCheckBox* checkActiveLog;
 		wxStaticLine* lineERYAProfilingTools;
@@ -892,7 +903,7 @@ class dialogERYAProfilingAdvanced : public wxDialog
 
 	public:
 
-		dialogERYAProfilingAdvanced( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("ERYA Profiling Advanced Precision Settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 700,550 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		dialogERYAProfilingAdvanced( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("ERYA Profiling Advanced Precision Settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 700,600 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~dialogERYAProfilingAdvanced();
 
 };
