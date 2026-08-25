@@ -493,6 +493,7 @@ double VavilovAiryFunction::VAa(unsigned int n)
   return (this->VAa(n-3))/(1.0*n*(1.0*n-1));
 }
 
+// Implementation of Airy Function of First Kind
 double VavilovAiryFunction::Airy(double t)
 {
  // Apply a domain cut-off
@@ -515,6 +516,29 @@ double VavilovAiryFunction::Airy(double t)
  }
 }
 
+// Implementation of the Derivative of Airy Function of First Kind
+double VavilovAiryFunction::DAiry(double t)
+{
+ // Apply a domain cut-off
+ if ((t>-2.33811) && (t<=5))
+ {
+   double x=0;
+   for(unsigned int n=0; n<123; n++)
+   {
+     x = x + this->VAa(n+1)*(n+1)*std::pow(t,n*1.0);
+   }
+  return x;
+ }
+ else if (t>5)
+ {
+  return (-1.0*(std::exp((-2.0/3.0)*std::pow(t,3.0/2.0))*std::pow(t,1.0/4.0))/(std::sqrt(16.0*std::atan(1.0))))*(1+7/(48*std::pow(t,3.0/2.0)));
+ }
+ else
+ {
+  return 0;
+ }
+}
+
 // Evaluate the Airy approximation value of Vavilov distribution
 double VavilovAiryFunction::VA(double delta, double xi, double beta, double k)
 {
@@ -522,9 +546,26 @@ double VavilovAiryFunction::VA(double delta, double xi, double beta, double k)
  double eta = (xi * std::pow((1 - (2*VAbeta*VAbeta)/3),1.0/3.0))/(std::pow(2.0*VAk,2.0/3.0));
  double a = (std::pow(2.0*VAk,1.0/3.0) * (1 - (VAbeta*VAbeta)/2)) / (std::pow((1 - (2.0*VAbeta*VAbeta)/3.0),2.0/3.0));
  double t = delta / eta + a*a;
- double f = this->Airy(t) * std::exp(a*t-(a*a*a)/3) / eta;
+ // Set corrected Airy parametrization for lower k
+ double euler = (std::lgamma(0.999999) - std::lgamma(1.000001)) / (0.000002); // Euler's Constant
+ // padé approximation for C(1)
+  double num = 0.5 * (1.0 - beta*beta);
+  double den = 1.0 + 1.5 * k;
+  double phi1 = num / den;
+ double f = (this->Airy(t) + phi1 * k * this->DAiry(t)) * std::exp(k * (1.0 + beta*beta*euler) + a*t-(a*a*a)/3) / (eta * std::sqrt(k));
  return (f>0) ? f : 0.0;
 }
+
+// Evaluate the Airy approximation value of Vavilov distribution
+//double VavilovAiryFunction::VA(double delta, double xi, double beta, double k)
+//{
+ // Set the following model parameters
+// double eta = (xi * std::pow((1 - (2*VAbeta*VAbeta)/3),1.0/3.0))/(std::pow(2.0*VAk,2.0/3.0));
+// double a = (std::pow(2.0*VAk,1.0/3.0) * (1 - (VAbeta*VAbeta)/2)) / (std::pow((1 - (2.0*VAbeta*VAbeta)/3.0),2.0/3.0));
+// double t = delta / eta + a*a;
+//double f = this->Airy(t) * std::exp(a*t-(a*a*a)/3) / eta;
+// return (f>0) ? f : 0.0;
+//}
 
 
 // Return the distribution value in terms of energy

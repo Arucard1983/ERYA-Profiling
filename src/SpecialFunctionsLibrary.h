@@ -91,6 +91,7 @@ class VavilovAiryFunction
  double VAxi, VAk, VAbeta, VAdelta, VADEM;
  double VAa(unsigned int n);
  double Airy(double t);
+ double DAiry(double t);
  double VA(double delta, double xi, double beta, double k);
  double MaximumFunction(double a);
  public:
